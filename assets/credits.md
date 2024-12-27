@@ -1,0 +1,2 @@
+- Night-mode icon: [Adriansyah](https://www.flaticon.com/authors/adriansyah)
+- Sun icon: [Freepik](https://www.freepik.com/)

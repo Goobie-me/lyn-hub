@@ -1,0 +1,3 @@
+This directory is automatically loaded before most things run. It is used to store most constants so net messages become cheaper to send and receive. It is similar to util.AddNetworkString but provides an easy way to place it inside sh_constants/any-file-name.lua and use c"hey-i-will-be-used-inside-lyn.Net.Hook". You could also use a capital C.
+
+It sounds dumb, but it's really unnecessary to include the net message name in each message being sent instead of its index/id. A net message with a name of "MyGreatAddonIsAwesome", if sent as a string, will be 21 bytes. If sent by its id, it will be 2 bytes.
