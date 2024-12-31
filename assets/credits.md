@@ -1,2 +1,3 @@
 - Night-mode icon: [Adriansyah](https://www.flaticon.com/authors/adriansyah)
 - Sun icon: [Freepik](https://www.freepik.com/)
+- Bot icon: [Bharat Icons](https://www.flaticon.com/free-icons/bot)
