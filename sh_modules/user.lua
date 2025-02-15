@@ -43,6 +43,44 @@ Command("#grantrole")
     end)
 :Register()
 
+Command("#grantroleid")
+    :Permission("grantroleid")
+
+    :Param("steamid64")
+    :Param("string", {hint = "role", check = function(ctx, input_arg)
+        local value = input_arg.value
+        return value and Role.Exists(value) and ctx.caller:LynCanTargetRole(value)
+    end})
+    :Param("duration", {default = 0})
+
+    :Execute(function(ply, promise, role, duration)
+        local steamid64 = promise.steamid64
+        promise:Handle(function()
+            local duration_formatted
+            if duration == 0 then
+                duration = nil
+                duration_formatted = Language.Get("commands.grantroleid.permanent")
+            else
+                duration_formatted = TimeUtils.FormatDuration(duration)
+            end
+
+            lyn.Player.GrantRoleSteamID64(steamid64, role, duration, function(err)
+                if err then
+                    Command.Notify(ply, "#commands.failed_to_run")
+                    return
+                end
+
+                Command.Notify("*", "#commands.grantroleid.notify", {
+                    P = ply,
+                    target_steamid64 = steamid64,
+                    role = Role.GetDisplayName(role),
+                    duration = duration_formatted,
+                })
+            end)
+        end)
+    end)
+:Register()
+
 Command("#revokerole")
     :Permission("revokerole")
 

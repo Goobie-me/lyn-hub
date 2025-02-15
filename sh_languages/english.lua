@@ -154,11 +154,33 @@ commands = {
             "giverole",
             "roleadd",
             "rolegrant",
+            "rolegive",
         },
 
         help = "Grant a role to a player.",
         notify = "{P} granted the role {green %role%} to {T} for {green %duration%}",
-        permanent = "Permanent",
+        permanent = "Permanent", -- this will be used if duration is set to 0
+    },
+
+    grantroleid = {
+        identifiers = {
+            "grantroleid",
+            "grantroleid64",
+            "grantrolesteamid",
+            "grantrolesteamid64",
+            "addroleid",
+            "addroleid64",
+            "addrolesteamid",
+            "addrolesteamid64",
+            "giveroleid",
+            "giveroleid64",
+            "giverolesteamid",
+            "giverolesteamid64",
+        },
+
+        help = "Grant a role to a player by their SteamID/SteamID64.",
+        notify = "{P} granted the role {green %role%} to {red %target_steamid64%} for {green %duration%}",
+        permanent = "Permanent", -- this will be used if duration is set to 0
     },
 
     revokerole = {
@@ -219,6 +241,17 @@ commands = {
         },
 
         help = "Kick a player from the server.",
+        notify = "{P} kicked {T} for: {red %reason%}",
+    },
+
+    kickm = {
+        identifiers = {
+            "kickm",
+            "kickmulti",
+            "kickmultiple",
+        },
+
+        help = "Kick multiple players from the server.",
         notify = "{P} kicked {T} for: {red %reason%}",
     },
 

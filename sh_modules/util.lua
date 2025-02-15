@@ -70,6 +70,25 @@ Command("#kick")
     end)
 :Register()
 
+Command("#kickm")
+    :Permission("kickm")
+
+    :Param("player", {disable_self_as_default = true})
+    :Param("string", {hint = "reason", default = Language.Get("kicking.default_reason")})
+
+    :Execute(function(ply, targets, reason)
+        for i = 1, #targets do
+            targets[i]:Kick(reason)
+        end
+
+        Command.Notify("*", "#commands.kickm.notify", {
+            P = ply,
+            T = targets,
+            reason = reason,
+        })
+    end)
+:Register()
+
 Command("#ban")
     :Permission("ban")
 
@@ -115,20 +134,7 @@ Command("#banid")
     :Execute(function(ply, promise, duration, reason)
         local steamid64 = promise.steamid64
         local caller_steamid64 = ply:SteamID64()
-        promise:Handle(function(err, can_target, target)
-            -- target could be the player that spawned and became authed while we were waiting to check if we can target him
-            if err then -- db error
-                Command.Notify(ply, "#commands.failed_to_run")
-                return
-            end
-
-            if not can_target then
-                Command.Notify(ply, "#commands.arguments.cant_target", {
-                    P = target or steamid64
-                })
-                return
-            end
-
+        promise:Handle(function()
             local duration_formatted
             if duration == 0 then
                 duration = nil
@@ -163,19 +169,7 @@ Command("#unban")
     :Execute(function(ply, promise)
         local steamid64 = promise.steamid64
         local caller_steamid64 = ply:SteamID64()
-        promise:Handle(function(err, can_target)
-            if err then -- db error
-                Command.Notify(ply, "#commands.failed_to_run")
-                return
-            end
-
-            if not can_target then
-                Command.Notify(ply, "#commands.arguments.cant_target", {
-                    P = steamid64
-                })
-                return
-            end
-
+        promise:Handle(function()
             lyn.Player.Unban(steamid64, caller_steamid64, function(err2, no_active_ban, immunity_error)
                 if err2 then -- db error
                     Command.Notify(ply, "#commands.failed_to_run")
@@ -191,23 +185,6 @@ Command("#unban")
                 end
             end)
         end)
-    end)
-:Register()
-
-Command("#bot")
-    :Permission("bot")
-
-    :Param("number", {hint = "amount", floor = true, min = 1, max = game.MaxPlayers(), default = 1})
-
-    :Execute(function(ply, amount)
-        for i = 1, amount do
-            RunConsoleCommand("bot")
-        end
-
-        Command.Notify("*", "#commands.bot.notify", {
-            P = ply,
-            amount = amount,
-        })
     end)
 :Register()
 
