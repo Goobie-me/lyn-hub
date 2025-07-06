@@ -1,4 +1,3 @@
-- Night-mode icon: [Adriansyah](https://www.flaticon.com/authors/adriansyah)
-- Sun icon: [Freepik](https://www.freepik.com/)
 - Bot icon: [Freepik - Flaticon](https://www.flaticon.com/free-icons/bot)
 - Refresh icon: [Icon Mart - Flaticon](https://www.flaticon.com/free-icons/restart)
+- Theme icon: [Ian Anandara - Flaticon](https://www.flaticon.com/free-icons/theme)
