@@ -24,7 +24,7 @@ Command("#maprestart")
             P = ply,
         })
     end)
-:Register()
+    :Register()
 
 Command("#stopmaprestart")
     :Permission("maprestart")
@@ -40,7 +40,7 @@ Command("#stopmaprestart")
             P = ply,
         })
     end)
-:Register()
+    :Register()
 
 Command("#mapreset")
     :Permission("mapreset")
@@ -51,13 +51,13 @@ Command("#mapreset")
             P = ply,
         })
     end)
-:Register()
+    :Register()
 
 Command("#kick")
-    :Permission("kick")
+    :Permission("kick", "admin")
 
-    :Param("player", {single_target = true, disable_self_as_default = true})
-    :Param("string", {hint = "reason", default = Language.Get("kicking.default_reason")})
+    :Param("player", { single_target = true, disable_self_as_default = true })
+    :Param("string", { hint = "reason", default = Language.Get("kicking.default_reason") })
 
     :Execute(function(ply, targets, reason)
         targets[1]:Kick(reason)
@@ -68,13 +68,13 @@ Command("#kick")
             reason = reason,
         })
     end)
-:Register()
+    :Register()
 
 Command("#kickm")
     :Permission("kickm")
 
-    :Param("player", {disable_self_as_default = true})
-    :Param("string", {hint = "reason", default = Language.Get("kicking.default_reason")})
+    :Param("player", { disable_self_as_default = true })
+    :Param("string", { hint = "reason", default = Language.Get("kicking.default_reason") })
 
     :Execute(function(ply, targets, reason)
         for i = 1, #targets do
@@ -87,14 +87,14 @@ Command("#kickm")
             reason = reason,
         })
     end)
-:Register()
+    :Register()
 
 Command("#ban")
-    :Permission("ban")
+    :Permission("ban", "admin")
 
-    :Param("player", {single_target = true, disable_self_as_default = true})
-    :Param("duration", {default = 0})
-    :Param("string", {hint = "reason", default = Language.Get("banning.default_reason")})
+    :Param("player", { single_target = true, disable_self_as_default = true })
+    :Param("duration", { default = 0 })
+    :Param("string", { hint = "reason", default = Language.Get("banning.default_reason") })
 
     :GetRestArgs()
 
@@ -120,14 +120,14 @@ Command("#ban")
             })
         end)
     end)
-:Register()
+    :Register()
 
 Command("#banid")
-    :Permission("banid")
+    :Permission("banid", "admin")
 
     :Param("steamid64")
-    :Param("duration", {default = 0})
-    :Param("string", {hint = "reason", default = Language.Get("banning.default_reason")})
+    :Param("duration", { default = 0 })
+    :Param("string", { hint = "reason", default = Language.Get("banning.default_reason") })
 
     :GetRestArgs()
 
@@ -159,10 +159,10 @@ Command("#banid")
             end)
         end)
     end)
-:Register()
+    :Register()
 
 Command("#unban")
-    :Permission("unban")
+    :Permission("unban", "admin")
 
     :Param("steamid64")
 
@@ -186,12 +186,12 @@ Command("#unban")
             end)
         end)
     end)
-:Register()
+    :Register()
 
 Command("#bot")
     :Permission("bot")
 
-    :Param("number", {hint = "amount", floor = true, min = 1, max = game.MaxPlayers(), default = 1})
+    :Param("number", { hint = "amount", floor = true, min = 1, max = game.MaxPlayers(), default = 1 })
 
     :Execute(function(ply, amount)
         for i = 1, amount do
@@ -203,10 +203,10 @@ Command("#bot")
             amount = amount,
         })
     end)
-:Register()
+    :Register()
 
 Command("#help")
-    :Param("string", {hint = "command", optional = true})
+    :Param("string", { hint = "command", optional = true })
 
     :GetRestArgs()
 
@@ -219,15 +219,15 @@ Command("#help")
                 })
                 return
             end
-            Net.Start("Command.Help", ply, cmd.name, cmd_name)
+            Net.StartSV("Command.Help", ply, cmd.name, cmd_name)
         else
-            Net.Start("Command.Help", ply)
+            Net.StartSV("Command.Help", ply)
         end
     end)
-:Register()
+    :Register()
 
 if CLIENT then
-    Net.Hook("Command.Help", function(cmd_name, matched_identifier)
+    Net.HookCL("Command.Help", function(cmd_name, matched_identifier)
         if cmd_name then
             Command.SendSyntax({
                 command = Command.Get(cmd_name),

@@ -9,12 +9,15 @@ Command.SetCategory("User Management")
 Command("#grantrole")
     :Permission("grantrole")
 
-    :Param("player", {single_target = true})
-    :Param("string", {hint = "role", check = function(ctx, input_arg)
-        local value = input_arg.value
-        return value and Role.Exists(value) and ctx.caller:LynCanTargetRole(value)
-    end})
-    :Param("duration", {default = 0})
+    :Param("player", { single_target = true })
+    :Param("string", {
+        hint = "role",
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and Role.Exists(value) and ctx.caller:LynCanTargetRole(value)
+        end
+    })
+    :Param("duration", { default = 0 })
 
     :Execute(function(ply, targets, role, duration)
         local target = targets[1]
@@ -41,17 +44,20 @@ Command("#grantrole")
             })
         end)
     end)
-:Register()
+    :Register()
 
 Command("#grantroleid")
     :Permission("grantroleid")
 
     :Param("steamid64")
-    :Param("string", {hint = "role", check = function(ctx, input_arg)
-        local value = input_arg.value
-        return value and Role.Exists(value) and ctx.caller:LynCanTargetRole(value)
-    end})
-    :Param("duration", {default = 0})
+    :Param("string", {
+        hint = "role",
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and Role.Exists(value) and ctx.caller:LynCanTargetRole(value)
+        end
+    })
+    :Param("duration", { default = 0 })
 
     :Execute(function(ply, promise, role, duration)
         local steamid64 = promise.steamid64
@@ -79,16 +85,19 @@ Command("#grantroleid")
             end)
         end)
     end)
-:Register()
+    :Register()
 
 Command("#revokerole")
     :Permission("revokerole")
 
-    :Param("player", {single_target = true})
-    :Param("string", {hint = "role", check = function(ctx, input_arg)
-        local value = input_arg.value
-        return value and Role.Exists(value) and ctx.caller:LynCanTargetRole(value)
-    end})
+    :Param("player", { single_target = true })
+    :Param("string", {
+        hint = "role",
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and Role.Exists(value) and ctx.caller:LynCanTargetRole(value)
+        end
+    })
 
     :Execute(function(ply, targets, role)
         local target = targets[1]
@@ -106,4 +115,4 @@ Command("#revokerole")
             })
         end)
     end)
-:Register()
+    :Register()

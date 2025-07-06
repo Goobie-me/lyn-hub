@@ -11,7 +11,7 @@ targets = {
 
     yourself = "Yourself", -- Color will be the same as "You"
 
-    himself = "Himself", -- Color will be his role color
+    himself = "Himself",   -- Color will be his role color
 
     -- This will be used inside {T} when the target is "*"
     -- when it prints everyone in chat, it doesn't mean literally everyone, it's everyone that the player can target.
@@ -53,9 +53,11 @@ kicking = {
 banning = {
     default_reason = "Unspecified",
 
-    immunity_error = "You cannot modify this player's ban because they were banned by someone with higher immunity than you.",
+    immunity_error =
+    "You cannot modify this player's ban because they were banned by someone with higher immunity than you.",
 
-    unban_immunity_error = "You cannot unban this player because they were banned by someone with higher immunity than you.",
+    unban_immunity_error =
+    "You cannot unban this player because they were banned by someone with higher immunity than you.",
     unban_no_active_ban = "The user is not currently banned.",
 
     -- this will be used if expires_at is set to "Permanent"
@@ -102,7 +104,8 @@ commands = {
         -- %param_idx% - The index of the parameter in the command.
         -- %param_name% - The hint/name of the parameter.
         -- %input% - The input the player provided.
-        restricted = "Param {blue %param_name%} #{gold %param_idx%}, with input {red %input%}, is restricted to: [[%[%valid_inputs%]%]]",
+        restricted =
+        "Param {blue %param_name%} #{gold %param_idx%}, with input {red %input%}, is restricted to: [[%[%valid_inputs%]%]]",
 
         cant_find_target = "Cannot find a player matching {red %target%}",
         target_not_authed = "You cannot target {T} because they are not authenticated yet.",
@@ -122,6 +125,15 @@ commands = {
 
         -- This is used when there are players but he can't target any of them. (higher roles, not-authed yet, etc.)
         no_valid_targets = "No valid targets found.",
+    },
+
+    help = {
+        identifiers = {
+            "help",
+        },
+
+        help = "Display a list of available commands or get help for a specific command.",
+        no_command = "No command found with the name {red %command%}",
     },
 
     hp = {
@@ -309,13 +321,4 @@ commands = {
         help = "Add a bot to the server.",
         notify = "{P} added {green %amount%} bot(s) to the server.",
     },
-
-    help = {
-        identifiers = {
-            "help",
-        },
-
-        help = "Display a list of available commands or get help for a specific command.",
-        no_command = "No command found with the name {red %command%}",
-    }
 }

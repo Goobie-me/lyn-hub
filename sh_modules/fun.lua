@@ -2,11 +2,11 @@ local lyn = lyn
 local Command = lyn.Command
 
 Command("#hp")
-    :Permission("health")
+    :Permission("hp", "admin")
     :Help("Set the health of a player")
 
     :Param("player")
-    :Param("number", {hint = "amount", default = 100, min = 1, max = 2147483647, round = true})
+    :Param("number", { hint = "amount", default = 100, min = 1, max = 2147483647, round = true })
 
     :Execute(function(ply, targets, amount)
         for i = 1, #targets do
@@ -19,4 +19,4 @@ Command("#hp")
             amount = amount,
         })
     end)
-:Register()
+    :Register()
