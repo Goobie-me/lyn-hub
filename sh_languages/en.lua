@@ -26,7 +26,7 @@ targets = {
         color = Color(80, 80, 80)
     },
 
-    -- This will be used if {P} is the console
+    -- This will be used if {P} is the console and also used by other functions that need to refer to the console's name
     console = {
         label = "Console",
         color = Color(46, 136, 137)
@@ -46,12 +46,18 @@ hints = {
     role = "role",
 }
 
+themes = {
+    blur = "Blur",
+    dark = "Dark",
+    light = "Light",
+}
+
 kicking = {
-    default_reason = "Unspecified"
+    default_reason = "unspecified"
 }
 
 banning = {
-    default_reason = "Unspecified",
+    default_reason = "unspecified",
 
     immunity_error =
     "You cannot modify this player's ban because they were banned by someone with higher immunity than you.",
@@ -60,10 +66,6 @@ banning = {
     "You cannot unban this player because they were banned by someone with higher immunity than you.",
     unban_no_active_ban = "The user is not currently banned.",
 
-    -- this will be used if expires_at is set to "Permanent"
-    expires_at_permanent = "Permanent",
-    -- this will be used if ends_in is set to "Permanent"
-    ends_in_permanent = "Permanent",
     -- %reason% - The reason the player was banned.
     -- %banned_at% - The date and time the player was banned. formatted as %d-%b-%Y %I:%M %p (e.g., 01-Jan-1970 12:00 AM)
     -- %expires_at% - The date and time the player will be unbanned. formatted as %d-%b-%Y %I:%M %p (e.g., 01-Jan-1970 12:00 AM)

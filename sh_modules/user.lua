@@ -22,14 +22,7 @@ Command("#grantrole")
     :Execute(function(ply, targets, role, duration)
         local target = targets[1]
 
-        local duration_formatted
-        if duration == 0 then
-            duration = nil
-            duration_formatted = Language.Get("commands.grantrole.permanent")
-        else
-            duration_formatted = TimeUtils.FormatDuration(duration)
-        end
-
+        local duration_formatted = TimeUtils.FormatDuration(duration)
         lyn.Player.GrantRole(target, role, duration, function(err)
             if err then
                 Command.Notify(ply, "#commands.failed_to_run")
@@ -62,14 +55,7 @@ Command("#grantroleid")
     :Execute(function(ply, promise, role, duration)
         local steamid64 = promise.steamid64
         promise:Handle(function()
-            local duration_formatted
-            if duration == 0 then
-                duration = nil
-                duration_formatted = Language.Get("commands.grantroleid.permanent")
-            else
-                duration_formatted = TimeUtils.FormatDuration(duration)
-            end
-
+            local duration_formatted = TimeUtils.FormatDuration(duration)
             lyn.Player.GrantRoleSteamID64(steamid64, role, duration, function(err)
                 if err then
                     Command.Notify(ply, "#commands.failed_to_run")

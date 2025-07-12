@@ -99,14 +99,7 @@ Command("#ban")
     :GetRestArgs()
 
     :Execute(function(ply, targets, duration, reason)
-        local duration_formatted
-        if duration == 0 then
-            duration = nil
-            duration_formatted = Language.Get("banning.ends_in_permanent")
-        else
-            duration_formatted = TimeUtils.FormatDuration(duration)
-        end
-
+        local duration_formatted = TimeUtils.FormatDuration(duration)
         lyn.Player.Ban(targets[1], duration, reason, ply:SteamID64(), function(err)
             if err then -- db error
                 Command.Notify(ply, "#commands.failed_to_run")
@@ -135,14 +128,7 @@ Command("#banid")
         local steamid64 = promise.steamid64
         local caller_steamid64 = ply:SteamID64()
         promise:Handle(function()
-            local duration_formatted
-            if duration == 0 then
-                duration = nil
-                duration_formatted = Language.Get("banning.ends_in_permanent")
-            else
-                duration_formatted = TimeUtils.FormatDuration(duration)
-            end
-
+            local duration_formatted = TimeUtils.FormatDuration(duration)
             lyn.Player.BanSteamID64(steamid64, duration, reason, caller_steamid64, function(err2, immunity_error)
                 if err2 then -- db error
                     Command.Notify(ply, "#commands.failed_to_run")
