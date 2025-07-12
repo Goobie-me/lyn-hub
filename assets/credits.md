@@ -1,3 +1,3 @@
 - Bot icon: [Freepik - Flaticon](https://www.flaticon.com/free-icons/bot)
-- Refresh icon: [Icon Mart - Flaticon](https://www.flaticon.com/free-icons/restart)
+- Refresh icon: [Slidicon - Flaticon](https://www.flaticon.com/free-icons/reuse)
 - Theme icon: [Ian Anandara - Flaticon](https://www.flaticon.com/free-icons/theme)
