@@ -33,19 +33,6 @@ targets = {
     }
 }
 
--- Hints translations are automatically used without using a # before them unlike commands' names.
-hints = {
-    duration = "duration",
-    number = "number",
-    player = "player",
-    reason = "reason",
-    steamid64 = "steamid64",
-    string = "string",
-
-    amount = "amount",
-    role = "role",
-}
-
 themes = {
     blur = "Blur",
     dark = "Dark",
@@ -129,27 +116,89 @@ commands = {
         no_valid_targets = "No valid targets found.",
     },
 
-    help = {
-        identifiers = {
-            "help",
-        },
+    exclusive_error = "Cannot run this command on {T} - {red %reason%} is currently active.",
 
+    -- Hints translations are automatically used without using a # before them unlike commands' names.
+    hints = {
+        duration = "duration",
+        number = "number",
+        player = "player",
+        reason = "reason",
+        steamid64 = "steamid64",
+        string = "string",
+
+        amount = "amount",
+        role = "role",
+        immunity = "immunity",
+        display_name = "display name",
+        color = "color",
+    },
+
+    help = {
         help = "Display a list of available commands or get help for a specific command.",
         no_command = "No command found with the name {red %command%}",
     },
 
-    hp = {
-        identifiers = {
-            "hp",
-            "health",
-            "sethealth",
-            "sethp",
-            "hpset",
-            "healthset",
-        },
+    -- Fun Commands
 
+    hp = {
         help = "Set the health of player(s).",
         notify = "{P} set the hp of {T} to {green %amount%}",
+    },
+
+    armor = {
+        help = "Set the armor of player(s).",
+        notify = "{P} set the armor of {T} to {green %amount%}",
+    },
+
+    slay = {
+        help = "Slay a player, causing them to die instantly.",
+        notify = "{P} slayed {T}",
+    },
+
+    ignite = {
+        help = "Ignite a player, setting them on fire.",
+        notify = "{P} ignited {T} for {green %duration%} seconds",
+    },
+
+    unignite = {
+        help = "Extinguish a player, removing the fire effect.",
+        notify = "{P} extinguished {T}",
+    },
+
+    god = {
+        help = "Enable god mode for player(s).",
+        notify = "{P} enabled god mode for {T}",
+    },
+
+    ungod = {
+        help = "Disable god mode for player(s).",
+        notify = "{P} disabled god mode for {T}",
+    },
+
+    freeze = {
+        help = "Freeze player(s).",
+        notify = "{P} froze {T}",
+    },
+
+    unfreeze = {
+        help = "Unfreeze player(s).",
+        notify = "{P} unfroze {T}",
+    },
+
+    cloak = {
+        help = "Cloak player(s), making them invisible.",
+        notify = "{P} cloaked {T}",
+    },
+
+    uncloak = {
+        help = "Uncloak player(s), making them visible again.",
+        notify = "{P} uncloaked {T}",
+    },
+
+    strip = {
+        help = "Strip player(s) of their weapons.",
+        notify = "{P} stripped {T} of their weapons",
     },
 
     jail = {
@@ -161,165 +210,113 @@ commands = {
     },
 
     -- User Management Commands
-    grantrole = {
-        identifiers = {
-            "grantrole",
-            "addrole",
-            "giverole",
-            "roleadd",
-            "rolegrant",
-            "rolegive",
-        },
 
+    grantrole = {
         help = "Grant a role to a player.",
         notify = "{P} granted the role {green %role%} to {T} for {green %duration%}",
         permanent = "Permanent", -- this will be used if duration is set to 0
     },
 
     grantroleid = {
-        identifiers = {
-            "grantroleid",
-            "grantroleid64",
-            "grantrolesteamid",
-            "grantrolesteamid64",
-            "addroleid",
-            "addroleid64",
-            "addrolesteamid",
-            "addrolesteamid64",
-            "giveroleid",
-            "giveroleid64",
-            "giverolesteamid",
-            "giverolesteamid64",
-        },
-
         help = "Grant a role to a player by their SteamID/SteamID64.",
         notify = "{P} granted the role {green %role%} to {red %target_steamid64%} for {green %duration%}",
         permanent = "Permanent", -- this will be used if duration is set to 0
     },
 
     revokerole = {
-        identifiers = {
-            "revokerole",
-            "removerole",
-            "takerole",
-            "roleremove",
-            "rolerevoke",
-        },
-
         help = "Revoke a role from a player.",
         notify = "{P} revoked the role {red %role%} from {T}",
     },
 
-    -- Utility Commands
-    maprestart = {
-        identifiers = {
-            "maprestart",
-            "restartmap",
-            "restart"
-        },
+    revokeroleid = {
+        help = "Revoke a role from a player by their SteamID/SteamID64.",
+        notify = "{P} revoked the role {red %role%} from {red %target_steamid64%}",
+    },
 
+    newrole = {
+        help = "Create a new role.",
+        notify = "{P} created a new role: {green %role%}",
+    },
+
+    removerole = {
+        help = "Remove a role.",
+        notify = "{P} removed the role: {red %role%}",
+    },
+
+    renamerole = {
+        help = "Rename a role.",
+        notify = "{P} renamed the role {red %old_role%} to {green %new_role%}",
+    },
+
+    setroleimmunity = {
+        help = "Change the immunity level of a role.",
+        notify = "{P} changed the immunity of {green %role%} to {green %immunity%}",
+    },
+
+    renameroledisplayname = {
+        help = "Change the display name of a role.",
+        notify = "{P} changed the display name of {green %role%} to {green %display_name%}",
+    },
+
+    setrolecolor = {
+        help = "Change the color of a role.",
+        notify = "{P} changed the color of {green %role%} to {green %color%}",
+    },
+
+    grantpermission = {
+        help = "Grant a permission to a role.",
+        notify = "{P} granted the permission {green %permission%} to the role {green %role%}",
+    },
+
+    revokepermission = {
+        help = "Revoke a permission from a role.",
+        notify = "{P} revoked the permission {red %permission%} from the role {green %role%}",
+    },
+
+    -- Utility Commands
+
+    maprestart = {
         help = "Restart the current map.",
         notify = "A map restart has been initiated by {P} and will occur in 10 seconds. Please prepare accordingly."
     },
 
     stopmaprestart = {
-        identifiers = {
-            "stopmaprestart",
-            "stoprestart",
-            "cancelrestart",
-            "cancelmaprestart",
-            "abortrestart",
-        },
-
         help = "Stop the current map restart.",
-
         notify = "The map restart has been stopped by {P}",
         no_restart = "There is no map restart in progress."
     },
 
     mapreset = {
-        identifiers = {
-            "resetmap",
-            "mapreset",
-            "mapclear",
-            "clearmap",
-        },
-
         help = "Reset the current map.",
         notify = "{P} reset the map."
     },
 
     kick = {
-        identifiers = {
-            "kick",
-        },
-
         help = "Kick a player from the server.",
         notify = "{P} kicked {T} for: {red %reason%}",
     },
 
     kickm = {
-        identifiers = {
-            "kickm",
-            "kickmulti",
-            "kickmultiple",
-        },
-
         help = "Kick multiple players from the server.",
         notify = "{P} kicked {T} for: {red %reason%}",
     },
 
     ban = {
-        identifiers = {
-            "ban",
-            "addban",
-        },
-
         help = "Ban a player from the server.",
         notify = "{P} banned {T} for {green %duration%} with reason: {red %reason%}",
     },
 
     banid = {
-        identifiers = {
-            "banid",
-            "banid64",
-            "bansteamid",
-            "bansteamid64",
-            "addbanid",
-            "addbanid64",
-            "addbansteamid",
-            "addbansteamid64",
-        },
-
         help = "Ban a player by their SteamID/SteamID64.",
         notify = "{P} banned {red %target_steamid64%} for {green %duration%} with reason: {red %reason%}",
     },
 
     unban = {
-        identifiers = {
-            "unban",
-            "unbanid",
-            "unbanid64",
-            "unbansteamid",
-            "unbansteamid64",
-            "removeban",
-            "removebanid",
-            "removebanid64",
-            "removebansteamid",
-            "removebansteamid64",
-        },
-
         help = "Unban a player from the server.",
         notify = "{P} unbanned {red %target_steamid64%}",
     },
 
     bot = {
-        identifiers = {
-            "bot",
-            "addbot",
-            "createbot",
-        },
-
         help = "Add a bot to the server.",
         notify = "{P} added {green %amount%} bot(s) to the server.",
     },

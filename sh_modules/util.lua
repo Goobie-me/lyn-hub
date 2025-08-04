@@ -5,10 +5,12 @@ local TimeUtils = lyn.goobie_utils.TimeUtils
 local Net = lyn.goobie_utils.Net
 
 local player = player
+local ipairs = ipairs
 
 Command.SetCategory("Utility")
 
-Command("#maprestart")
+Command("maprestart")
+    :Aliases("restartmap", "restartlevel", "levelrestart")
     :Permission("maprestart")
 
     :Execute(function(ply)
@@ -26,7 +28,8 @@ Command("#maprestart")
     end)
     :Register()
 
-Command("#stopmaprestart")
+Command("stopmaprestart")
+    :Aliases("stoprestart", "cancelrestart", "cancelmaprestart", "abortrestart")
     :Permission("maprestart")
 
     :Execute(function(ply)
@@ -42,7 +45,8 @@ Command("#stopmaprestart")
     end)
     :Register()
 
-Command("#mapreset")
+Command("mapreset")
+    :Aliases("resetmap", "mapclear", "clearmap")
     :Permission("mapreset")
 
     :Execute(function(ply)
@@ -53,12 +57,12 @@ Command("#mapreset")
     end)
     :Register()
 
-Command("#kick")
+Command("kick")
+    :Aliases("kickplayer", "playerkick")
     :Permission("kick", "admin")
 
-    :Param("player", { single_target = true, disable_self_as_default = true })
+    :Param("player", { single_target = true })
     :Param("string", { hint = "reason", default = Language.Get("kicking.default_reason") })
-
     :Execute(function(ply, targets, reason)
         targets[1]:Kick(reason)
 
@@ -70,12 +74,12 @@ Command("#kick")
     end)
     :Register()
 
-Command("#kickm")
+Command("kickm")
+    :Aliases("kickmulti", "kickmultiple", "kickmany")
     :Permission("kickm")
 
-    :Param("player", { disable_self_as_default = true })
+    :Param("player")
     :Param("string", { hint = "reason", default = Language.Get("kicking.default_reason") })
-
     :Execute(function(ply, targets, reason)
         for i = 1, #targets do
             targets[i]:Kick(reason)
@@ -89,15 +93,14 @@ Command("#kickm")
     end)
     :Register()
 
-Command("#ban")
+Command("ban")
+    :Aliases("banplayer", "playerban", "addban")
     :Permission("ban", "admin")
 
-    :Param("player", { single_target = true, disable_self_as_default = true })
+    :Param("player", { single_target = true })
     :Param("duration", { default = 0 })
     :Param("string", { hint = "reason", default = Language.Get("banning.default_reason") })
-
     :GetRestArgs()
-
     :Execute(function(ply, targets, duration, reason)
         local duration_formatted = TimeUtils.FormatDuration(duration)
         lyn.Player.Ban(targets[1], duration, reason, ply:SteamID64(), function(err)
@@ -115,15 +118,14 @@ Command("#ban")
     end)
     :Register()
 
-Command("#banid")
+Command("banid")
+    :Aliases("banid64", "bansteamid", "bansteamid64", "addbanid", "addbanid64", "addbansteamid", "addbansteamid64")
     :Permission("banid", "admin")
 
     :Param("steamid64")
     :Param("duration", { default = 0 })
     :Param("string", { hint = "reason", default = Language.Get("banning.default_reason") })
-
     :GetRestArgs()
-
     :Execute(function(ply, promise, duration, reason)
         local steamid64 = promise.steamid64
         local caller_steamid64 = ply:SteamID64()
@@ -147,11 +149,12 @@ Command("#banid")
     end)
     :Register()
 
-Command("#unban")
+Command("unban")
+    :Aliases("unbanid", "unbanid64", "unbansteamid", "unbansteamid64", "removeban", "removebanid", "removebanid64",
+        "removebansteamid", "removebansteamid64")
     :Permission("unban", "admin")
 
     :Param("steamid64")
-
     :Execute(function(ply, promise)
         local steamid64 = promise.steamid64
         local caller_steamid64 = ply:SteamID64()
@@ -174,11 +177,11 @@ Command("#unban")
     end)
     :Register()
 
-Command("#bot")
+Command("bot")
+    :Aliases("addbot", "spawnbot", "createbot")
     :Permission("bot")
 
     :Param("number", { hint = "amount", floor = true, min = 1, max = game.MaxPlayers(), default = 1 })
-
     :Execute(function(ply, amount)
         for i = 1, amount do
             RunConsoleCommand("bot")
@@ -191,11 +194,9 @@ Command("#bot")
     end)
     :Register()
 
-Command("#help")
+Command("help")
     :Param("string", { hint = "command", optional = true })
-
     :GetRestArgs()
-
     :Execute(function(ply, cmd_name)
         if cmd_name then
             local cmd = Command.Search(cmd_name)
@@ -216,11 +217,10 @@ if CLIENT then
     Net.HookCL("Command.Help", function(cmd_name, matched_identifier)
         if cmd_name then
             Command.SendSyntax({
-                command = Command.Get(cmd_name),
+                cmd = Command.Get(cmd_name),
                 caller = LocalPlayer(),
-                input_args = {},
-                invalid_idxs = {},
-                command_text_match = matched_identifier,
+                parsed_arguments = {},
+                matched_prefix = matched_identifier,
             })
         else
             local commands = Command.GetAll()

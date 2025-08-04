@@ -6,7 +6,8 @@ local Role = lyn.Role
 
 Command.SetCategory("User Management")
 
-Command("#grantrole")
+Command("grantrole")
+    :Aliases("giverole", "rolegrant", "rolegive", "setrole", "adduser", "giverank", "setrank")
     :Permission("grantrole")
 
     :Param("player", { single_target = true })
@@ -18,7 +19,6 @@ Command("#grantrole")
         end
     })
     :Param("duration", { default = 0 })
-
     :Execute(function(ply, targets, role, duration)
         local target = targets[1]
 
@@ -39,7 +39,9 @@ Command("#grantrole")
     end)
     :Register()
 
-Command("#grantroleid")
+Command("grantroleid")
+    :Aliases("grantroleid64", "grantrolesteamid", "grantrolesteamid64", "giveroleid", "giveroleid64", "giverolesteamid",
+        "giverolesteamid64")
     :Permission("grantroleid")
 
     :Param("steamid64")
@@ -51,7 +53,6 @@ Command("#grantroleid")
         end
     })
     :Param("duration", { default = 0 })
-
     :Execute(function(ply, promise, role, duration)
         local steamid64 = promise.steamid64
         promise:Handle(function()
@@ -73,7 +74,8 @@ Command("#grantroleid")
     end)
     :Register()
 
-Command("#revokerole")
+Command("revokerole")
+    :Aliases("takerole", "rolerevoke")
     :Permission("revokerole")
 
     :Param("player", { single_target = true })
@@ -84,7 +86,6 @@ Command("#revokerole")
             return value and Role.Exists(value) and ctx.caller:LynCanTargetRole(value)
         end
     })
-
     :Execute(function(ply, targets, role)
         local target = targets[1]
 
@@ -98,6 +99,298 @@ Command("#revokerole")
                 P = ply,
                 T = targets,
                 role = Role.GetDisplayName(role),
+            })
+        end)
+    end)
+    :Register()
+
+Command("revokeroleid")
+    :Aliases("revokeroleid64", "revokerolesteamid", "revokerolesteamid64", "takeroleid", "takeroleid64",
+        "takerolesteamid", "takerolesteamid64")
+    :Permission("revokeroleid")
+
+    :Param("steamid64")
+    :Param("string", {
+        hint = "role",
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and Role.Exists(value) and ctx.caller:LynCanTargetRole(value)
+        end
+    })
+    :Execute(function(ply, promise, role)
+        local steamid64 = promise.steamid64
+        promise:Handle(function()
+            lyn.Player.RevokeRoleSteamID64(steamid64, role, function(err)
+                if err then
+                    Command.Notify(ply, "#commands.failed_to_run")
+                    return
+                end
+
+                Command.Notify("*", "#commands.revokeroleid.notify", {
+                    P = ply,
+                    target_steamid64 = steamid64,
+                    role = Role.GetDisplayName(role),
+                })
+            end)
+        end)
+    end)
+    :Register()
+
+Command("newrole")
+    :Aliases("createrole", "rolecreate", "rolenew")
+    :Permission("manage_roles")
+
+    :Param("string", {
+        hint = "role",
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and not Role.Exists(value)
+        end
+    })
+    :Param("number", {
+        hint = "immunity",
+    })
+    :Param("string", {
+        hint = "display_name",
+        optional = true,
+    })
+    :Param("string", {
+        hint = "color",
+        optional = true,
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and lyn.Util.Color(value) ~= nil
+        end
+    })
+    :Execute(function(ply, role, immunity, display_name, color)
+        lyn.Role.Create(role, immunity, display_name, color, function(err)
+            if err then
+                Command.Notify(ply, "#commands.failed_to_run")
+                return
+            end
+
+            Command.Notify("*", "#commands.newrole.notify", {
+                P = ply,
+                role = role .. " (" .. Role.GetDisplayName(role) .. ")",
+            })
+        end)
+    end)
+    :Register()
+
+Command("removerole")
+    :Aliases("deleterole", "roledelete", "roleremove")
+    :Permission("manage_roles")
+
+    :Param("string", {
+        hint = "role",
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and Role.Exists(value) and not Role.IsDefault(value)
+        end
+    })
+    :Execute(function(ply, role)
+        local display_name = Role.GetDisplayName(role)
+        lyn.Role.Remove(role, function(err)
+            if err then
+                Command.Notify(ply, "#commands.failed_to_run")
+                return
+            end
+
+            Command.Notify("*", "#commands.removerole.notify", {
+                P = ply,
+                role = role .. " (" .. display_name .. ")",
+            })
+        end)
+    end)
+    :Register()
+
+Command("renamerole")
+    :Aliases("rolerename")
+    :Permission("manage_roles")
+
+    :Param("string", {
+        hint = "role",
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and Role.Exists(value) and not Role.IsDefault(value)
+        end
+    })
+    :Param("string", {
+        hint = "role",
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and not Role.Exists(value)
+        end
+    })
+    :Execute(function(ply, old_role, new_role)
+        local display_name = Role.GetDisplayName(old_role)
+        lyn.Role.Rename(old_role, new_role, function(err)
+            if err then
+                Command.Notify(ply, "#commands.failed_to_run")
+                return
+            end
+
+            Command.Notify("*", "#commands.renamerole.notify", {
+                P = ply,
+                old_role = old_role .. " (" .. display_name .. ")",
+                new_role = new_role,
+            })
+        end)
+    end)
+    :Register()
+
+Command("setroleimmunity")
+    :Aliases("changeroleimmunity")
+    :Permission("manage_roles")
+
+    :Param("string", {
+        hint = "role",
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and Role.Exists(value) and value ~= "superadmin"
+        end
+    })
+    :Param("number", {
+        hint = "immunity",
+        min = Role.MIN_IMMUNITY,
+        max = Role.MAX_IMMUNITY
+    })
+    :Execute(function(ply, role, immunity)
+        lyn.Role.ChangeImmunity(role, immunity, function(err)
+            if err then
+                Command.Notify(ply, "#commands.failed_to_run")
+                return
+            end
+
+            Command.Notify("*", "#commands.setroleimmunity.notify", {
+                P = ply,
+                role = role .. " (" .. Role.GetDisplayName(role) .. ")",
+                immunity = immunity,
+            })
+        end)
+    end)
+    :Register()
+
+Command("renameroledisplayname")
+    :Aliases("setroledisplayname")
+    :Permission("manage_roles")
+
+    :Param("string", {
+        hint = "role",
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and Role.Exists(value)
+        end
+    })
+    :Param("string", {
+        hint = "display_name",
+    })
+    :Execute(function(ply, role, display_name)
+        local old_display_name = Role.GetDisplayName(role)
+        lyn.Role.RenameDisplayName(role, display_name, function(err)
+            if err then
+                Command.Notify(ply, "#commands.failed_to_run")
+                return
+            end
+
+            Command.Notify("*", "#commands.renameroledisplayname.notify", {
+                P = ply,
+                role = role .. " (" .. old_display_name .. ")",
+                display_name = display_name,
+            })
+        end)
+    end)
+    :Register()
+
+Command("setrolecolor")
+    :Aliases("changerolecolor")
+    :Permission("manage_roles")
+
+    :Param("string", {
+        hint = "role",
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and Role.Exists(value)
+        end
+    })
+    :Param("string", {
+        hint = "color",
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and lyn.Util.IsValidHexColor(value)
+        end
+    })
+    :Execute(function(ply, role, color)
+        lyn.Role.SetColor(role, color, function(err)
+            if err then
+                Command.Notify(ply, "#commands.failed_to_run")
+                return
+            end
+
+            Command.Notify("*", "#commands.setrolecolor.notify", {
+                P = ply,
+                role = role .. " (" .. Role.GetDisplayName(role) .. ")",
+                color = color,
+            })
+        end)
+    end)
+    :Register()
+
+Command("grantpermission")
+    :Aliases("addpermission", "rolegrantpermission", "roleaddpermission")
+    :Permission("manage_roles")
+
+    :Param("string", {
+        hint = "role",
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and Role.Exists(value)
+        end
+    })
+    :Param("string", {
+        hint = "permission"
+    })
+    :Execute(function(ply, role, permission)
+        lyn.Role.GrantPermission(role, permission, function(err)
+            if err then
+                Command.Notify(ply, "#commands.failed_to_run")
+                return
+            end
+
+            Command.Notify("*", "#commands.grantpermission.notify", {
+                P = ply,
+                role = role .. " (" .. Role.GetDisplayName(role) .. ")",
+                permission = permission,
+            })
+        end)
+    end)
+    :Register()
+
+Command("revokepermission")
+    :Aliases("removepermission", "roleremovepermission", "roledeletepermission")
+    :Permission("manage_roles")
+
+    :Param("string", {
+        hint = "role",
+        check = function(ctx, input_arg)
+            local value = input_arg.value
+            return value and Role.Exists(value) and value ~= "superadmin"
+        end
+    })
+    :Param("string", {
+        hint = "permission"
+    })
+    :Execute(function(ply, role, permission)
+        lyn.Role.RevokePermission(role, permission, function(err)
+            if err then
+                Command.Notify(ply, "#commands.failed_to_run")
+                return
+            end
+
+            Command.Notify("*", "#commands.revokepermission.notify", {
+                P = ply,
+                role = role .. " (" .. Role.GetDisplayName(role) .. ")",
+                permission = permission,
             })
         end)
     end)
