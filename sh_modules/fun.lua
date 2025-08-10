@@ -226,7 +226,7 @@ Command("uncloak")
 Command("strip")
     :Permission("strip", "admin")
 
-    :Param("player", { default = "^" })
+    :Param("player")
     :Execute(function(ply, targets)
         for _, target in ipairs(targets) do
             target:StripWeapons()

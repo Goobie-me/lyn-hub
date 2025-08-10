@@ -11,11 +11,10 @@ Command("grantrole")
     :Permission("grantrole")
 
     :Param("player", { single_target = true })
-    :Param("string", {
-        hint = "role",
+    :Param("role", {
         check = function(ctx, input_arg)
             local value = input_arg.value
-            return value and Role.Exists(value) and ctx.caller:LynCanTargetRole(value)
+            return value and ctx.caller:LynCanTargetRole(value)
         end
     })
     :Param("duration", { default = 0 })
@@ -45,11 +44,10 @@ Command("grantroleid")
     :Permission("grantroleid")
 
     :Param("steamid64")
-    :Param("string", {
-        hint = "role",
+    :Param("role", {
         check = function(ctx, input_arg)
             local value = input_arg.value
-            return value and Role.Exists(value) and ctx.caller:LynCanTargetRole(value)
+            return value and ctx.caller:LynCanTargetRole(value)
         end
     })
     :Param("duration", { default = 0 })
@@ -79,11 +77,10 @@ Command("revokerole")
     :Permission("revokerole")
 
     :Param("player", { single_target = true })
-    :Param("string", {
-        hint = "role",
+    :Param("role", {
         check = function(ctx, input_arg)
             local value = input_arg.value
-            return value and Role.Exists(value) and ctx.caller:LynCanTargetRole(value)
+            return value and ctx.caller:LynCanTargetRole(value)
         end
     })
     :Execute(function(ply, targets, role)
@@ -110,11 +107,10 @@ Command("revokeroleid")
     :Permission("revokeroleid")
 
     :Param("steamid64")
-    :Param("string", {
-        hint = "role",
+    :Param("role", {
         check = function(ctx, input_arg)
             local value = input_arg.value
-            return value and Role.Exists(value) and ctx.caller:LynCanTargetRole(value)
+            return value and ctx.caller:LynCanTargetRole(value)
         end
     })
     :Execute(function(ply, promise, role)
@@ -159,7 +155,7 @@ Command("newrole")
         optional = true,
         check = function(ctx, input_arg)
             local value = input_arg.value
-            return value and lyn.Util.Color(value) ~= nil
+            return not value or lyn.Util.Color(value) ~= nil
         end
     })
     :Execute(function(ply, role, immunity, display_name, color)
@@ -181,11 +177,10 @@ Command("removerole")
     :Aliases("deleterole", "roledelete", "roleremove")
     :Permission("manage_roles")
 
-    :Param("string", {
-        hint = "role",
+    :Param("role", {
         check = function(ctx, input_arg)
             local value = input_arg.value
-            return value and Role.Exists(value) and not Role.IsDefault(value)
+            return value and not Role.IsDefault(value)
         end
     })
     :Execute(function(ply, role)
@@ -208,11 +203,10 @@ Command("renamerole")
     :Aliases("rolerename")
     :Permission("manage_roles")
 
-    :Param("string", {
-        hint = "role",
+    :Param("role", {
         check = function(ctx, input_arg)
             local value = input_arg.value
-            return value and Role.Exists(value) and not Role.IsDefault(value)
+            return value and not Role.IsDefault(value)
         end
     })
     :Param("string", {
@@ -243,11 +237,10 @@ Command("setroleimmunity")
     :Aliases("changeroleimmunity")
     :Permission("manage_roles")
 
-    :Param("string", {
-        hint = "role",
+    :Param("role", {
         check = function(ctx, input_arg)
             local value = input_arg.value
-            return value and Role.Exists(value) and value ~= "superadmin"
+            return value and value ~= "superadmin"
         end
     })
     :Param("number", {
@@ -271,29 +264,23 @@ Command("setroleimmunity")
     end)
     :Register()
 
-Command("renameroledisplayname")
-    :Aliases("setroledisplayname")
+Command("setroledisplayname")
+    :Aliases("changeroledisplayname")
     :Permission("manage_roles")
 
-    :Param("string", {
-        hint = "role",
-        check = function(ctx, input_arg)
-            local value = input_arg.value
-            return value and Role.Exists(value)
-        end
-    })
+    :Param("role")
     :Param("string", {
         hint = "display_name",
     })
     :Execute(function(ply, role, display_name)
         local old_display_name = Role.GetDisplayName(role)
-        lyn.Role.RenameDisplayName(role, display_name, function(err)
+        lyn.Role.SetDisplayName(role, display_name, function(err)
             if err then
                 Command.Notify(ply, "#commands.failed_to_run")
                 return
             end
 
-            Command.Notify("*", "#commands.renameroledisplayname.notify", {
+            Command.Notify("*", "#commands.setroledisplayname.notify", {
                 P = ply,
                 role = role .. " (" .. old_display_name .. ")",
                 display_name = display_name,
@@ -306,13 +293,7 @@ Command("setrolecolor")
     :Aliases("changerolecolor")
     :Permission("manage_roles")
 
-    :Param("string", {
-        hint = "role",
-        check = function(ctx, input_arg)
-            local value = input_arg.value
-            return value and Role.Exists(value)
-        end
-    })
+    :Param("role")
     :Param("string", {
         hint = "color",
         check = function(ctx, input_arg)
@@ -336,17 +317,11 @@ Command("setrolecolor")
     end)
     :Register()
 
-Command("grantpermission")
-    :Aliases("addpermission", "rolegrantpermission", "roleaddpermission")
+Command("rolegrantpermission")
+    :Aliases("grantrolepermission", "roleaddpermission", "roleaddperm")
     :Permission("manage_roles")
 
-    :Param("string", {
-        hint = "role",
-        check = function(ctx, input_arg)
-            local value = input_arg.value
-            return value and Role.Exists(value)
-        end
-    })
+    :Param("role")
     :Param("string", {
         hint = "permission"
     })
@@ -357,7 +332,7 @@ Command("grantpermission")
                 return
             end
 
-            Command.Notify("*", "#commands.grantpermission.notify", {
+            Command.Notify("*", "#commands.rolegrantpermission.notify", {
                 P = ply,
                 role = role .. " (" .. Role.GetDisplayName(role) .. ")",
                 permission = permission,
@@ -366,15 +341,14 @@ Command("grantpermission")
     end)
     :Register()
 
-Command("revokepermission")
-    :Aliases("removepermission", "roleremovepermission", "roledeletepermission")
+Command("rolerevokepermission")
+    :Aliases("revokerolepermission", "roleremovepermission", "roledeletepermission", "roleremoveperm")
     :Permission("manage_roles")
 
-    :Param("string", {
-        hint = "role",
+    :Param("role", {
         check = function(ctx, input_arg)
             local value = input_arg.value
-            return value and Role.Exists(value) and value ~= "superadmin"
+            return value and value ~= "superadmin"
         end
     })
     :Param("string", {
@@ -387,7 +361,7 @@ Command("revokepermission")
                 return
             end
 
-            Command.Notify("*", "#commands.revokepermission.notify", {
+            Command.Notify("*", "#commands.rolerevokepermission.notify", {
                 P = ply,
                 role = role .. " (" .. Role.GetDisplayName(role) .. ")",
                 permission = permission,

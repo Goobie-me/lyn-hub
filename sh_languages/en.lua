@@ -47,10 +47,10 @@ banning = {
     default_reason = "unspecified",
 
     immunity_error =
-    "You cannot modify this player's ban because they were banned by someone with higher immunity than you.",
+    "You cannot modify this player's ban because it was issued by someone with higher immunity than you.",
 
     unban_immunity_error =
-    "You cannot unban this player because they were banned by someone with higher immunity than you.",
+    "You cannot unban this player because their ban was issued by someone with higher immunity than you.",
     unban_no_active_ban = "The user is not currently banned.",
 
     -- %reason% - The reason the player was banned.
@@ -114,6 +114,8 @@ commands = {
 
         -- This is used when there are players but he can't target any of them. (higher roles, not-authed yet, etc.)
         no_valid_targets = "No valid targets found.",
+
+        role_does_not_exist = "The role {red %role%} does not exist.",
     },
 
     exclusive_error = "Cannot run this command on {T} - {red %reason%} is currently active.",
@@ -143,7 +145,7 @@ commands = {
 
     hp = {
         help = "Set the health of player(s).",
-        notify = "{P} set the hp of {T} to {green %amount%}",
+        notify = "{P} set the HP of {T} to {green %amount%}",
     },
 
     armor = {
@@ -209,6 +211,11 @@ commands = {
         help = "Send a private message to a player.",
     },
 
+    respawn = {
+        help = "Respawn a player.",
+        notify = "{P} respawned {T}",
+    },
+
     -- User Management Commands
 
     grantrole = {
@@ -253,7 +260,7 @@ commands = {
         notify = "{P} changed the immunity of {green %role%} to {green %immunity%}",
     },
 
-    renameroledisplayname = {
+    setroledisplayname = {
         help = "Change the display name of a role.",
         notify = "{P} changed the display name of {green %role%} to {green %display_name%}",
     },
@@ -263,12 +270,12 @@ commands = {
         notify = "{P} changed the color of {green %role%} to {green %color%}",
     },
 
-    grantpermission = {
+    rolegrantpermission = {
         help = "Grant a permission to a role.",
         notify = "{P} granted the permission {green %permission%} to the role {green %role%}",
     },
 
-    revokepermission = {
+    rolerevokepermission = {
         help = "Revoke a permission from a role.",
         notify = "{P} revoked the permission {red %permission%} from the role {green %role%}",
     },
@@ -277,28 +284,29 @@ commands = {
 
     maprestart = {
         help = "Restart the current map.",
-        notify = "A map restart has been initiated by {P} and will occur in 10 seconds. Please prepare accordingly."
+        notify =
+        "A map restart has been initiated by {P} and will occur in {green %duration%}. Please prepare accordingly."
     },
 
     stopmaprestart = {
         help = "Stop the current map restart.",
         notify = "The map restart has been stopped by {P}",
-        no_restart = "There is no map restart in progress."
+        no_restart = "There is no map restart in progress"
     },
 
     mapreset = {
         help = "Reset the current map.",
-        notify = "{P} reset the map."
+        notify = "{P} performed a map reset"
     },
 
     kick = {
         help = "Kick a player from the server.",
-        notify = "{P} kicked {T} for: {red %reason%}",
+        notify = "{P} kicked {T} for {red %reason%}",
     },
 
     kickm = {
         help = "Kick multiple players from the server.",
-        notify = "{P} kicked {T} for: {red %reason%}",
+        notify = "{P} kicked {T} for {red %reason%}",
     },
 
     ban = {
@@ -318,6 +326,6 @@ commands = {
 
     bot = {
         help = "Add a bot to the server.",
-        notify = "{P} added {green %amount%} bot(s) to the server.",
+        notify = "{P} added {green %amount%} bot(s) to the server",
     },
 }

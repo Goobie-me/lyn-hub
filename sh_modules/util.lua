@@ -13,17 +13,22 @@ Command("maprestart")
     :Aliases("restartmap", "restartlevel", "levelrestart")
     :Permission("maprestart")
 
-    :Execute(function(ply)
+    :Param("duration", {
+        default = 10,
+    })
+
+    :Execute(function(ply, duration)
         if #player.GetHumans() == 0 then
             game.ConsoleCommand("changelevel " .. game.GetMap() .. "\n")
         else
-            timer.Create("Lyn.Command.MapRestart", 10, 1, function()
+            timer.Create("Lyn.Command.MapRestart", duration, 1, function()
                 RunConsoleCommand("changelevel", game.GetMap())
             end)
         end
 
         Command.Notify("*", "#commands.maprestart.notify", {
             P = ply,
+            duration = TimeUtils.FormatDuration(duration),
         })
     end)
     :Register()
@@ -63,6 +68,7 @@ Command("kick")
 
     :Param("player", { single_target = true })
     :Param("string", { hint = "reason", default = Language.Get("kicking.default_reason") })
+    :GetRestArgs()
     :Execute(function(ply, targets, reason)
         targets[1]:Kick(reason)
 
@@ -80,6 +86,7 @@ Command("kickm")
 
     :Param("player")
     :Param("string", { hint = "reason", default = Language.Get("kicking.default_reason") })
+    :GetRestArgs()
     :Execute(function(ply, targets, reason)
         for i = 1, #targets do
             targets[i]:Kick(reason)
