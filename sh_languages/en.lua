@@ -1,3 +1,5 @@
+---@diagnostic disable: lowercase-global
+
 -- You don't have access to _G, only Color function for now, I can add more if needed.
 
 -- All Targets, You, Yourself, Everyone, Unknown, Console get prepended with a white "*"
@@ -39,13 +41,10 @@ themes = {
     light = "Light",
 }
 
-kicking = {
-    default_reason = "unspecified"
-}
+-- Used as default "reason" for most commands, eg. ban, kick, mute ...etc
+unspecified = "unspecified"
 
 banning = {
-    default_reason = "unspecified",
-
     immunity_error =
     "You cannot modify this player's ban because it was issued by someone with higher immunity than you.",
 
@@ -134,11 +133,54 @@ commands = {
         immunity = "immunity",
         display_name = "display name",
         color = "color",
+        message = "message",
     },
 
     help = {
         help = "Display a list of available commands or get help for a specific command.",
         no_command = "No command found with the name {red %command%}",
+    },
+
+    -- Chat
+
+    pm = {
+        help = "Send a private message to a player.",
+
+        to = "{gold PM} to {T}: {green %message%}",
+        from = "{gold PM} from {P}: {green %message%}",
+    },
+
+    asay = {
+        help = "Send a message to admin chat.",
+
+        notify = "[{lightred Admins}] {P}: %message%",
+        notify_no_access = "{P} to {lightred Admins}: {red %message%}",
+    },
+
+    speakas = {
+        help = "Send a message as another player.",
+    },
+
+    mute = {
+        help = "Mute a player(s).",
+        notify = "{P} muted {T} for {green %duration%} with reason {red %reason%}",
+
+        notify_muted = "You are muted for {green %duration%} with reason {red %reason%}"
+    },
+
+    unmute = {
+        help = "Unmute a player(s).",
+        notify = "{P} unmuted {T}",
+    },
+
+    gag = {
+        help = "Gag a player(s).",
+        notify = "{P} gagged {T} for {green %duration%} with reason {red %reason%}",
+    },
+
+    ungag = {
+        help = "Ungag a player(s).",
+        notify = "{P} ungagged {T}",
     },
 
     -- Fun Commands
@@ -151,6 +193,13 @@ commands = {
     armor = {
         help = "Set the armor of player(s).",
         notify = "{P} set the armor of {T} to {green %amount%}",
+    },
+
+    slap = {
+        help = "Slap a player(s), causing them to take damage.",
+
+        notify = "{P} slapped {T}",
+        notify_damage = "{P} slapped {T} for {green %damage%} damage",
     },
 
     slay = {
@@ -203,12 +252,28 @@ commands = {
         notify = "{P} stripped {T} of their weapons",
     },
 
-    jail = {
-
+    setmodel = {
+        help = "Set the model of player(s).",
+        notify = "{P} set the model of {T} to {green %model%}",
     },
 
-    pm = {
-        help = "Send a private message to a player.",
+    giveammo = {
+        help = "Give ammunition to player(s).",
+        notify = "{P} gave {T} {green %amount%} ammo",
+    },
+
+    scale = {
+        help = "Scale player(s) to a specific size.",
+        notify = "{P} scaled {T} to {green %amount%}",
+    },
+
+    freezeprops = {
+        help = "Freeze props in the world.",
+        notify = "{P} froze all props",
+    },
+
+    jail = {
+
     },
 
     respawn = {
@@ -311,12 +376,12 @@ commands = {
 
     ban = {
         help = "Ban a player from the server.",
-        notify = "{P} banned {T} for {green %duration%} with reason: {red %reason%}",
+        notify = "{P} banned {T} for {green %duration%} with reason {red %reason%}",
     },
 
     banid = {
         help = "Ban a player by their SteamID/SteamID64.",
-        notify = "{P} banned {red %target_steamid64%} for {green %duration%} with reason: {red %reason%}",
+        notify = "{P} banned {red %target_steamid64%} for {green %duration%} with reason {red %reason%}",
     },
 
     unban = {

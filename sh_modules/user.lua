@@ -14,7 +14,7 @@ Command("grantrole")
     :Param("role", {
         check = function(ctx, input_arg)
             local value = input_arg.value
-            return value and ctx.caller:LynCanTargetRole(value)
+            return value and ctx.caller:CanTargetRole(value)
         end
     })
     :Param("duration", { default = 0 })
@@ -24,7 +24,7 @@ Command("grantrole")
         local duration_formatted = TimeUtils.FormatDuration(duration)
         lyn.Player.GrantRole(target, role, duration, function(err)
             if err then
-                Command.Notify(ply, "#commands.failed_to_run")
+                ply:LynSendFmtText("#commands.failed_to_run")
                 return
             end
 
@@ -40,14 +40,14 @@ Command("grantrole")
 
 Command("grantroleid")
     :Aliases("grantroleid64", "grantrolesteamid", "grantrolesteamid64", "giveroleid", "giveroleid64", "giverolesteamid",
-        "giverolesteamid64")
+        "giverolesteamid64", "adduserid")
     :Permission("grantroleid")
 
     :Param("steamid64")
     :Param("role", {
         check = function(ctx, input_arg)
             local value = input_arg.value
-            return value and ctx.caller:LynCanTargetRole(value)
+            return value and ctx.caller:CanTargetRole(value)
         end
     })
     :Param("duration", { default = 0 })
@@ -57,7 +57,7 @@ Command("grantroleid")
             local duration_formatted = TimeUtils.FormatDuration(duration)
             lyn.Player.GrantRoleSteamID64(steamid64, role, duration, function(err)
                 if err then
-                    Command.Notify(ply, "#commands.failed_to_run")
+                    ply:LynSendFmtText("#commands.failed_to_run")
                     return
                 end
 
@@ -80,7 +80,7 @@ Command("revokerole")
     :Param("role", {
         check = function(ctx, input_arg)
             local value = input_arg.value
-            return value and ctx.caller:LynCanTargetRole(value)
+            return value and ctx.caller:CanTargetRole(value)
         end
     })
     :Execute(function(ply, targets, role)
@@ -88,7 +88,7 @@ Command("revokerole")
 
         lyn.Player.RevokeRole(target, role, function(err)
             if err then
-                Command.Notify(ply, "#commands.failed_to_run")
+                ply:LynSendFmtText("#commands.failed_to_run")
                 return
             end
 
@@ -110,7 +110,7 @@ Command("revokeroleid")
     :Param("role", {
         check = function(ctx, input_arg)
             local value = input_arg.value
-            return value and ctx.caller:LynCanTargetRole(value)
+            return value and ctx.caller:CanTargetRole(value)
         end
     })
     :Execute(function(ply, promise, role)
@@ -118,7 +118,7 @@ Command("revokeroleid")
         promise:Handle(function()
             lyn.Player.RevokeRoleSteamID64(steamid64, role, function(err)
                 if err then
-                    Command.Notify(ply, "#commands.failed_to_run")
+                    ply:LynSendFmtText("#commands.failed_to_run")
                     return
                 end
 
@@ -161,7 +161,7 @@ Command("newrole")
     :Execute(function(ply, role, immunity, display_name, color)
         lyn.Role.Create(role, immunity, display_name, color, function(err)
             if err then
-                Command.Notify(ply, "#commands.failed_to_run")
+                ply:LynSendFmtText("#commands.failed_to_run")
                 return
             end
 
@@ -187,7 +187,7 @@ Command("removerole")
         local display_name = Role.GetDisplayName(role)
         lyn.Role.Remove(role, function(err)
             if err then
-                Command.Notify(ply, "#commands.failed_to_run")
+                ply:LynSendFmtText("#commands.failed_to_run")
                 return
             end
 
@@ -220,7 +220,7 @@ Command("renamerole")
         local display_name = Role.GetDisplayName(old_role)
         lyn.Role.Rename(old_role, new_role, function(err)
             if err then
-                Command.Notify(ply, "#commands.failed_to_run")
+                ply:LynSendFmtText("#commands.failed_to_run")
                 return
             end
 
@@ -251,7 +251,7 @@ Command("setroleimmunity")
     :Execute(function(ply, role, immunity)
         lyn.Role.ChangeImmunity(role, immunity, function(err)
             if err then
-                Command.Notify(ply, "#commands.failed_to_run")
+                ply:LynSendFmtText("#commands.failed_to_run")
                 return
             end
 
@@ -276,7 +276,7 @@ Command("setroledisplayname")
         local old_display_name = Role.GetDisplayName(role)
         lyn.Role.SetDisplayName(role, display_name, function(err)
             if err then
-                Command.Notify(ply, "#commands.failed_to_run")
+                ply:LynSendFmtText("#commands.failed_to_run")
                 return
             end
 
@@ -304,7 +304,7 @@ Command("setrolecolor")
     :Execute(function(ply, role, color)
         lyn.Role.SetColor(role, color, function(err)
             if err then
-                Command.Notify(ply, "#commands.failed_to_run")
+                ply:LynSendFmtText("#commands.failed_to_run")
                 return
             end
 
@@ -318,7 +318,7 @@ Command("setrolecolor")
     :Register()
 
 Command("rolegrantpermission")
-    :Aliases("grantrolepermission", "roleaddpermission", "roleaddperm")
+    :Aliases("grantrolepermission", "roleaddpermission", "roleaddperm", "giverolepermission", "addrolepermission")
     :Permission("manage_roles")
 
     :Param("role")
@@ -328,7 +328,7 @@ Command("rolegrantpermission")
     :Execute(function(ply, role, permission)
         lyn.Role.GrantPermission(role, permission, function(err)
             if err then
-                Command.Notify(ply, "#commands.failed_to_run")
+                ply:LynSendFmtText("#commands.failed_to_run")
                 return
             end
 
@@ -342,7 +342,8 @@ Command("rolegrantpermission")
     :Register()
 
 Command("rolerevokepermission")
-    :Aliases("revokerolepermission", "roleremovepermission", "roledeletepermission", "roleremoveperm")
+    :Aliases("revokerolepermission", "roleremovepermission", "roledeletepermission", "roleremoveperm",
+        "takerolepermission")
     :Permission("manage_roles")
 
     :Param("role", {
@@ -357,7 +358,7 @@ Command("rolerevokepermission")
     :Execute(function(ply, role, permission)
         lyn.Role.RevokePermission(role, permission, function(err)
             if err then
-                Command.Notify(ply, "#commands.failed_to_run")
+                ply:LynSendFmtText("#commands.failed_to_run")
                 return
             end
 

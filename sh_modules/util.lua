@@ -39,7 +39,7 @@ Command("stopmaprestart")
 
     :Execute(function(ply)
         if not timer.Exists("Lyn.Command.MapRestart") then
-            Command.Notify(ply, "#commands.stopmaprestart.no_restart")
+            ply:LynSendFmtText("#commands.stopmaprestart.no_restart")
             return
         end
 
@@ -67,7 +67,7 @@ Command("kick")
     :Permission("kick", "admin")
 
     :Param("player", { single_target = true })
-    :Param("string", { hint = "reason", default = Language.Get("kicking.default_reason") })
+    :Param("string", { hint = "reason", default = Language.Get("unspecified") })
     :GetRestArgs()
     :Execute(function(ply, targets, reason)
         targets[1]:Kick(reason)
@@ -85,11 +85,11 @@ Command("kickm")
     :Permission("kickm")
 
     :Param("player")
-    :Param("string", { hint = "reason", default = Language.Get("kicking.default_reason") })
+    :Param("string", { hint = "reason", default = Language.Get("unspecified") })
     :GetRestArgs()
     :Execute(function(ply, targets, reason)
-        for i = 1, #targets do
-            targets[i]:Kick(reason)
+        for _, target in ipairs(targets) do
+            target:Kick(reason)
         end
 
         Command.Notify("*", "#commands.kickm.notify", {
@@ -106,13 +106,13 @@ Command("ban")
 
     :Param("player", { single_target = true })
     :Param("duration", { default = 0 })
-    :Param("string", { hint = "reason", default = Language.Get("banning.default_reason") })
+    :Param("string", { hint = "reason", default = Language.Get("unspecified") })
     :GetRestArgs()
     :Execute(function(ply, targets, duration, reason)
         local duration_formatted = TimeUtils.FormatDuration(duration)
         lyn.Player.Ban(targets[1], duration, reason, ply:SteamID64(), function(err)
             if err then -- db error
-                Command.Notify(ply, "#commands.failed_to_run")
+                ply:LynSendFmtText("#commands.failed_to_run")
                 return
             end
             Command.Notify("*", "#commands.ban.notify", {
@@ -131,7 +131,7 @@ Command("banid")
 
     :Param("steamid64")
     :Param("duration", { default = 0 })
-    :Param("string", { hint = "reason", default = Language.Get("banning.default_reason") })
+    :Param("string", { hint = "reason", default = Language.Get("unspecified") })
     :GetRestArgs()
     :Execute(function(ply, promise, duration, reason)
         local steamid64 = promise.steamid64
@@ -140,9 +140,9 @@ Command("banid")
             local duration_formatted = TimeUtils.FormatDuration(duration)
             lyn.Player.BanSteamID64(steamid64, duration, reason, caller_steamid64, function(err2, immunity_error)
                 if err2 then -- db error
-                    Command.Notify(ply, "#commands.failed_to_run")
+                    ply:LynSendFmtText("#commands.failed_to_run")
                 elseif immunity_error then
-                    Command.Notify(ply, "#banning.immunity_error")
+                    ply:LynSendFmtText("#banning.immunity_error")
                 else
                     Command.Notify("*", "#commands.banid.notify", {
                         P = ply,
@@ -168,11 +168,11 @@ Command("unban")
         promise:Handle(function()
             lyn.Player.Unban(steamid64, caller_steamid64, function(err2, no_active_ban, immunity_error)
                 if err2 then -- db error
-                    Command.Notify(ply, "#commands.failed_to_run")
+                    ply:LynSendFmtText("#commands.failed_to_run")
                 elseif no_active_ban then
-                    Command.Notify(ply, "#banning.unban_no_active_ban")
+                    ply:LynSendFmtText("#banning.unban_no_active_ban")
                 elseif immunity_error then
-                    Command.Notify(ply, "#banning.unban_immunity_error")
+                    ply:LynSendFmtText("#banning.unban_immunity_error")
                 else
                     Command.Notify("*", "#commands.unban.notify", {
                         P = ply,
@@ -207,8 +207,8 @@ Command("help")
     :Execute(function(ply, cmd_name)
         if cmd_name then
             local cmd = Command.Search(cmd_name)
-            if not cmd or (cmd:GetPermissionName() and not ply:LynHasPermission(cmd:GetPermissionName())) then
-                Command.Notify(ply, "#commands.help.no_command", {
+            if not cmd or (cmd:GetPermissionName() and not ply:HasPermission(cmd:GetPermissionName())) then
+                ply:LynSendFmtText("#commands.help.no_command", {
                     command = cmd_name
                 })
                 return
@@ -232,7 +232,7 @@ if CLIENT then
         else
             local commands = Command.GetAll()
             for _, cmd in pairs(commands) do
-                if not cmd:GetPermissionName() or LocalPlayer():LynHasPermission(cmd:GetPermissionName()) then
+                if not cmd:GetPermissionName() or LocalPlayer():HasPermission(cmd:GetPermissionName()) then
                     if cmd.help then
                         lyn.Player.SendText(cmd.chat_prefix .. cmd.name .. " - " .. cmd.help)
                     else

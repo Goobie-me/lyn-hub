@@ -44,6 +44,50 @@ Command("armor")
     end)
     :Register()
 
+do
+    local sounds = {}
+    for i = 1, 6 do
+        sounds[i] = "physics/body/body_medium_impact_hard" .. i .. ".wav"
+    end
+
+    local function slap(ply, damage, admin)
+        if not ply:Alive() or ply:LynGetSharedVar("frozen") then return end
+        ply:ExitVehicle()
+
+        ply:SetVelocity(Vector(math.random(-100, 100), math.random(-100, 100), math.random(200, 400)))
+        ply:EmitSound(sounds[math.random(1, 6)], 60, math.random(80, 120))
+
+        if damage > 0 then
+            ply:TakeDamage(damage, admin, DMG_GENERIC)
+        end
+    end
+
+    Command("slap")
+        :Permission("slap", "admin")
+
+        :Param("player")
+        :Param("number", { hint = "damage", round = true, min = 0, default = 0 })
+        :Execute(function(ply, targets, damage)
+            for _, target in ipairs(targets) do
+                slap(target, damage, ply)
+            end
+
+            if damage > 0 then
+                Command.Notify("*", "#commands.slap.notify_damage", {
+                    P = ply,
+                    T = targets,
+                    damage = damage,
+                })
+            else
+                Command.Notify("*", "#commands.slap.notify", {
+                    P = ply,
+                    T = targets,
+                })
+            end
+        end)
+        :Register()
+end
+
 Command("slay")
     :Aliases("kill", "slayplayer", "killplayer")
     :Permission("slay", "admin")
@@ -251,6 +295,103 @@ Command("respawn")
         Command.Notify("*", "#commands.respawn.notify", {
             P = ply,
             T = targets,
+        })
+    end)
+    :Register()
+
+Command("setmodel")
+    :Permission("setmodel")
+
+    :Param("player")
+    :Param("string", { hint = "model", default = "models/props_c17/oildrum001.mdl" })
+    :Execute(function(ply, targets, model)
+        for _, target in ipairs(targets) do
+            target:SetModel(model)
+        end
+
+        Command.Notify("*", "#commands.setmodel.notify", {
+            P = ply,
+            T = targets,
+            model = model,
+        })
+    end)
+    :Register()
+
+Command("giveammo")
+    :Aliases("setammo", "setammunition", "ammo")
+    :Permission("giveammo")
+
+    :Param("player", { default = "^" })
+    :Param("number", { hint = "amount", min = 0, max = 99999, default = 100, round = true })
+    :Execute(function(ply, targets, amount)
+        for _, target in ipairs(targets) do
+            for _, wep in ipairs(target:GetWeapons()) do
+                if wep:GetPrimaryAmmoType() ~= -1 then
+                    target:GiveAmmo(amount, wep:GetPrimaryAmmoType(), true)
+                end
+
+                if wep:GetSecondaryAmmoType() ~= -1 then
+                    target:GiveAmmo(amount, wep:GetSecondaryAmmoType(), true)
+                end
+            end
+        end
+
+        Command.Notify("*", "#commands.giveammo.notify", {
+            P = ply,
+            T = targets,
+            amount = amount,
+        })
+    end)
+    :Register()
+
+-- scale
+Command("scale")
+    :Permission("scale")
+
+    :Param("player")
+    :Param("number", { hint = "amount", min = 0, max = 2.5, default = 1 })
+    :Execute(function(ply, targets, amount)
+        for _, target in ipairs(targets) do
+            target:SetModelScale(amount)
+
+            -- https://github.com/carz1175/More-ULX-Commands/blob/9b142ee4247a84f16e2dc2ec71c879ab76e145d4/lua/ulx/modules/sh/extended.lua#L313
+            target:SetViewOffset(Vector(0, 0, 64 * amount))
+            target:SetViewOffsetDucked(Vector(0, 0, 28 * amount))
+
+            target:LynSetVar("was_scaled", true)
+        end
+
+        Command.Notify("*", "#commands.scale.notify", {
+            P = ply,
+            T = targets,
+            amount = amount,
+        })
+    end)
+    :Register()
+
+if SERVER then
+    hook.Add("PlayerSpawn", "Lyn.Scale", function(ply)
+        if lyn.Player.GetVar(ply, "was_scaled") then
+            ply:LynSetVar("was_scaled", nil)
+            ply:SetViewOffset(Vector(0, 0, 64))
+            ply:SetViewOffsetDucked(Vector(0, 0, 28))
+        end
+    end)
+end
+--
+
+Command("freezeprops")
+    :Permission("freezeprops", "admin")
+    :Execute(function(ply)
+        for _, prop in ipairs(ents.FindByClass("prop_physics")) do
+            local physics_obj = prop:GetPhysicsObject()
+            if IsValid(physics_obj) then
+                physics_obj:EnableMotion(false)
+            end
+        end
+
+        Command.Notify("*", "#commands.freezeprops.notify", {
+            P = ply,
         })
     end)
     :Register()
