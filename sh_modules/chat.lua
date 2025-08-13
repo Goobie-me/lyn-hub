@@ -13,8 +13,8 @@ Command("pm")
     :Param("player", { single_target = true, allow_higher_target = true, cant_target_self = true })
     :Param("string", {
         hint = "message",
-        check = function(_, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return value and value:match("%S") ~= nil
         end
     })
@@ -47,8 +47,8 @@ Command("asay")
 
     :Param("string", {
         hint = "message",
-        check = function(_, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return value and value:match("%S") ~= nil
         end
     })
@@ -240,8 +240,8 @@ Command("speakas")
     :Param("player", { single_target = true, cant_target_self = true })
     :Param("string", {
         hint = "message",
-        check = function(_, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return value and value:match("%S") ~= nil
         end
     })

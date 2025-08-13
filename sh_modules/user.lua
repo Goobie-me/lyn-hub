@@ -12,8 +12,8 @@ Command("grantrole")
 
     :Param("player", { single_target = true })
     :Param("role", {
-        check = function(ctx, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return value and ctx.caller:CanTargetRole(value)
         end
     })
@@ -45,8 +45,8 @@ Command("grantroleid")
 
     :Param("steamid64")
     :Param("role", {
-        check = function(ctx, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return value and ctx.caller:CanTargetRole(value)
         end
     })
@@ -78,8 +78,8 @@ Command("revokerole")
 
     :Param("player", { single_target = true })
     :Param("role", {
-        check = function(ctx, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return value and ctx.caller:CanTargetRole(value)
         end
     })
@@ -108,8 +108,8 @@ Command("revokeroleid")
 
     :Param("steamid64")
     :Param("role", {
-        check = function(ctx, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return value and ctx.caller:CanTargetRole(value)
         end
     })
@@ -138,8 +138,8 @@ Command("newrole")
 
     :Param("string", {
         hint = "role",
-        check = function(ctx, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return value and not Role.Exists(value)
         end
     })
@@ -153,8 +153,8 @@ Command("newrole")
     :Param("string", {
         hint = "color",
         optional = true,
-        check = function(ctx, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return not value or lyn.Util.Color(value) ~= nil
         end
     })
@@ -178,8 +178,8 @@ Command("removerole")
     :Permission("manage_roles")
 
     :Param("role", {
-        check = function(ctx, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return value and not Role.IsDefault(value)
         end
     })
@@ -204,15 +204,15 @@ Command("renamerole")
     :Permission("manage_roles")
 
     :Param("role", {
-        check = function(ctx, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return value and not Role.IsDefault(value)
         end
     })
     :Param("string", {
         hint = "role",
-        check = function(ctx, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return value and not Role.Exists(value)
         end
     })
@@ -238,8 +238,8 @@ Command("setroleimmunity")
     :Permission("manage_roles")
 
     :Param("role", {
-        check = function(ctx, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return value and value ~= "superadmin"
         end
     })
@@ -296,8 +296,8 @@ Command("setrolecolor")
     :Param("role")
     :Param("string", {
         hint = "color",
-        check = function(ctx, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return value and lyn.Util.IsValidHexColor(value)
         end
     })
@@ -347,8 +347,8 @@ Command("rolerevokepermission")
     :Permission("manage_roles")
 
     :Param("role", {
-        check = function(ctx, input_arg)
-            local value = input_arg.value
+        check = function(ctx)
+            local value = ctx.value
             return value and value ~= "superadmin"
         end
     })
