@@ -3,6 +3,7 @@ local Command = lyn.Command
 local TimeUtils = lyn.goobie_utils.TimeUtils
 
 local ipairs = ipairs
+local type = type
 
 Command.SetCategory("Fun")
 
@@ -40,6 +41,24 @@ Command("armor")
             P = ply,
             T = targets,
             amount = amount,
+        })
+    end)
+    :Register()
+
+Command("give")
+    :Permission("give")
+
+    :Param("player", { default = "^" })
+    :Param("string", { hint = "weapon/entity" })
+    :Execute(function(ply, targets, class)
+        for _, target in ipairs(targets) do
+            target:Give(class)
+        end
+
+        Command.Notify("*", "#commands.give.notify", {
+            P = ply,
+            T = targets,
+            class = class,
         })
     end)
     :Register()
@@ -182,6 +201,49 @@ Command("ungod")
         })
     end)
     :Register()
+
+do
+    Command("buddha")
+        :Permission("buddha", "admin")
+
+        :Param("player", { default = "^" })
+        :Execute(function(ply, targets)
+            for _, target in ipairs(targets) do
+                target:LynSetVar("buddha", true)
+            end
+
+            Command.Notify("*", "#commands.buddha.notify", {
+                P = ply,
+                T = targets,
+            })
+        end)
+        :Register()
+
+    Command("unbuddha")
+        :Permission("buddha", "admin")
+
+        :Param("player", { default = "^" })
+        :Execute(function(ply, targets)
+            for _, target in ipairs(targets) do
+                target:LynSetVar("buddha", nil)
+            end
+
+            Command.Notify("*", "#commands.unbuddha.notify", {
+                P = ply,
+                T = targets,
+            })
+        end)
+        :Register()
+
+    if SERVER then
+        hook.Add("EntityTakeDamage", "SAM.BuddhaMode", function(ply, info)
+            if type(ply) == "Player" and ply:LynGetVar("buddha") and ply:Health() - info:GetDamage() <= 1 then
+                ply:SetHealth(1)
+                return true
+            end
+        end)
+    end
+end
 
 do
     Command("freeze")

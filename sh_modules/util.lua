@@ -9,6 +9,42 @@ local ipairs = ipairs
 
 Command.SetCategory("Utility")
 
+Command("map")
+    :Aliases("changemap", "setmap")
+    :Permission("map")
+
+    :Param("map")
+    :Param("string", {
+        hint = "gamemode",
+        optional = true
+    })
+    :Param("duration", {
+        default = 10,
+    })
+    :Execute(function(ply, map, gamemode, duration)
+        if gamemode then
+            RunConsoleCommand("gamemode", gamemode)
+            Command.Notify("*", "#commands.map.notify_gamemode", {
+                P = ply,
+                duration = TimeUtils.FormatDuration(duration),
+            })
+        else
+            Command.Notify("*", "#commands.map.notify", {
+                P = ply,
+                duration = TimeUtils.FormatDuration(duration),
+            })
+        end
+
+        if #player.GetHumans() == 0 then
+            RunConsoleCommand("changelevel", map)
+        else
+            timer.Create("Lyn.Command.MapRestart", duration, 1, function()
+                RunConsoleCommand("changelevel", map)
+            end)
+        end
+    end)
+    :Register()
+
 Command("maprestart")
     :Aliases("restartmap", "restartlevel", "levelrestart")
     :Permission("maprestart")
@@ -243,3 +279,20 @@ if CLIENT then
         end
     end)
 end
+
+Command("time")
+    :Permission("time", "user")
+
+    :Param("player", { single_target = true, default = "^" })
+    :Execute(function(ply, targets)
+        if ply == targets[1] then
+            ply:LynSendFmtText("#commands.time.your", {
+                time = TimeUtils.FormatDuration(ply:LynGetPlayTime())
+            })
+        else
+            ply:LynSendFmtText("#commands.time.target", {
+                T = targets, time = TimeUtils.FormatDuration(targets[1]:LynGetPlayTime())
+            })
+        end
+    end)
+    :Register()

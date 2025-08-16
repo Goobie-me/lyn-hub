@@ -153,7 +153,7 @@ commands = {
     asay = {
         help = "Send a message to admin chat.",
 
-        notify = "[{lightred Admins}] {P}: %message%",
+        notify = "[{lightred Admins}] {P}: {green %message%}",
         notify_no_access = "{P} to {lightred Admins}: {red %message%}",
     },
 
@@ -195,6 +195,11 @@ commands = {
         notify = "{P} set the armor of {T} to {green %amount%}",
     },
 
+    give = {
+        help = "Give a weapon or entity to player(s).",
+        notify = "{P} gave {T} {green %class%}",
+    },
+
     slap = {
         help = "Slap a player(s), causing them to take damage.",
 
@@ -225,6 +230,16 @@ commands = {
     ungod = {
         help = "Disable god mode for player(s).",
         notify = "{P} disabled god mode for {T}",
+    },
+
+    buddha = {
+        help = "Makes player(s) invincible when their health is 1.",
+        notify = "{P} enabled buddha mode for {T}",
+    },
+
+    unbuddha = {
+        help = "Disables buddha mode for player(s).",
+        notify = "{P} disabled buddha mode for {T}",
     },
 
     freeze = {
@@ -347,10 +362,18 @@ commands = {
 
     -- Utility Commands
 
+    map = {
+        help = "Change current map and/or gamemode.",
+
+        notify = "A map change has been initiated by {P} and will occur in {green %duration%}.",
+        notify_gamemode =
+        "A map change has been initiated by {P} and will occur in {green %duration%} with the gamemode set to {green %gamemode%}.",
+    },
+
     maprestart = {
         help = "Restart the current map.",
         notify =
-        "A map restart has been initiated by {P} and will occur in {green %duration%}. Please prepare accordingly."
+        "A map restart has been initiated by {P} and will occur in {green %duration%}."
     },
 
     stopmaprestart = {
@@ -393,4 +416,10 @@ commands = {
         help = "Add a bot to the server.",
         notify = "{P} added {green %amount%} bot(s) to the server",
     },
+
+    time = {
+        help = "Check the playtime of a player.",
+        your = "Your playtime: {green %time%}",
+        target = "{T} playtime: {green %time%}",
+    }
 }
