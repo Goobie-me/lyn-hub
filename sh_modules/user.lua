@@ -150,13 +150,8 @@ Command("newrole")
         hint = "display_name",
         optional = true,
     })
-    :Param("string", {
-        hint = "color",
-        optional = true,
-        check = function(ctx)
-            local value = ctx.value
-            return not value or lyn.Util.Color(value) ~= nil
-        end
+    :Param("color", {
+        optional = true
     })
     :Execute(function(ply, role, immunity, display_name, color)
         lyn.Role.Create(role, immunity, display_name, color, function(err)
@@ -294,13 +289,7 @@ Command("setrolecolor")
     :Permission("manage_roles")
 
     :Param("role")
-    :Param("string", {
-        hint = "color",
-        check = function(ctx)
-            local value = ctx.value
-            return value and lyn.Util.IsValidHexColor(value)
-        end
-    })
+    :Param("color")
     :Execute(function(ply, role, color)
         lyn.Role.SetColor(role, color, function(err)
             if err then
@@ -311,7 +300,7 @@ Command("setrolecolor")
             Command.Notify("*", "#commands.setrolecolor.notify", {
                 P = ply,
                 role = role .. " (" .. Role.GetDisplayName(role) .. ")",
-                color = color,
+                color = color:ToHex(),
             })
         end)
     end)
