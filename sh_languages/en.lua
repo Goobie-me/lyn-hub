@@ -108,6 +108,8 @@ commands = {
 
         player_id_not_found = "No player found with ID {red %input%}",
 
+        player_steamid_not_found = "No player found with SteamID/SteamID64 {red %input%}",
+
         -- Sent when the command only accepts a single target but multiple matches are found.
         multiple_players_found = "Multiple players found: {T}",
 
@@ -134,6 +136,7 @@ commands = {
         display_name = "display name",
         color = "color",
         message = "message",
+        extends = "extends",
     },
 
     help = {
@@ -325,9 +328,9 @@ commands = {
         notify = "{P} created a new role: {green %role%}",
     },
 
-    removerole = {
-        help = "Remove a role.",
-        notify = "{P} removed the role: {red %role%}",
+    deleterole = {
+        help = "Delete a role.",
+        notify = "{P} deleted the role: {red %role%}",
     },
 
     renamerole = {
@@ -350,6 +353,13 @@ commands = {
         notify = "{P} changed the color of {green %role%} to {green %color%}",
     },
 
+    setroleextends = {
+        help = "Set or clear what role this one extends.",
+
+        notify_set = "{P} set {green %role%} to extend {green %extends%}",
+        notify_removed = "{P} removed the extend from {green %role%}",
+    },
+
     rolegrantpermission = {
         help = "Grant a permission to a role.",
         notify = "{P} granted the permission {green %permission%} to the role {green %role%}",
@@ -358,6 +368,11 @@ commands = {
     rolerevokepermission = {
         help = "Revoke a permission from a role.",
         notify = "{P} revoked the permission {red %permission%} from the role {green %role%}",
+    },
+
+    roledeletepermission = {
+        help = "Delete a permission from a role. Unlike revoke, it removes the override so inheritance applies.",
+        notify = "{P} deleted the permission {red %permission%} from the role {green %role%}",
     },
 
     -- Utility Commands
