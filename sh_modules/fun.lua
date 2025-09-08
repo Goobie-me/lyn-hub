@@ -411,7 +411,7 @@ Command("scale")
     :Permission("scale")
 
     :Param("player")
-    :Param("number", { hint = "amount", min = 0, max = 2.5, default = 1 })
+    :Param("number", { hint = "amount", min = 0.0001, max = 2.5, default = 1 })
     :Execute(function(ply, targets, amount)
         for _, target in ipairs(targets) do
             target:SetModelScale(amount)
