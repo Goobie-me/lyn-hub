@@ -281,7 +281,7 @@ if CLIENT then
 end
 
 Command("time")
-    :Permission("time", "user")
+    :Permission("time", lyn.Role.Defaults())
 
     :Param("player", { single_target = true, default = "^" })
     :Execute(function(ply, targets)
