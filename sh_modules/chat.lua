@@ -91,7 +91,7 @@ Command("mute")
         local till = duration ~= 0 and os.time() + duration or 0
 
         for _, target in ipairs(targets) do
-            target:LynSetPData("muted", {
+            lyn.Player.SetPData(target, "muted", {
                 till = till,
                 reason = reason
             })
@@ -113,7 +113,7 @@ Command("unmute")
     :GetRestArgs()
     :Execute(function(ply, targets)
         for _, target in ipairs(targets) do
-            target:LynSetPData("muted", nil)
+            lyn.Player.SetPData(target, "muted", nil)
         end
 
         Command.Notify("*", "#commands.unmute.notify", {
@@ -125,7 +125,7 @@ Command("unmute")
 
 if SERVER then
     local function is_muted(ply, no_notify)
-        local muted = ply:LynGetPData("muted")
+        local muted = lyn.Player.GetPData(ply, "muted")
         if not muted then return end
 
         local till = muted.till
@@ -140,7 +140,7 @@ if SERVER then
             return true
         end
 
-        ply:LynSetPData("muted", nil)
+        lyn.Player.SetPData(ply, "muted", nil)
     end
 
     hook.Add("PlayerSay", "Lyn.Chat.Mute", function(ply)
@@ -171,13 +171,13 @@ Command("gag")
     :GetRestArgs()
     :Execute(function(ply, targets, duration, reason)
         for _, target in ipairs(targets) do
-            target:LynSetPData("gagged", {
+            lyn.Player.SetPData(target, "gagged", {
                 till = duration ~= 0 and os.time() + duration or 0,
                 reason = reason
             })
             if duration ~= 0 then
                 lyn.Player.Timer.Create(target, "Lyn.Chat.Gag", duration, 1, function()
-                    target:LynSetPData("gagged", nil)
+                    lyn.Player.SetPData(target, "gagged", nil)
                 end)
             end
         end
@@ -198,7 +198,7 @@ Command("ungag")
     :GetRestArgs()
     :Execute(function(ply, targets)
         for _, target in ipairs(targets) do
-            target:LynSetPData("gagged", nil)
+            lyn.Player.SetPData(target, "gagged", nil)
             lyn.Player.Timer.Remove(target, "Lyn.Chat.Gag")
         end
 
@@ -227,7 +227,7 @@ if SERVER then
 
         local remaining = till - os.time()
         lyn.Player.Timer.Create(ply, "Lyn.Chat.Gag", remaining, 1, function()
-            ply:LynSetPData("gagged", nil)
+            lyn.Player.SetPData(ply, "gagged", nil)
         end)
     end)
 end
