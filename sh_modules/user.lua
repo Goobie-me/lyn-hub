@@ -314,7 +314,11 @@ Command("setroleextends")
     :Aliases("changeroleextends")
     :Permission("manage_roles")
 
-    :Param("role")
+    :Param("role", {
+        check = function(ctx)
+            return ctx.value ~= "superadmin"
+        end
+    })
     :Param("role", {
         hint = "extends",
         optional = true,
