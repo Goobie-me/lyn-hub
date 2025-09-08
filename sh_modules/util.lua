@@ -288,11 +288,11 @@ Command("time")
     :Execute(function(ply, targets)
         if ply == targets[1] then
             lyn.Player.Chat.Send(ply, "#commands.time.your", {
-                time = TimeUtils.FormatDuration(ply:LynGetPlayTime())
+                time = TimeUtils.FormatDuration(lyn.Player.GetPlayTime(ply))
             })
         else
             lyn.Player.Chat.Send(ply, "#commands.time.target", {
-                T = targets, time = TimeUtils.FormatDuration(targets[1]:LynGetPlayTime())
+                T = targets, time = TimeUtils.FormatDuration(lyn.Player.GetPlayTime(targets[1]))
             })
         end
     end)

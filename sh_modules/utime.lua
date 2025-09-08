@@ -29,7 +29,7 @@ end
 
 if SERVER then
     hook.Add("Lyn.Player.RetrieveDataTransaction", "Lyn.UTime", function(ply)
-        ply:SetUTime(ply:LynGetPlayTime())
+        ply:SetUTime(lyn.Player.GetPlayTime(ply))
         ply:SetUTimeStart(CurTime())
     end)
 end
