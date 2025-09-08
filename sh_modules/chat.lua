@@ -233,7 +233,6 @@ if SERVER then
 end
 --
 
-
 Command("speakas")
     :Permission("speakas")
 
