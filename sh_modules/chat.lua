@@ -22,12 +22,12 @@ Command("pm")
     :Execute(function(ply, targets, message)
         local target = targets[1]
 
-        lyn.Player.SendFmtText(ply, "#commands.pm.to", {
+        lyn.Player.Chat.Send(ply, "#commands.pm.to", {
             T = targets,
             message = message
         })
 
-        lyn.Player.SendFmtText(target, "#commands.pm.from", {
+        lyn.Player.Chat.Send(target, "#commands.pm.from", {
             P = ply,
             message = message
         })
@@ -63,12 +63,12 @@ Command("asay")
 
         -- Not using Command.Notify because it's a message
         if ply:HasPermission("see_admin_chat") then
-            lyn.Player.SendFmtText(targets, "#commands.asay.notify", {
+            lyn.Player.Chat.Send(targets, "#commands.asay.notify", {
                 P = ply,
                 message = message
             })
         else
-            lyn.Player.SendFmtText(targets, "#commands.asay.notify_no_access", {
+            lyn.Player.Chat.Send(targets, "#commands.asay.notify_no_access", {
                 P = ply,
                 message = message
             })
@@ -132,7 +132,7 @@ if SERVER then
         if till == 0 or till > os.time() then
             if not no_notify then
                 local duration = till == 0 and 0 or till - os.time()
-                ply:LynSendFmtText("#commands.mute.notify_muted", {
+                lyn.Player.Chat.Send(ply, "#commands.mute.notify_muted", {
                     duration = TimeUtils.FormatDuration(duration),
                     reason = muted.reason
                 })
