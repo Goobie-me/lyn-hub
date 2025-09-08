@@ -1,20 +1,22 @@
+local lyn = lyn
+
 ---@class Player
 local PLAYER = FindMetaTable("Player")
 
 function PLAYER:GetUTime()
-    return self:LynGetSharedVar("TotalUTime", 0)
+    return lyn.Player.GetSharedVar(self, "TotalUTime", 0)
 end
 
 function PLAYER:SetUTime(time)
-    self:LynSetSharedVar("TotalUTime", time)
+    lyn.Player.SetSharedVar(self, "TotalUTime", time)
 end
 
 function PLAYER:GetUTimeStart()
-    return self:LynGetSharedVar("UTimeStart", 0)
+    return lyn.Player.GetSharedVar(self, "UTimeStart", 0)
 end
 
 function PLAYER:SetUTimeStart(time)
-    self:LynSetSharedVar("UTimeStart", time)
+    lyn.Player.SetSharedVar(self, "UTimeStart", time)
 end
 
 function PLAYER:GetUTimeSessionTime()

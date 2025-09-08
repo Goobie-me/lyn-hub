@@ -70,7 +70,7 @@ do
     end
 
     local function slap(ply, damage, admin)
-        if not ply:Alive() or ply:LynGetSharedVar("frozen") then return end
+        if not ply:Alive() or lyn.Player.GetSharedVar(ply, "frozen") then return end
         ply:ExitVehicle()
 
         ply:SetVelocity(Vector(math.random(-100, 100), math.random(-100, 100), math.random(200, 400)))
@@ -174,7 +174,7 @@ Command("god")
     :Execute(function(ply, targets)
         for _, target in ipairs(targets) do
             target:GodEnable()
-            target:LynSetVar("god", true)
+            lyn.Player.SetVar(target, "god", true)
         end
 
         Command.Notify("*", "#commands.god.notify", {
@@ -192,7 +192,7 @@ Command("ungod")
     :Execute(function(ply, targets)
         for _, target in ipairs(targets) do
             target:GodDisable()
-            target:LynSetVar("god", false)
+            lyn.Player.SetVar(target, "god", false)
         end
 
         Command.Notify("*", "#commands.ungod.notify", {
@@ -209,7 +209,7 @@ do
         :Param("player", { default = "^" })
         :Execute(function(ply, targets)
             for _, target in ipairs(targets) do
-                target:LynSetVar("buddha", true)
+                lyn.Player.SetVar(target, "buddha", true)
             end
 
             Command.Notify("*", "#commands.buddha.notify", {
@@ -225,7 +225,7 @@ do
         :Param("player", { default = "^" })
         :Execute(function(ply, targets)
             for _, target in ipairs(targets) do
-                target:LynSetVar("buddha", nil)
+                lyn.Player.SetVar(target, "buddha", nil)
             end
 
             Command.Notify("*", "#commands.unbuddha.notify", {
@@ -237,7 +237,7 @@ do
 
     if SERVER then
         hook.Add("EntityTakeDamage", "SAM.BuddhaMode", function(ply, info)
-            if type(ply) == "Player" and ply:LynGetVar("buddha") and ply:Health() - info:GetDamage() <= 1 then
+            if type(ply) == "Player" and lyn.Player.GetVar(ply, "buddha") and ply:Health() - info:GetDamage() <= 1 then
                 ply:SetHealth(1)
                 return true
             end
@@ -253,11 +253,11 @@ do
         :Execute(function(ply, targets)
             for _, target in ipairs(targets) do
                 target:ExitVehicle()
-                if target:LynGetSharedVar("frozen") then
+                if lyn.Player.GetSharedVar(target, "frozen") then
                     target:UnLock()
                 end
                 target:Lock()
-                target:LynSetSharedVar("frozen", true)
+                lyn.Player.SetSharedVar(target, "frozen", true)
                 lyn.Player.SetExclusive(target, "freeze")
             end
 
@@ -275,7 +275,7 @@ do
         :Execute(function(ply, targets)
             for _, target in ipairs(targets) do
                 target:UnLock()
-                target:LynSetSharedVar("frozen", nil)
+                lyn.Player.SetSharedVar(target, "frozen", nil)
                 lyn.Player.SetExclusive(target, nil)
             end
 
@@ -287,7 +287,7 @@ do
         :Register()
 
     local function disallow(ply)
-        if ply:LynGetSharedVar("frozen") then
+        if lyn.Player.GetSharedVar(ply, "frozen") then
             return false
         end
     end
@@ -421,7 +421,7 @@ Command("scale")
             target:SetViewOffset(Vector(0, 0, 64 * amount))
             target:SetViewOffsetDucked(Vector(0, 0, 28 * amount))
 
-            target:LynSetVar("was_scaled", true)
+            lyn.Player.SetVar(target, "was_scaled", true)
         end
 
         Command.Notify("*", "#commands.scale.notify", {
@@ -435,7 +435,7 @@ Command("scale")
 if SERVER then
     hook.Add("PlayerSpawn", "Lyn.Scale", function(ply)
         if lyn.Player.GetVar(ply, "was_scaled") then
-            ply:LynSetVar("was_scaled", nil)
+            lyn.Player.SetVar(ply, "was_scaled", nil)
             ply:SetViewOffset(Vector(0, 0, 64))
             ply:SetViewOffsetDucked(Vector(0, 0, 28))
         end
