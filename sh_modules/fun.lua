@@ -411,6 +411,7 @@ Command("scale")
     :Permission("scale")
 
     :Param("player")
+-- thanks to https://www.gmodstore.com/users/76561198109871279 for telling me to set a min value to stop crashes
     :Param("number", { hint = "amount", min = 0.0001, max = 2.5, default = 1 })
     :Execute(function(ply, targets, amount)
         for _, target in ipairs(targets) do
