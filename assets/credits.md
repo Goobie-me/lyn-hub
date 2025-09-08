@@ -1,3 +1,6 @@
-- Bot icon: [Freepik - Flaticon](https://www.flaticon.com/free-icons/bot)
-- Refresh icon: [Slidicon - Flaticon](https://www.flaticon.com/free-icons/reuse)
-- Theme icon: [Ian Anandara - Flaticon](https://www.flaticon.com/free-icons/theme)
+- Bot/Commands icon: [Freepik - Flaticon](https://www.flaticon.com/authors/freepik)
+- Refresh icon: [Slidicon - Flaticon](https://www.flaticon.com/authors/Slidicon)
+- Theme icon: [Ian Anandara - Flaticon](https://www.flaticon.com/authors/Ian-Anandara)
+- Roles icon: [Tanah Basah - Flaticon](https://www.flaticon.com/authors/tanah-basah)
+
+I don't remember where I got the arrow or user from :C
