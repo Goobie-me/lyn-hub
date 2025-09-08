@@ -83,7 +83,7 @@ Command("mute")
 
     :Param("player")
     :Param("duration", {
-        min = 0, default = 0,
+        min = 0, default = "5m",
     })
     :Param("string", { hint = "reason", default = Language.Get("unspecified") })
     :GetRestArgs()
@@ -165,7 +165,7 @@ Command("gag")
 
     :Param("player")
     :Param("duration", {
-        min = 0, default = 0,
+        min = 0, default = "5m",
     })
     :Param("string", { hint = "reason", default = Language.Get("unspecified") })
     :GetRestArgs()
