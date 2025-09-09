@@ -91,7 +91,7 @@ Command("playerremoverole")
                 return
             end
 
-            Command.Notify("*", "#commands.removerole.notify", {
+            Command.Notify("*", "#commands.playerremoverole.notify", {
                 P = ply,
                 T = targets,
                 role = Role.GetDisplayName(role),
@@ -120,7 +120,7 @@ Command("playerremoveroleid")
                     return
                 end
 
-                Command.Notify("*", "#commands.removeroleid.notify", {
+                Command.Notify("*", "#commands.playerremoveroleid.notify", {
                     P = ply,
                     target_steamid64 = steamid64,
                     role = Role.GetDisplayName(role),
