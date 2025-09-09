@@ -1,9 +1,9 @@
-local lyn = lyn
-local Command = lyn.Command
-local Language = lyn.Language
-local TimeUtils = lyn.goobie_utils.TimeUtils
-local Net = lyn.goobie_utils.Net
-local Parser = lyn.goobie_utils.Parser
+local Lyn = Lyn
+local Command = Lyn.Command
+local Language = Lyn.Language
+local TimeUtils = Lyn.goobie_utils.TimeUtils
+local Net = Lyn.goobie_utils.Net
+local Parser = Lyn.goobie_utils.Parser
 
 local player = player
 local ipairs = ipairs
@@ -76,7 +76,7 @@ Command("stopmaprestart")
 
     :Execute(function(ply)
         if not timer.Exists("Lyn.Command.MapRestart") then
-            lyn.Player.Chat.Send(ply, "#commands.stopmaprestart.no_restart")
+            Lyn.Player.Chat.Send(ply, "#commands.stopmaprestart.no_restart")
             return
         end
 
@@ -147,9 +147,9 @@ Command("ban")
     :GetRestArgs()
     :Execute(function(ply, targets, duration, reason)
         local duration_formatted = TimeUtils.FormatDuration(duration)
-        lyn.Player.Ban(targets[1], duration, reason, ply:SteamID64(), function(err)
+        Lyn.Player.Ban(targets[1], duration, reason, ply:SteamID64(), function(err)
             if err then -- db error
-                lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
             Command.Notify("*", "#commands.ban.notify", {
@@ -175,11 +175,11 @@ Command("banid")
         local caller_steamid64 = ply:SteamID64()
         promise:Handle(function()
             local duration_formatted = TimeUtils.FormatDuration(duration)
-            lyn.Player.BanSteamID64(steamid64, duration, reason, caller_steamid64, function(err2, immunity_error)
+            Lyn.Player.BanSteamID64(steamid64, duration, reason, caller_steamid64, function(err2, immunity_error)
                 if err2 then -- db error
-                    lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                    Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 elseif immunity_error then
-                    lyn.Player.Chat.Send(ply, "#banning.immunity_error")
+                    Lyn.Player.Chat.Send(ply, "#banning.immunity_error")
                 else
                     Command.Notify("*", "#commands.banid.notify", {
                         P = ply,
@@ -203,13 +203,13 @@ Command("unban")
         local steamid64 = promise.steamid64
         local caller_steamid64 = ply:SteamID64()
         promise:Handle(function()
-            lyn.Player.Unban(steamid64, caller_steamid64, function(err2, no_active_ban, immunity_error)
+            Lyn.Player.Unban(steamid64, caller_steamid64, function(err2, no_active_ban, immunity_error)
                 if err2 then -- db error
-                    lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                    Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 elseif no_active_ban then
-                    lyn.Player.Chat.Send(ply, "#banning.unban_no_active_ban")
+                    Lyn.Player.Chat.Send(ply, "#banning.unban_no_active_ban")
                 elseif immunity_error then
-                    lyn.Player.Chat.Send(ply, "#banning.unban_immunity_error")
+                    Lyn.Player.Chat.Send(ply, "#banning.unban_immunity_error")
                 else
                     Command.Notify("*", "#commands.unban.notify", {
                         P = ply,
@@ -245,7 +245,7 @@ Command("help")
         if cmd_name then
             local cmd = Command.Search(cmd_name)
             if not cmd or (cmd:GetPermissionName() and not ply:HasPermission(cmd:GetPermissionName())) then
-                lyn.Player.Chat.Send(ply, "#commands.help.no_command", {
+                Lyn.Player.Chat.Send(ply, "#commands.help.no_command", {
                     command = cmd_name
                 })
                 return
@@ -271,9 +271,9 @@ if CLIENT then
             for _, cmd in pairs(commands) do
                 if not cmd:GetPermissionName() or LocalPlayer():HasPermission(cmd:GetPermissionName()) then
                     if cmd.help then
-                        lyn.Player.Chat.Add(Parser.escape(cmd.chat_prefix .. cmd.name .. " - " .. cmd.help))
+                        Lyn.Player.Chat.Add(Parser.escape(cmd.chat_prefix .. cmd.name .. " - " .. cmd.help))
                     else
-                        lyn.Player.Chat.Add(Parser.escape(cmd.chat_prefix .. cmd.name))
+                        Lyn.Player.Chat.Add(Parser.escape(cmd.chat_prefix .. cmd.name))
                     end
                 end
             end
@@ -282,17 +282,17 @@ if CLIENT then
 end
 
 Command("time")
-    :Permission("time", lyn.Role.Defaults())
+    :Permission("time", Lyn.Role.Defaults())
 
     :Param("player", { single_target = true, default = "^" })
     :Execute(function(ply, targets)
         if ply == targets[1] then
-            lyn.Player.Chat.Send(ply, "#commands.time.your", {
-                time = TimeUtils.FormatDuration(lyn.Player.GetPlayTime(ply))
+            Lyn.Player.Chat.Send(ply, "#commands.time.your", {
+                time = TimeUtils.FormatDuration(Lyn.Player.GetPlayTime(ply))
             })
         else
-            lyn.Player.Chat.Send(ply, "#commands.time.target", {
-                T = targets, time = TimeUtils.FormatDuration(lyn.Player.GetPlayTime(targets[1]))
+            Lyn.Player.Chat.Send(ply, "#commands.time.target", {
+                T = targets, time = TimeUtils.FormatDuration(Lyn.Player.GetPlayTime(targets[1]))
             })
         end
     end)

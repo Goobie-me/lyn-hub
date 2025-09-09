@@ -1,8 +1,8 @@
-local lyn = lyn
-local Command = lyn.Command
-local Language = lyn.Language
-local TimeUtils = lyn.goobie_utils.TimeUtils
-local Role = lyn.Role
+local Lyn = Lyn
+local Command = Lyn.Command
+local Language = Lyn.Language
+local TimeUtils = Lyn.goobie_utils.TimeUtils
+local Role = Lyn.Role
 
 Command.SetCategory("User Management")
 
@@ -22,9 +22,9 @@ Command("playeraddrole")
         local target = targets[1]
 
         local duration_formatted = TimeUtils.FormatDuration(duration)
-        lyn.Player.Role.Add(target, role, duration, function(err)
+        Lyn.Player.Role.Add(target, role, duration, function(err)
             if err then
-                lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
@@ -54,9 +54,9 @@ Command("playeraddroleid")
         local steamid64 = promise.steamid64
         promise:Handle(function()
             local duration_formatted = TimeUtils.FormatDuration(duration)
-            lyn.Player.Role.AddSteamID64(steamid64, role, duration, function(err)
+            Lyn.Player.Role.AddSteamID64(steamid64, role, duration, function(err)
                 if err then
-                    lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                    Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                     return
                 end
 
@@ -85,9 +85,9 @@ Command("playerremoverole")
     :Execute(function(ply, targets, role)
         local target = targets[1]
 
-        lyn.Player.Role.Remove(target, role, function(err)
+        Lyn.Player.Role.Remove(target, role, function(err)
             if err then
-                lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
@@ -114,9 +114,9 @@ Command("playerremoveroleid")
     :Execute(function(ply, promise, role)
         local steamid64 = promise.steamid64
         promise:Handle(function()
-            lyn.Player.Role.RemoveSteamID64(steamid64, role, function(err)
+            Lyn.Player.Role.RemoveSteamID64(steamid64, role, function(err)
                 if err then
-                    lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                    Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                     return
                 end
 
@@ -156,9 +156,9 @@ Command("createrole")
         optional = true,
     })
     :Execute(function(ply, role, immunity, display_name, color, extends)
-        lyn.Role.Create(role, immunity, display_name, color, extends, function(err)
+        Lyn.Role.Create(role, immunity, display_name, color, extends, function(err)
             if err then
-                lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
@@ -182,9 +182,9 @@ Command("deleterole")
     })
     :Execute(function(ply, role)
         local display_name = Role.GetDisplayName(role)
-        lyn.Role.Delete(role, function(err)
+        Lyn.Role.Delete(role, function(err)
             if err then
-                lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
@@ -215,9 +215,9 @@ Command("renamerole")
     })
     :Execute(function(ply, old_role, new_role)
         local display_name = Role.GetDisplayName(old_role)
-        lyn.Role.Rename(old_role, new_role, function(err)
+        Lyn.Role.Rename(old_role, new_role, function(err)
             if err then
-                lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
@@ -246,9 +246,9 @@ Command("setroleimmunity")
         max = Role.MAX_IMMUNITY
     })
     :Execute(function(ply, role, immunity)
-        lyn.Role.SetImmunity(role, immunity, function(err)
+        Lyn.Role.SetImmunity(role, immunity, function(err)
             if err then
-                lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
@@ -271,9 +271,9 @@ Command("setroledisplayname")
     })
     :Execute(function(ply, role, display_name)
         local old_display_name = Role.GetDisplayName(role)
-        lyn.Role.SetDisplayName(role, display_name, function(err)
+        Lyn.Role.SetDisplayName(role, display_name, function(err)
             if err then
-                lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
@@ -293,9 +293,9 @@ Command("setrolecolor")
     :Param("role")
     :Param("color")
     :Execute(function(ply, role, color)
-        lyn.Role.SetColor(role, color, function(err)
+        Lyn.Role.SetColor(role, color, function(err)
             if err then
-                lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
@@ -327,9 +327,9 @@ Command("setroleextends")
         end
     })
     :Execute(function(ply, role, extends)
-        lyn.Role.SetExtends(role, extends, function(err)
+        Lyn.Role.SetExtends(role, extends, function(err)
             if err then
-                lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
@@ -357,9 +357,9 @@ Command("roleaddpermission")
         hint = "permission"
     })
     :Execute(function(ply, role, permission)
-        lyn.Role.AddPermission(role, permission, function(err)
+        Lyn.Role.AddPermission(role, permission, function(err)
             if err then
-                lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
@@ -385,9 +385,9 @@ Command("roleremovepermission")
         hint = "permission"
     })
     :Execute(function(ply, role, permission)
-        lyn.Role.RemovePermission(role, permission, function(err)
+        Lyn.Role.RemovePermission(role, permission, function(err)
             if err then
-                lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
@@ -413,9 +413,9 @@ Command("roledeletepermission")
         hint = "permission"
     })
     :Execute(function(ply, role, permission)
-        lyn.Role.DeletePermission(role, permission, function(err)
+        Lyn.Role.DeletePermission(role, permission, function(err)
             if err then
-                lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 

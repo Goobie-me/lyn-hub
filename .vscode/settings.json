@@ -1,0 +1,12 @@
+{
+  "Lua.runtime.special": {
+    "include": "require",
+    "IncludeCS": "require",
+    "Lyn.RunFile": "require",
+    "goobie_utils.RunFile": "require",
+    "RunFile": "require"
+  },
+  "Lua.diagnostics.globals": [
+    "Lyn"
+  ]
+}

@@ -1,22 +1,22 @@
-local lyn = lyn
+local Lyn = Lyn
 
 ---@class Player
 local PLAYER = FindMetaTable("Player")
 
 function PLAYER:GetUTime()
-    return lyn.Player.GetSharedVar(self, "TotalUTime", 0)
+    return Lyn.Player.GetSharedVar(self, "TotalUTime", 0)
 end
 
 function PLAYER:SetUTime(time)
-    lyn.Player.SetSharedVar(self, "TotalUTime", time)
+    Lyn.Player.SetSharedVar(self, "TotalUTime", time)
 end
 
 function PLAYER:GetUTimeStart()
-    return lyn.Player.GetSharedVar(self, "UTimeStart", 0)
+    return Lyn.Player.GetSharedVar(self, "UTimeStart", 0)
 end
 
 function PLAYER:SetUTimeStart(time)
-    lyn.Player.SetSharedVar(self, "UTimeStart", time)
+    Lyn.Player.SetSharedVar(self, "UTimeStart", time)
 end
 
 function PLAYER:GetUTimeSessionTime()
@@ -29,7 +29,7 @@ end
 
 if SERVER then
     hook.Add("Lyn.Player.RetrieveDataTransaction", "Lyn.UTime", function(ply)
-        ply:SetUTime(lyn.Player.GetPlayTime(ply))
+        ply:SetUTime(Lyn.Player.GetPlayTime(ply))
         ply:SetUTimeStart(CurTime())
     end)
 end

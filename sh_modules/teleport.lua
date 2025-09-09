@@ -1,5 +1,5 @@
-local lyn     = lyn
-local Command = lyn.Command
+local Lyn     = Lyn
+local Command = Lyn.Command
 local util    = util
 local Vector  = Vector
 local IsValid = IsValid
