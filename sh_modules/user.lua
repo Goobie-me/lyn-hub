@@ -1,7 +1,7 @@
 local Lyn = Lyn
 local Command = Lyn.Command
 local Language = Lyn.Language
-local TimeUtils = Lyn.goobie_utils.TimeUtils
+local TimeUtils = Lyn.GoobieCore.TimeUtils
 local Role = Lyn.Role
 
 Command.SetCategory("User Management")

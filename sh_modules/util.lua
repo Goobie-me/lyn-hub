@@ -1,9 +1,9 @@
 local Lyn = Lyn
 local Command = Lyn.Command
 local Language = Lyn.Language
-local TimeUtils = Lyn.goobie_utils.TimeUtils
-local Net = Lyn.goobie_utils.Net
-local Parser = Lyn.goobie_utils.Parser
+local TimeUtils = Lyn.GoobieCore.TimeUtils
+local Net = Lyn.GoobieCore.Net
+local Parser = Lyn.GoobieCore.Parser
 
 local player = player
 local ipairs = ipairs

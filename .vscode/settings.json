@@ -3,7 +3,7 @@
     "include": "require",
     "IncludeCS": "require",
     "Lyn.RunFile": "require",
-    "goobie_utils.RunFile": "require",
+    "GoobieCore.RunFile": "require",
     "RunFile": "require"
   },
   "Lua.diagnostics.globals": [

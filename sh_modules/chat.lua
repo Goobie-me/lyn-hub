@@ -1,6 +1,6 @@
 local Lyn = Lyn
 local Command = Lyn.Command
-local TimeUtils = Lyn.goobie_utils.TimeUtils
+local TimeUtils = Lyn.GoobieCore.TimeUtils
 local Language = Lyn.Language
 
 local ipairs = ipairs
