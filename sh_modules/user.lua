@@ -22,7 +22,7 @@ Command("grantrole")
         local target = targets[1]
 
         local duration_formatted = TimeUtils.FormatDuration(duration)
-        lyn.Player.GrantRole(target, role, duration, function(err)
+        lyn.Player.Role.Grant(target, role, duration, function(err)
             if err then
                 lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
@@ -55,7 +55,7 @@ Command("grantroleid")
         local steamid64 = promise.steamid64
         promise:Handle(function()
             local duration_formatted = TimeUtils.FormatDuration(duration)
-            lyn.Player.GrantRoleSteamID64(steamid64, role, duration, function(err)
+            lyn.Player.Role.GrantSteamID64(steamid64, role, duration, function(err)
                 if err then
                     lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                     return
@@ -86,7 +86,7 @@ Command("revokerole")
     :Execute(function(ply, targets, role)
         local target = targets[1]
 
-        lyn.Player.RevokeRole(target, role, function(err)
+        lyn.Player.Role.Revoke(target, role, function(err)
             if err then
                 lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
@@ -116,7 +116,7 @@ Command("revokeroleid")
     :Execute(function(ply, promise, role)
         local steamid64 = promise.steamid64
         promise:Handle(function()
-            lyn.Player.RevokeRoleSteamID64(steamid64, role, function(err)
+            lyn.Player.Role.RevokeSteamID64(steamid64, role, function(err)
                 if err then
                     lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                     return
