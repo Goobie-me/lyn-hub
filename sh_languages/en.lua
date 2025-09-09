@@ -301,29 +301,29 @@ commands = {
 
     -- User Management Commands
 
-    grantrole = {
-        help = "Grant a role to a player.",
-        notify = "{P} granted the role {green %role%} to {T} for {green %duration%}",
+    playeraddrole = {
+        help = "Add a role to a player.",
+        notify = "{P} added the role {green %role%} to {T} for {green %duration%}",
         permanent = "Permanent", -- this will be used if duration is set to 0
     },
 
-    grantroleid = {
-        help = "Grant a role to a player by their SteamID/SteamID64.",
-        notify = "{P} granted the role {green %role%} to {red %target_steamid64%} for {green %duration%}",
+    playeraddroleid = {
+        help = "Add a role to a player by their SteamID/SteamID64.",
+        notify = "{P} added the role {green %role%} to {red %target_steamid64%} for {green %duration%}",
         permanent = "Permanent", -- this will be used if duration is set to 0
     },
 
-    revokerole = {
-        help = "Revoke a role from a player.",
-        notify = "{P} revoked the role {red %role%} from {T}",
+    playerremoverole = {
+        help = "Remove a role from a player.",
+        notify = "{P} removed the role {red %role%} from {T}",
     },
 
-    revokeroleid = {
-        help = "Revoke a role from a player by their SteamID/SteamID64.",
-        notify = "{P} revoked the role {red %role%} from {red %target_steamid64%}",
+    playerremoveroleid = {
+        help = "Remove a role from a player by their SteamID/SteamID64.",
+        notify = "{P} removed the role {red %role%} from {red %target_steamid64%}",
     },
 
-    newrole = {
+    createrole = {
         help = "Create a new role.",
         notify = "{P} created a new role: {green %role%}",
     },
@@ -360,18 +360,18 @@ commands = {
         notify_removed = "{P} removed the extend from {green %role%}",
     },
 
-    rolegrantpermission = {
-        help = "Grant a permission to a role.",
-        notify = "{P} granted the permission {green %permission%} to the role {green %role%}",
+    roleaddpermission = {
+        help = "Add a permission to a role.",
+        notify = "{P} added the permission {green %permission%} to the role {green %role%}",
     },
 
-    rolerevokepermission = {
-        help = "Revoke a permission from a role.",
-        notify = "{P} revoked the permission {red %permission%} from the role {green %role%}",
+    roleremovepermission = {
+        help = "Remove a permission from a role.",
+        notify = "{P} removed the permission {red %permission%} from the role {green %role%}",
     },
 
     roledeletepermission = {
-        help = "Delete a permission from a role. Unlike revoke, it removes the override so inheritance applies.",
+        help = "Delete a permission from a role. Unlike remove, it removes the override so inheritance applies.",
         notify = "{P} deleted the permission {red %permission%} from the role {green %role%}",
     },
 

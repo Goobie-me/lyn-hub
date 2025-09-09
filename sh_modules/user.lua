@@ -6,9 +6,9 @@ local Role = lyn.Role
 
 Command.SetCategory("User Management")
 
-Command("grantrole")
-    :Aliases("giverole", "rolegrant", "rolegive", "setrole", "adduser", "giverank", "setrank")
-    :Permission("grantrole")
+Command("playeraddrole")
+    :Aliases("giverole", "rolegive", "adduser", "giverank")
+    :Permission("playeraddrole")
 
     :Param("player", { single_target = true })
     :Param("role", {
@@ -22,13 +22,13 @@ Command("grantrole")
         local target = targets[1]
 
         local duration_formatted = TimeUtils.FormatDuration(duration)
-        lyn.Player.Role.Grant(target, role, duration, function(err)
+        lyn.Player.Role.Add(target, role, duration, function(err)
             if err then
                 lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
-            Command.Notify("*", "#commands.grantrole.notify", {
+            Command.Notify("*", "#commands.playeraddrole.notify", {
                 P = ply,
                 T = targets,
                 role = Role.GetDisplayName(role),
@@ -36,12 +36,11 @@ Command("grantrole")
             })
         end)
     end)
-    :Register()
+    :Add()
 
-Command("grantroleid")
-    :Aliases("grantroleid64", "grantrolesteamid", "grantrolesteamid64", "giveroleid", "giveroleid64", "giverolesteamid",
-        "giverolesteamid64", "adduserid")
-    :Permission("grantroleid")
+Command("playeraddroleid")
+    :Aliases("giveroleid", "roleidgive", "adduserid", "giverankid")
+    :Permission("playeraddroleid")
 
     :Param("steamid64")
     :Param("role", {
@@ -55,13 +54,13 @@ Command("grantroleid")
         local steamid64 = promise.steamid64
         promise:Handle(function()
             local duration_formatted = TimeUtils.FormatDuration(duration)
-            lyn.Player.Role.GrantSteamID64(steamid64, role, duration, function(err)
+            lyn.Player.Role.AddSteamID64(steamid64, role, duration, function(err)
                 if err then
                     lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                     return
                 end
 
-                Command.Notify("*", "#commands.grantroleid.notify", {
+                Command.Notify("*", "#commands.playeraddroleid.notify", {
                     P = ply,
                     target_steamid64 = steamid64,
                     role = Role.GetDisplayName(role),
@@ -70,11 +69,11 @@ Command("grantroleid")
             end)
         end)
     end)
-    :Register()
+    :Add()
 
-Command("revokerole")
-    :Aliases("takerole", "rolerevoke")
-    :Permission("revokerole")
+Command("playerremoverole")
+    :Aliases("takeplayerrole")
+    :Permission("playerremoverole")
 
     :Param("player", { single_target = true })
     :Param("role", {
@@ -86,25 +85,24 @@ Command("revokerole")
     :Execute(function(ply, targets, role)
         local target = targets[1]
 
-        lyn.Player.Role.Revoke(target, role, function(err)
+        lyn.Player.Role.Remove(target, role, function(err)
             if err then
                 lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
-            Command.Notify("*", "#commands.revokerole.notify", {
+            Command.Notify("*", "#commands.removerole.notify", {
                 P = ply,
                 T = targets,
                 role = Role.GetDisplayName(role),
             })
         end)
     end)
-    :Register()
+    :Add()
 
-Command("revokeroleid")
-    :Aliases("revokeroleid64", "revokerolesteamid", "revokerolesteamid64", "takeroleid", "takeroleid64",
-        "takerolesteamid", "takerolesteamid64")
-    :Permission("revokeroleid")
+Command("playerremoveroleid")
+    :Aliases("playertakeroleid")
+    :Permission("playerremoveroleid")
 
     :Param("steamid64")
     :Param("role", {
@@ -116,13 +114,13 @@ Command("revokeroleid")
     :Execute(function(ply, promise, role)
         local steamid64 = promise.steamid64
         promise:Handle(function()
-            lyn.Player.Role.RevokeSteamID64(steamid64, role, function(err)
+            lyn.Player.Role.RemoveSteamID64(steamid64, role, function(err)
                 if err then
                     lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                     return
                 end
 
-                Command.Notify("*", "#commands.revokeroleid.notify", {
+                Command.Notify("*", "#commands.removeroleid.notify", {
                     P = ply,
                     target_steamid64 = steamid64,
                     role = Role.GetDisplayName(role),
@@ -130,10 +128,10 @@ Command("revokeroleid")
             end)
         end)
     end)
-    :Register()
+    :Add()
 
-Command("newrole")
-    :Aliases("createrole", "rolecreate", "rolenew")
+Command("createrole")
+    :Aliases("newrole", "rolecreate", "rolenew")
     :Permission("manage_roles")
 
     :Param("string", {
@@ -164,13 +162,13 @@ Command("newrole")
                 return
             end
 
-            Command.Notify("*", "#commands.newrole.notify", {
+            Command.Notify("*", "#commands.createrole.notify", {
                 P = ply,
                 role = role .. " (" .. Role.GetDisplayName(role) .. ")",
             })
         end)
     end)
-    :Register()
+    :Add()
 
 Command("deleterole")
     :Aliases("removerole", "roledelete", "roleremove")
@@ -196,7 +194,7 @@ Command("deleterole")
             })
         end)
     end)
-    :Register()
+    :Add()
 
 Command("renamerole")
     :Aliases("rolerename")
@@ -230,7 +228,7 @@ Command("renamerole")
             })
         end)
     end)
-    :Register()
+    :Add()
 
 Command("setroleimmunity")
     :Aliases("changeroleimmunity")
@@ -261,7 +259,7 @@ Command("setroleimmunity")
             })
         end)
     end)
-    :Register()
+    :Add()
 
 Command("setroledisplayname")
     :Aliases("changeroledisplayname")
@@ -286,7 +284,7 @@ Command("setroledisplayname")
             })
         end)
     end)
-    :Register()
+    :Add()
 
 Command("setrolecolor")
     :Aliases("changerolecolor")
@@ -308,7 +306,7 @@ Command("setrolecolor")
             })
         end)
     end)
-    :Register()
+    :Add()
 
 Command("setroleextends")
     :Aliases("changeroleextends")
@@ -349,9 +347,9 @@ Command("setroleextends")
             end
         end)
     end)
-    :Register()
+    :Add()
 
-Command("rolegrantpermission")
+Command("roleaddpermission")
     :Permission("manage_roles")
 
     :Param("role")
@@ -359,22 +357,22 @@ Command("rolegrantpermission")
         hint = "permission"
     })
     :Execute(function(ply, role, permission)
-        lyn.Role.GrantPermission(role, permission, function(err)
+        lyn.Role.AddPermission(role, permission, function(err)
             if err then
                 lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
-            Command.Notify("*", "#commands.rolegrantpermission.notify", {
+            Command.Notify("*", "#commands.roleaddpermission.notify", {
                 P = ply,
                 role = role .. " (" .. Role.GetDisplayName(role) .. ")",
                 permission = permission,
             })
         end)
     end)
-    :Register()
+    :Add()
 
-Command("rolerevokepermission")
+Command("roleremovepermission")
     :Permission("manage_roles")
 
     :Param("role", {
@@ -387,20 +385,20 @@ Command("rolerevokepermission")
         hint = "permission"
     })
     :Execute(function(ply, role, permission)
-        lyn.Role.RevokePermission(role, permission, function(err)
+        lyn.Role.RemovePermission(role, permission, function(err)
             if err then
                 lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
 
-            Command.Notify("*", "#commands.rolerevokepermission.notify", {
+            Command.Notify("*", "#commands.roleremovepermission.notify", {
                 P = ply,
                 role = role .. " (" .. Role.GetDisplayName(role) .. ")",
                 permission = permission,
             })
         end)
     end)
-    :Register()
+    :Add()
 
 Command("roledeletepermission")
     :Permission("manage_roles")
@@ -428,4 +426,4 @@ Command("roledeletepermission")
             })
         end)
     end)
-    :Register()
+    :Add()

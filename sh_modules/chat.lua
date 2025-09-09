@@ -32,10 +32,10 @@ Command("pm")
             message = message
         })
     end)
-    :Register()
+    :Add()
 
 -- asay
-lyn.Permission.Register("see_admin_chat", nil, "admin")
+lyn.Permission.Add("see_admin_chat", nil, "admin")
 
 Command("asay")
     :CustomAlias("@", {
@@ -74,7 +74,7 @@ Command("asay")
             })
         end
     end)
-    :Register()
+    :Add()
 --
 
 -- mute
@@ -104,7 +104,7 @@ Command("mute")
             reason = reason,
         })
     end)
-    :Register()
+    :Add()
 
 Command("unmute")
     :Permission("unmute", "admin")
@@ -121,7 +121,7 @@ Command("unmute")
             T = targets,
         })
     end)
-    :Register()
+    :Add()
 
 if SERVER then
     local function is_muted(ply, no_notify)
@@ -189,7 +189,7 @@ Command("gag")
             reason = reason,
         })
     end)
-    :Register()
+    :Add()
 
 Command("ungag")
     :Permission("ungag", "admin")
@@ -207,7 +207,7 @@ Command("ungag")
             T = targets,
         })
     end)
-    :Register()
+    :Add()
 
 if SERVER then
     local GetPData = lyn.Player.GetPData
@@ -249,4 +249,4 @@ Command("speakas")
         local target = targets[1]
         target:Say(message)
     end)
-    :Register()
+    :Add()

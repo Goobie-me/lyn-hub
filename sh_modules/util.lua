@@ -44,7 +44,7 @@ Command("map")
             end)
         end
     end)
-    :Register()
+    :Add()
 
 Command("maprestart")
     :Aliases("restartmap", "restartlevel", "levelrestart")
@@ -68,7 +68,7 @@ Command("maprestart")
             duration = TimeUtils.FormatDuration(duration),
         })
     end)
-    :Register()
+    :Add()
 
 Command("stopmaprestart")
     :Aliases("stoprestart", "cancelrestart", "cancelmaprestart", "abortrestart")
@@ -85,7 +85,7 @@ Command("stopmaprestart")
             P = ply,
         })
     end)
-    :Register()
+    :Add()
 
 Command("mapreset")
     :Aliases("resetmap", "mapclear", "clearmap")
@@ -97,7 +97,7 @@ Command("mapreset")
             P = ply,
         })
     end)
-    :Register()
+    :Add()
 
 Command("kick")
     :Aliases("kickplayer", "playerkick")
@@ -115,7 +115,7 @@ Command("kick")
             reason = reason,
         })
     end)
-    :Register()
+    :Add()
 
 Command("kickm")
     :Aliases("kickmulti", "kickmultiple", "kickmany")
@@ -135,7 +135,7 @@ Command("kickm")
             reason = reason,
         })
     end)
-    :Register()
+    :Add()
 
 Command("ban")
     :Aliases("banplayer", "playerban", "addban")
@@ -160,7 +160,7 @@ Command("ban")
             })
         end)
     end)
-    :Register()
+    :Add()
 
 Command("banid")
     :Aliases("banid64", "bansteamid", "bansteamid64", "addbanid", "addbanid64", "addbansteamid", "addbansteamid64")
@@ -191,7 +191,7 @@ Command("banid")
             end)
         end)
     end)
-    :Register()
+    :Add()
 
 Command("unban")
     :Aliases("unbanid", "unbanid64", "unbansteamid", "unbansteamid64", "removeban", "removebanid", "removebanid64",
@@ -219,7 +219,7 @@ Command("unban")
             end)
         end)
     end)
-    :Register()
+    :Add()
 
 Command("bot")
     :Aliases("addbot", "spawnbot", "createbot")
@@ -236,7 +236,7 @@ Command("bot")
             amount = amount,
         })
     end)
-    :Register()
+    :Add()
 
 Command("help")
     :Param("string", { hint = "command", optional = true })
@@ -255,7 +255,7 @@ Command("help")
             Net.StartSV("Command.Help", ply)
         end
     end)
-    :Register()
+    :Add()
 
 if CLIENT then
     Net.HookCL("Command.Help", function(cmd_name, matched_identifier)
@@ -296,4 +296,4 @@ Command("time")
             })
         end
     end)
-    :Register()
+    :Add()

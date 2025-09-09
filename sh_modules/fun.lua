@@ -24,7 +24,7 @@ Command("hp")
             amount = amount,
         })
     end)
-    :Register()
+    :Add()
 
 Command("armor")
     :Aliases("setarmor", "armorset")
@@ -43,7 +43,7 @@ Command("armor")
             amount = amount,
         })
     end)
-    :Register()
+    :Add()
 
 Command("give")
     :Permission("give")
@@ -61,7 +61,7 @@ Command("give")
             class = class,
         })
     end)
-    :Register()
+    :Add()
 
 do
     local sounds = {}
@@ -104,7 +104,7 @@ do
                 })
             end
         end)
-        :Register()
+        :Add()
 end
 
 Command("slay")
@@ -124,7 +124,7 @@ Command("slay")
             T = targets,
         })
     end)
-    :Register()
+    :Add()
 
 Command("ignite")
     :Aliases("burn", "setonfire")
@@ -147,7 +147,7 @@ Command("ignite")
             duration = TimeUtils.FormatDuration(duration),
         })
     end)
-    :Register()
+    :Add()
 
 Command("unignite")
     :Aliases("extinguish")
@@ -164,7 +164,7 @@ Command("unignite")
             T = targets,
         })
     end)
-    :Register()
+    :Add()
 
 Command("god")
     :Aliases("invincible")
@@ -182,7 +182,7 @@ Command("god")
             T = targets,
         })
     end)
-    :Register()
+    :Add()
 
 Command("ungod")
     :Aliases("uninvincible")
@@ -200,7 +200,7 @@ Command("ungod")
             T = targets,
         })
     end)
-    :Register()
+    :Add()
 
 do
     Command("buddha")
@@ -217,7 +217,7 @@ do
                 T = targets,
             })
         end)
-        :Register()
+        :Add()
 
     Command("unbuddha")
         :Permission("buddha", "admin")
@@ -233,7 +233,7 @@ do
                 T = targets,
             })
         end)
-        :Register()
+        :Add()
 
     if SERVER then
         hook.Add("EntityTakeDamage", "SAM.BuddhaMode", function(ply, info)
@@ -266,7 +266,7 @@ do
                 T = targets,
             })
         end)
-        :Register()
+        :Add()
 
     Command("unfreeze")
         :Permission("freeze", "admin")
@@ -284,7 +284,7 @@ do
                 T = targets,
             })
         end)
-        :Register()
+        :Add()
 
     local function disallow(ply)
         if lyn.Player.GetSharedVar(ply, "frozen") then
@@ -311,7 +311,7 @@ Command("cloak")
             T = targets,
         })
     end)
-    :Register()
+    :Add()
 
 Command("uncloak")
     :Permission("cloak", "admin")
@@ -327,7 +327,7 @@ Command("uncloak")
             T = targets,
         })
     end)
-    :Register()
+    :Add()
 
 Command("strip")
     :Permission("strip", "admin")
@@ -343,7 +343,7 @@ Command("strip")
             T = targets,
         })
     end)
-    :Register()
+    :Add()
 
 Command("respawn")
     :Permission("respawn", "admin")
@@ -359,7 +359,7 @@ Command("respawn")
             T = targets,
         })
     end)
-    :Register()
+    :Add()
 
 Command("setmodel")
     :Permission("setmodel")
@@ -377,7 +377,7 @@ Command("setmodel")
             model = model,
         })
     end)
-    :Register()
+    :Add()
 
 Command("giveammo")
     :Aliases("setammo", "setammunition", "ammo")
@@ -404,7 +404,7 @@ Command("giveammo")
             amount = amount,
         })
     end)
-    :Register()
+    :Add()
 
 -- scale
 Command("scale")
@@ -430,7 +430,7 @@ Command("scale")
             amount = amount,
         })
     end)
-    :Register()
+    :Add()
 
 if SERVER then
     hook.Add("PlayerSpawn", "Lyn.Scale", function(ply)
@@ -457,4 +457,4 @@ Command("freezeprops")
             P = ply,
         })
     end)
-    :Register()
+    :Add()
