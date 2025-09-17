@@ -268,14 +268,20 @@ if CLIENT then
             })
         else
             local commands = Command.GetAll()
+            local chat_lines = {}
+
             for _, cmd in pairs(commands) do
                 if not cmd:GetPermissionName() or LocalPlayer():HasPermission(cmd:GetPermissionName()) then
                     if cmd.help then
-                        Lyn.Player.Chat.Add(Parser.escape(cmd.chat_prefix .. cmd.name .. " - " .. cmd.help))
+                        table.insert(chat_lines, Parser.escape(cmd.chat_prefix .. cmd.name .. " - " .. cmd.help))
                     else
-                        Lyn.Player.Chat.Add(Parser.escape(cmd.chat_prefix .. cmd.name))
+                        table.insert(chat_lines, Parser.escape(cmd.chat_prefix .. cmd.name))
                     end
                 end
+            end
+
+            if #chat_lines > 0 then
+                Lyn.Player.Chat.Add(table.concat(chat_lines, "\n"))
             end
         end
     end)
