@@ -72,7 +72,7 @@ Command("playeraddroleid")
     :Add()
 
 Command("playerremoverole")
-    :Aliases("takeplayerrole")
+    :Aliases("takerole", "takeplayerrole")
     :Permission("playerremoverole")
 
     :Param("player", { single_target = true })
@@ -101,7 +101,7 @@ Command("playerremoverole")
     :Add()
 
 Command("playerremoveroleid")
-    :Aliases("playertakeroleid")
+    :Aliases("takeroleid", "playertakeroleid")
     :Permission("playerremoveroleid")
 
     :Param("steamid64")
