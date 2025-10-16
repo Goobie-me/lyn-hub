@@ -61,7 +61,7 @@ Command("asay")
             end
         end
 
-        -- Not using Command.Notify because it's a message
+        -- Not using LYN_NOTIFY because it's a message
         if ply:HasPermission("see_admin_chat") then
             Lyn.Player.Chat.Send(targets, "#commands.asay.notify", {
                 P = ply,
@@ -97,7 +97,7 @@ Command("mute")
             })
         end
 
-        Command.Notify("*", "#commands.mute.notify", {
+        LYN_NOTIFY("*", "#commands.mute.notify", {
             P = ply,
             T = targets,
             duration = TimeUtils.FormatDuration(duration),
@@ -116,7 +116,7 @@ Command("unmute")
             Lyn.Player.SetPData(target, "muted", nil)
         end
 
-        Command.Notify("*", "#commands.unmute.notify", {
+        LYN_NOTIFY("*", "#commands.unmute.notify", {
             P = ply,
             T = targets,
         })
@@ -182,7 +182,7 @@ Command("gag")
             end
         end
 
-        Command.Notify("*", "#commands.gag.notify", {
+        LYN_NOTIFY("*", "#commands.gag.notify", {
             P = ply,
             T = targets,
             duration = TimeUtils.FormatDuration(duration),
@@ -202,7 +202,7 @@ Command("ungag")
             Lyn.Player.Timer.Remove(target, "Lyn.Chat.Gag")
         end
 
-        Command.Notify("*", "#commands.ungag.notify", {
+        LYN_NOTIFY("*", "#commands.ungag.notify", {
             P = ply,
             T = targets,
         })

@@ -28,7 +28,7 @@ Command("playeraddrole")
                 return
             end
 
-            Command.Notify("*", "#commands.playeraddrole.notify", {
+            LYN_NOTIFY("*", "#commands.playeraddrole.notify", {
                 P = ply,
                 T = targets,
                 role = Role.GetDisplayName(role),
@@ -60,7 +60,7 @@ Command("playeraddroleid")
                     return
                 end
 
-                Command.Notify("*", "#commands.playeraddroleid.notify", {
+                LYN_NOTIFY("*", "#commands.playeraddroleid.notify", {
                     P = ply,
                     target_steamid64 = steamid64,
                     role = Role.GetDisplayName(role),
@@ -91,7 +91,7 @@ Command("playerremoverole")
                 return
             end
 
-            Command.Notify("*", "#commands.playerremoverole.notify", {
+            LYN_NOTIFY("*", "#commands.playerremoverole.notify", {
                 P = ply,
                 T = targets,
                 role = Role.GetDisplayName(role),
@@ -120,7 +120,7 @@ Command("playerremoveroleid")
                     return
                 end
 
-                Command.Notify("*", "#commands.playerremoveroleid.notify", {
+                LYN_NOTIFY("*", "#commands.playerremoveroleid.notify", {
                     P = ply,
                     target_steamid64 = steamid64,
                     role = Role.GetDisplayName(role),
@@ -162,7 +162,7 @@ Command("createrole")
                 return
             end
 
-            Command.Notify("*", "#commands.createrole.notify", {
+            LYN_NOTIFY("*", "#commands.createrole.notify", {
                 P = ply,
                 role = role .. " (" .. Role.GetDisplayName(role) .. ")",
             })
@@ -188,7 +188,7 @@ Command("deleterole")
                 return
             end
 
-            Command.Notify("*", "#commands.deleterole.notify", {
+            LYN_NOTIFY("*", "#commands.deleterole.notify", {
                 P = ply,
                 role = role .. " (" .. display_name .. ")",
             })
@@ -221,7 +221,7 @@ Command("renamerole")
                 return
             end
 
-            Command.Notify("*", "#commands.renamerole.notify", {
+            LYN_NOTIFY("*", "#commands.renamerole.notify", {
                 P = ply,
                 old_role = old_role .. " (" .. display_name .. ")",
                 new_role = new_role,
@@ -252,7 +252,7 @@ Command("setroleimmunity")
                 return
             end
 
-            Command.Notify("*", "#commands.setroleimmunity.notify", {
+            LYN_NOTIFY("*", "#commands.setroleimmunity.notify", {
                 P = ply,
                 role = role .. " (" .. Role.GetDisplayName(role) .. ")",
                 immunity = immunity,
@@ -277,7 +277,7 @@ Command("setroledisplayname")
                 return
             end
 
-            Command.Notify("*", "#commands.setroledisplayname.notify", {
+            LYN_NOTIFY("*", "#commands.setroledisplayname.notify", {
                 P = ply,
                 role = role .. " (" .. old_display_name .. ")",
                 display_name = display_name,
@@ -299,7 +299,7 @@ Command("setrolecolor")
                 return
             end
 
-            Command.Notify("*", "#commands.setrolecolor.notify", {
+            LYN_NOTIFY("*", "#commands.setrolecolor.notify", {
                 P = ply,
                 role = role .. " (" .. Role.GetDisplayName(role) .. ")",
                 color = color:ToHex(),
@@ -334,13 +334,13 @@ Command("setroleextends")
             end
 
             if extends then
-                Command.Notify("*", "#commands.setroleextends.notify_set", {
+                LYN_NOTIFY("*", "#commands.setroleextends.notify_set", {
                     P = ply,
                     role = role .. " (" .. Role.GetDisplayName(role) .. ")",
                     extends = extends .. " (" .. Role.GetDisplayName(extends) .. ")",
                 })
             else
-                Command.Notify("*", "#commands.setroleextends.notify_removed", {
+                LYN_NOTIFY("*", "#commands.setroleextends.notify_removed", {
                     P = ply,
                     role = role .. " (" .. Role.GetDisplayName(role) .. ")",
                 })
@@ -363,7 +363,7 @@ Command("roleaddpermission")
                 return
             end
 
-            Command.Notify("*", "#commands.roleaddpermission.notify", {
+            LYN_NOTIFY("*", "#commands.roleaddpermission.notify", {
                 P = ply,
                 role = role .. " (" .. Role.GetDisplayName(role) .. ")",
                 permission = permission,
@@ -391,7 +391,7 @@ Command("roleremovepermission")
                 return
             end
 
-            Command.Notify("*", "#commands.roleremovepermission.notify", {
+            LYN_NOTIFY("*", "#commands.roleremovepermission.notify", {
                 P = ply,
                 role = role .. " (" .. Role.GetDisplayName(role) .. ")",
                 permission = permission,
@@ -419,7 +419,7 @@ Command("roledeletepermission")
                 return
             end
 
-            Command.Notify("*", "#commands.roledeletepermission.notify", {
+            LYN_NOTIFY("*", "#commands.roledeletepermission.notify", {
                 P = ply,
                 role = role .. " (" .. Role.GetDisplayName(role) .. ")",
                 permission = permission,

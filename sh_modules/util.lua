@@ -25,12 +25,12 @@ Command("map")
     :Execute(function(ply, map, gamemode, duration)
         if gamemode then
             RunConsoleCommand("gamemode", gamemode)
-            Command.Notify("*", "#commands.map.notify_gamemode", {
+            LYN_NOTIFY("*", "#commands.map.notify_gamemode", {
                 P = ply,
                 duration = TimeUtils.FormatDuration(duration),
             })
         else
-            Command.Notify("*", "#commands.map.notify", {
+            LYN_NOTIFY("*", "#commands.map.notify", {
                 P = ply,
                 duration = TimeUtils.FormatDuration(duration),
             })
@@ -63,7 +63,7 @@ Command("maprestart")
             end)
         end
 
-        Command.Notify("*", "#commands.maprestart.notify", {
+        LYN_NOTIFY("*", "#commands.maprestart.notify", {
             P = ply,
             duration = TimeUtils.FormatDuration(duration),
         })
@@ -81,7 +81,7 @@ Command("stopmaprestart")
         end
 
         timer.Remove("Lyn.Command.MapRestart")
-        Command.Notify("*", "#commands.stopmaprestart.notify", {
+        LYN_NOTIFY("*", "#commands.stopmaprestart.notify", {
             P = ply,
         })
     end)
@@ -93,7 +93,7 @@ Command("mapreset")
 
     :Execute(function(ply)
         game.CleanUpMap(false, nil, function() end)
-        Command.Notify("*", "#commands.mapreset.notify", {
+        LYN_NOTIFY("*", "#commands.mapreset.notify", {
             P = ply,
         })
     end)
@@ -109,7 +109,7 @@ Command("kick")
     :Execute(function(ply, targets, reason)
         targets[1]:Kick(reason)
 
-        Command.Notify("*", "#commands.kick.notify", {
+        LYN_NOTIFY("*", "#commands.kick.notify", {
             P = ply,
             T = targets,
             reason = reason,
@@ -129,7 +129,7 @@ Command("kickm")
             target:Kick(reason)
         end
 
-        Command.Notify("*", "#commands.kickm.notify", {
+        LYN_NOTIFY("*", "#commands.kickm.notify", {
             P = ply,
             T = targets,
             reason = reason,
@@ -152,7 +152,7 @@ Command("ban")
                 Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
                 return
             end
-            Command.Notify("*", "#commands.ban.notify", {
+            LYN_NOTIFY("*", "#commands.ban.notify", {
                 P = ply,
                 T = targets,
                 duration = duration_formatted,
@@ -181,7 +181,7 @@ Command("banid")
                 elseif immunity_error then
                     Lyn.Player.Chat.Send(ply, "#banning.immunity_error")
                 else
-                    Command.Notify("*", "#commands.banid.notify", {
+                    LYN_NOTIFY("*", "#commands.banid.notify", {
                         P = ply,
                         target_steamid64 = steamid64,
                         duration = duration_formatted,
@@ -211,7 +211,7 @@ Command("unban")
                 elseif immunity_error then
                     Lyn.Player.Chat.Send(ply, "#banning.unban_immunity_error")
                 else
-                    Command.Notify("*", "#commands.unban.notify", {
+                    LYN_NOTIFY("*", "#commands.unban.notify", {
                         P = ply,
                         target_steamid64 = steamid64,
                     })
@@ -221,17 +221,103 @@ Command("unban")
     end)
     :Add()
 
+do
+    Command("noclip")
+        :Permission("noclip", "admin")
+
+        :Param("player", { default = "^" })
+        :Execute(function(ply, targets)
+            for _, target in ipairs(targets) do
+                target:SetMoveType(target:GetMoveType() == MOVETYPE_WALK and MOVETYPE_NOCLIP or MOVETYPE_WALK)
+            end
+
+            LYN_NOTIFY("*", "#commands.armor.noclip", { P = ply, T = targets })
+        end)
+        :Add()
+
+    Lyn.Permission.Add("can_noclip", nil, "admin")
+
+    hook.Add("PlayerNoClip", "Lyn.CanNoClip", function(ply)
+        if ply:HasPermission("can_noclip") then
+            return true
+        end
+    end)
+end
+
+do
+    Lyn.Permission.Add("can_physgun_players", nil, "admin")
+
+    local function freeze_player(ply)
+        if SERVER then
+            ply:Lock()
+        end
+        ply:SetMoveType(MOVETYPE_NONE)
+        ply:SetCollisionGroup(COLLISION_GROUP_WORLD)
+    end
+
+    Lyn.Hook.PreReturn("PhysgunPickup", "Lyn.CanPhysgunPlayer", function(ply, target)
+        if type(target) == "Player" and ply:HasPermission("can_physgun_players") and ply:CanTarget(target) then
+            freeze_player(target)
+            return true
+        end
+    end)
+
+    local physgun_right_click_to_freeze = Lyn.Config.SyncValue("physgun_right_click_to_freeze", false)
+    local physgun_nofalldamage = Lyn.Config.SyncValue("physgun_nofalldamage", false)
+    local physgun_reset_velocity = Lyn.Config.SyncValue("physgun_reset_velocity", false)
+
+    hook.Add("PhysgunDrop", "Lyn.PhysgunDrop", function(ply, target)
+        if type(target) ~= "Player" then return end
+
+        if physgun_right_click_to_freeze() and ply:KeyPressed(IN_ATTACK2) then
+            freeze_player(target)
+            if SERVER then
+                Lyn.Player.SetSharedVar(target, "frozen", true)
+                Lyn.Player.SetExclusive(target, "freeze")
+            end
+        else
+            if physgun_reset_velocity() then
+                target:SetLocalVelocity(Vector(0, 0, 0))
+            end
+
+            if SERVER then
+                target:UnLock()
+                Lyn.Player.SetSharedVar(target, "frozen", nil)
+                Lyn.Player.SetExclusive(target, nil)
+
+                if Lyn.Player.GetVar(target, "god") then
+                    target:GodEnable()
+                end
+
+                Lyn.Player.SetVar(target, "physgun_drop_was_frozen", not target:IsOnGround())
+            end
+
+            target:SetMoveType(MOVETYPE_WALK)
+            target:SetCollisionGroup(COLLISION_GROUP_PLAYER)
+        end
+    end)
+
+    hook.Add("OnPlayerHitGround", "Lyn.PhysgunDropOnPlayerHitGround", function(ply)
+        if not physgun_nofalldamage() then return end
+
+        if Lyn.Player.GetVar(ply, "physgun_drop_was_frozen") then
+            Lyn.Player.SetVar(ply, "physgun_drop_was_frozen", false)
+            return true
+        end
+    end)
+end
+
 Command("bot")
     :Aliases("addbot", "spawnbot", "createbot")
     :Permission("bot")
 
     :Param("number", { hint = "amount", floor = true, min = 1, max = game.MaxPlayers(), default = 1 })
     :Execute(function(ply, amount)
-        for i = 1, amount do
+        for _ = 1, amount do
             RunConsoleCommand("bot")
         end
 
-        Command.Notify("*", "#commands.bot.notify", {
+        LYN_NOTIFY("*", "#commands.bot.notify", {
             P = ply,
             amount = amount,
         })
