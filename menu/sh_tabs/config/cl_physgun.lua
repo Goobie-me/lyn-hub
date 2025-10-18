@@ -28,6 +28,7 @@ local items = {
 }
 
 Lyn.Config.AddSimpleTab("Physgun", function() return items end, {
+    pos = 3,
     check = function()
         return LocalPlayer():HasPermission("menu.manage_config")
     end
