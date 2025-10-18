@@ -1,5 +1,4 @@
 local Lyn = Lyn
-local Config = Lyn.Config
 
 local items = {
     {
@@ -28,7 +27,7 @@ local items = {
     },
 }
 
-Config.AddSimpleTab("Physgun", function() return items end, {
+Lyn.Config.AddSimpleTab("Physgun", function() return items end, {
     check = function()
         return LocalPlayer():HasPermission("menu.manage_config")
     end

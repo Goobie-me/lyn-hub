@@ -231,7 +231,7 @@ do
                 target:SetMoveType(target:GetMoveType() == MOVETYPE_WALK and MOVETYPE_NOCLIP or MOVETYPE_WALK)
             end
 
-            LYN_NOTIFY("*", "#commands.armor.noclip", { P = ply, T = targets })
+            LYN_NOTIFY("*", "#commands.noclip.notify", { P = ply, T = targets })
         end)
         :Add()
 
@@ -252,7 +252,6 @@ do
             ply:Lock()
         end
         ply:SetMoveType(MOVETYPE_NONE)
-        ply:SetCollisionGroup(COLLISION_GROUP_WORLD)
     end
 
     Lyn.Hook.PreReturn("PhysgunPickup", "Lyn.CanPhysgunPlayer", function(ply, target)
@@ -293,7 +292,6 @@ do
             end
 
             target:SetMoveType(MOVETYPE_WALK)
-            target:SetCollisionGroup(COLLISION_GROUP_PLAYER)
         end
     end)
 
@@ -306,6 +304,74 @@ do
         end
     end)
 end
+
+do
+    Command("cleardecals")
+        :Aliases("decalsclear", "removealldecals", "clearmapdecals")
+        :Permission("cleardecals")
+
+        :Execute(function(ply)
+            Net.StartSV("Command.ClearDecals", "*")
+            LYN_NOTIFY("*", "#commands.cleardecals.notify", {
+                P = ply,
+            })
+        end)
+        :Add()
+
+
+    if CLIENT then
+        Net.HookCL("Command.ClearDecals", function()
+            game.RemoveRagdolls()
+            RunConsoleCommand("r_cleardecals")
+        end)
+    end
+end
+
+do
+    Command("stopsound")
+        :Permission("stopsound")
+
+        :Execute(function(ply)
+            Net.StartSV("Command.StopSound", "*")
+            LYN_NOTIFY("*", "#commands.stopsound.notify", {
+                P = ply,
+            })
+        end)
+        :Add()
+
+    if CLIENT then
+        Net.HookCL("Command.StopSound", function()
+            RunConsoleCommand("stopsound")
+        end)
+    end
+end
+
+Command("exitvehicle")
+    :Permission("exitvehicle", "admin")
+
+    :Param("player", { single_target = true })
+    :Execute(function(ply, targets)
+        local target = targets[1]
+
+        if not target:InVehicle() then
+            if ply == target then
+                Lyn.Player.Chat.Send(ply, "#commands.exit_vehicle.not_in_vehicle_self")
+            else
+                Lyn.Player.Chat.Send(ply, "#commands.exit_vehicle.not_in_vehicle_target", {
+                    T = targets
+                })
+            end
+            return
+        end
+
+        target:ExitVehicle()
+
+        LYN_NOTIFY("*", "#commands.exit_vehicle.notify", {
+            P = ply,
+            T = targets,
+        })
+    end)
+    :Add()
 
 Command("bot")
     :Aliases("addbot", "spawnbot", "createbot")

@@ -119,7 +119,8 @@ commands = {
         role_does_not_exist = "The role {red %role%} does not exist.",
     },
 
-    exclusive_error = "Cannot run this command on {T} - {red %reason%} is currently active.",
+    exclusive_error = "Cannot run this command on {T} - {red %reason%} is currently active",
+    exclusive_error_targets = "Exclusive active - skipping {T}",
 
     -- Hints translations are automatically used without using a # before them unlike commands' names.
     hints = {
@@ -299,6 +300,24 @@ commands = {
         notify = "{P} respawned {T}",
     },
 
+    -- Teleport
+
+    bring = {
+        help = "Teleport a player to yourself.",
+        notify = "{P} brought {T}",
+    },
+
+    ["goto"] = {
+        help = "Teleport to a player.",
+        notify = "{P} teleported to {T}",
+    },
+
+    ["return"] = {
+        help = "Return to your previous location before using 'goto' or 'bring'.",
+        notify = "{P} returned {T} to the previous location",
+        no_previous_location = "No previous location found for {P}",
+    },
+
     -- User Management Commands
 
     playeraddrole = {
@@ -425,6 +444,30 @@ commands = {
     unban = {
         help = "Unban a player from the server.",
         notify = "{P} unbanned {red %target_steamid64%}",
+    },
+
+    noclip = {
+        help = "Toggle noclip for a player.",
+        notify = "{P} toggled noclip for {T}",
+    },
+
+    cleardecals = {
+        help = "Clear ragdolls and decals for all players.",
+        notify = "{P} cleared ragdolls and decals for all players.",
+    },
+
+    stopsound = {
+        help = "Stop all sounds for all players.",
+        notify = "{P} stopped all sounds",
+    },
+
+    exit_vehicle = {
+        help = "Force a player out of a vehicle.",
+
+        not_in_vehicle_self = "You are not in a vehicle!",
+        not_in_vehicle_target = "{T} is not in a vehicle!",
+
+        notify = "{P} forced {T} to get out from a vehicle",
     },
 
     bot = {

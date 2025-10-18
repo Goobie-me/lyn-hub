@@ -99,28 +99,28 @@ local function can_stand(pos, mins, maxs, stand_filter)
     return clear_here(pos, mins, maxs, stand_filter, CLEAR_PAD)
 end
 
-local function admin_ground_z(admin, mins, maxs)
-    local g = trace_ground(admin:GetPos(), mins, maxs, { admin })
+local function caller_ground_z(caller, mins, maxs)
+    local g = trace_ground(caller:GetPos(), mins, maxs, { caller })
     if g.Hit and g.HitNormal.z > 0.7 then
-        local floor = snap_floor(g.HitPos, mins, maxs, { admin }) or (g.HitPos + VEC_UP_4)
+        local floor = snap_floor(g.HitPos, mins, maxs, { caller }) or (g.HitPos + VEC_UP_4)
         return floor.z
     end
-    return admin:GetPos().z
+    return caller:GetPos().z
 end
 
-local function z_ok(z, admin_z)
-    if z < (admin_z - ALT_MAX_DROP) then return false end
-    if z > (admin_z + ALT_MAX_RISE) then return false end
+local function z_ok(z, caller_z)
+    if z < (caller_z - ALT_MAX_DROP) then return false end
+    if z > (caller_z + ALT_MAX_RISE) then return false end
     return true
 end
 
 local function push_history(ply)
-    ply.sam_tele_stack = ply.sam_tele_stack or {}
-    ply.sam_tele_stack[#ply.sam_tele_stack + 1] = { pos = ply:GetPos(), ang = ply:EyeAngles() }
+    local tele_stack = Lyn.Player.GetVar(ply, "command_teleport_stack", {})
+    tele_stack[#tele_stack + 1] = { pos = ply:GetPos(), ang = ply:EyeAngles() }
+    Lyn.Player.SetVar(ply, "command_teleport_stack", tele_stack)
 end
 
 local function unstick(ply)
-    if not IsValid(ply) then return end
     local mins, maxs = hull(ply)
     for _ = 1, 6 do
         local p = ply:GetPos()
@@ -171,19 +171,19 @@ local function gen_ring_slots(center, r, step, angle_offset)
     return out
 end
 
-local function collect_slots(admin, worst_mins, worst_maxs, admin_z, R, step)
-    local origin = admin:GetPos()
+local function collect_slots(caller, worst_mins, worst_maxs, caller_z, R, step)
+    local origin = caller:GetPos()
     local slots = {}
     local angle_jitter = 0
-    local ignore_ground = { admin }
+    local ignore_ground = { caller }
 
     do
-        local eye = admin:EyeAngles()
+        local eye = caller:EyeAngles()
         local try = origin + eye:Forward() * 72
         local g = trace_ground(try, worst_mins, worst_maxs, ignore_ground)
         if g.Hit and g.HitNormal.z > 0.7 then
             local floor = snap_floor(g.HitPos, worst_mins, worst_maxs, ignore_ground)
-            if floor and z_ok(floor.z, admin_z) and not bad_at(floor) then
+            if floor and z_ok(floor.z, caller_z) and not bad_at(floor) then
                 slots[#slots + 1] = floor
             end
         end
@@ -196,7 +196,7 @@ local function collect_slots(admin, worst_mins, worst_maxs, admin_z, R, step)
             local g = trace_ground(ring[i], worst_mins, worst_maxs, ignore_ground)
             if g.Hit and g.HitNormal.z > 0.7 then
                 local floor = snap_floor(g.HitPos, worst_mins, worst_maxs, ignore_ground)
-                if floor and z_ok(floor.z, admin_z) and not bad_at(floor) then
+                if floor and z_ok(floor.z, caller_z) and not bad_at(floor) then
                     slots[#slots + 1] = floor
                 end
             end
@@ -206,62 +206,66 @@ local function collect_slots(admin, worst_mins, worst_maxs, admin_z, R, step)
     return slots
 end
 
-local function assign_slots(admin, targets)
+local function assign_slots(caller, targets)
     local worst_mins, worst_maxs, worst_r
-    for _, target in ipairs(targets) do
+    local target_count = #targets
+
+    local target_hulls = {}
+    for i = 1, target_count do
+        local target = targets[i]
         if not target:Alive() then target:Spawn() end
         target:ExitVehicle()
         local mi, ma = hull(target)
         local ri = hull_radius(mi, ma)
-        if worst_r then
-            if ri > worst_r then worst_r, worst_mins, worst_maxs = ri, mi, ma end
-        else
-            worst_mins, worst_maxs, worst_r = mi, ma, ri
+        local dmi, dma = hull_duck(target)
+        target_hulls[i] = {
+            ent = target,
+            mins = mi,
+            maxs = ma,
+            dmins = dmi,
+            dmaxs = dma
+        }
+        if not worst_r or ri > worst_r then
+            worst_r, worst_mins, worst_maxs = ri, mi, ma
         end
     end
 
-    local admin_z = admin_ground_z(admin, worst_mins, worst_maxs)
+    local caller_z = caller_ground_z(caller, worst_mins, worst_maxs)
     local step = math.max(BASE_STEP, (worst_r * 2) + (SEP_PAD * 2))
     local R = step
     local placed = {}
+    local placed_lookup = {}
     local taken = {}
-    local origin = admin:GetPos()
+    local origin = caller:GetPos()
+    local min_dist_sqr = (worst_r + SEP_PAD) ^ 2
 
-    while #placed < #targets and R <= MAX_RADIUS do
-        local slots = collect_slots(admin, worst_mins, worst_maxs, admin_z, R, step)
-        for s = 1, #slots do
+    while #placed < target_count and R <= MAX_RADIUS do
+        local slots = collect_slots(caller, worst_mins, worst_maxs, caller_z, R, step)
+        local slot_count = #slots
+        for s = 1, slot_count do
             if not taken[s] then
                 local pos = slots[s]
-                if pos:DistToSqr(origin) > ((worst_r + SEP_PAD) ^ 2) then
-                    for t = 1, #targets do
-                        local ply = targets[t]
-                        local already = false
-                        for k = 1, #placed do
-                            if placed[k].ent == ply then
-                                already = true
-                                break
-                            end
-                        end
-                        if not already and IsValid(ply) then
-                            local mins, maxs = hull(ply)
-                            local stand_filter = { ply }
-                            if can_stand(pos, mins, maxs, stand_filter)
-                                and respects_sep(pos, mins, maxs, placed, SEP_PAD) then
+                if pos:DistToSqr(origin) > min_dist_sqr then
+                    for t = 1, target_count do
+                        if not placed_lookup[t] then
+                            local th = target_hulls[t]
+                            local stand_filter = { th.ent }
+                            if can_stand(pos, th.mins, th.maxs, stand_filter)
+                                and respects_sep(pos, th.mins, th.maxs, placed, SEP_PAD) then
                                 taken[s] = true
-                                placed[#placed + 1] = { ent = ply, pos = pos, mins = mins, maxs = maxs }
+                                placed_lookup[t] = true
+                                placed[#placed + 1] = { ent = th.ent, pos = pos, mins = th.mins, maxs = th.maxs }
                                 break
-                            else
-                                local dmins, dmaxs = hull_duck(ply)
-                                if can_stand(pos, dmins, dmaxs, stand_filter)
-                                    and respects_sep(pos, dmins, dmaxs, placed, SEP_PAD) then
-                                    taken[s] = true
-                                    placed[#placed + 1] = { ent = ply, pos = pos, mins = dmins, maxs = dmaxs }
-                                    break
-                                end
+                            elseif can_stand(pos, th.dmins, th.dmaxs, stand_filter)
+                                and respects_sep(pos, th.dmins, th.dmaxs, placed, SEP_PAD) then
+                                taken[s] = true
+                                placed_lookup[t] = true
+                                placed[#placed + 1] = { ent = th.ent, pos = pos, mins = th.dmins, maxs = th.dmaxs }
+                                break
                             end
                         end
                     end
-                    if #placed >= #targets then break end
+                    if #placed >= target_count then break end
                 end
             end
         end
@@ -270,23 +274,31 @@ local function assign_slots(admin, targets)
     return placed
 end
 
-local function place_group(admin, targets)
-    local plan = assign_slots(admin, targets)
-    if #plan == 0 then return end
+local function place_group(caller, targets)
+    local plan = assign_slots(caller, targets)
+    if #plan == 0 then return {} end
+
+    local exclusives = { caller = caller }
+    targets = { caller = caller }
 
     for i = 1, #plan do
-        local item = plan[i]
-        local ply  = item.ent
-        if IsValid(ply) then
-            push_history(ply)
-            ply:SetGroundEntity(nil)
-            ply:SetPos(item.pos + VEC_UP_8)
-            ply:DropToFloor()
-            timer.Simple(0, function() if IsValid(ply) then unstick(ply) end end)
-            local look = (admin:EyePos() - ply:EyePos()):Angle()
-            ply:SetEyeAngles(look)
+        local item   = plan[i]
+        local target = item.ent
+        if Lyn.Player.GetExclusive(caller, target) then
+            table.insert(exclusives, target)
+        else
+            table.insert(targets, target)
+            push_history(target)
+            target:SetGroundEntity(nil)
+            target:SetPos(item.pos + VEC_UP_8)
+            target:DropToFloor()
+            Lyn.Player.Timer.Simple(target, 0, unstick)
+            local look = (caller:EyePos() - target:EyePos()):Angle()
+            target:SetEyeAngles(look)
         end
     end
+
+    return targets, exclusives
 end
 
 Command("bring")
@@ -296,7 +308,21 @@ Command("bring")
 
     :Param("player", { cant_target_self = true })
     :Execute(function(ply, targets)
-        place_group(ply, targets)
+        if #targets == 1 and Lyn.Player.SendExclusiveMessage(ply, targets[1]) then
+            return
+        end
+        local targets, exclusives = place_group(ply, targets)
+        if #targets > 0 then
+            LYN_NOTIFY("*", "#commands.bring.notify", {
+                P = ply,
+                T = targets,
+            })
+        end
+        if #exclusives > 0 then
+            Lyn.Player.Chat.Send(ply, "#commands.exclusive_error_targets", {
+                T = exclusives
+            })
+        end
     end)
     :Add()
 
@@ -307,6 +333,43 @@ Command("goto")
 
     :Param("player", { cant_target_self = true, single_target = true, allow_higher_target = true })
     :Execute(function(ply, targets)
-        place_group(targets[1], { ply })
+        local target = targets[1]
+        if Lyn.Player.SendExclusiveMessage(ply, target) then return end
+        place_group(target, { ply })
+    end)
+    :Add()
+
+Command("return")
+    :Permission("return", "admin")
+
+    :DenyConsole()
+
+    :Param("player", { default = "^" })
+    :Execute(function(ply, targets)
+        local count = #targets
+        for _, target in ipairs(targets) do
+            local tele_stack = Lyn.Player.GetVar(target, "command_teleport_stack", {})
+            if #tele_stack > 0 then
+                local last = table.remove(tele_stack)
+                Lyn.Player.SetVar(target, "command_teleport_stack", tele_stack)
+
+                target:SetGroundEntity(nil)
+                target:SetPos(last.pos)
+                target:SetEyeAngles(last.ang)
+                target:DropToFloor()
+
+                Lyn.Player.Timer.Simple(target, 0, unstick)
+            elseif count == 1 then
+                Lyn.Player.Chat.Send(ply, "#commands.return.no_previous_location", {
+                    P = target
+                })
+                return
+            end
+        end
+
+        LYN_NOTIFY("*", "#commands.return.notify", {
+            P = ply,
+            T = targets,
+        })
     end)
     :Add()
