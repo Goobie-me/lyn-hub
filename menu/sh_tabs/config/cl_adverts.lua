@@ -28,7 +28,7 @@ Config.AddTab("Adverts", function(sheet)
         value = TimeUtils.ShortFormatDuration(value, nil, true)
         self:SetValue(value)
     end)
-    random_adverts_delay_entry:SetConfig("adverts_random_delay", "2m")
+    random_adverts_delay_entry:SetConfig("adverts_random_delay", "2min")
     random_adverts_delay:SetPanel(random_adverts_delay_entry)
 
     local adverts_panel = panel:Add("GScrollPanel")
