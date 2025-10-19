@@ -99,7 +99,7 @@ Config.AddTab("Adverts", function(sheet)
 
     return panel
 end, {
-    pos = 3,
+    pos = 2,
     check = function()
         return LocalPlayer():HasPermission("menu.manage_config")
     end
