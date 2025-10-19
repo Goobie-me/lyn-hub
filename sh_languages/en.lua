@@ -36,9 +36,9 @@ targets = {
 }
 
 themes = {
-    blur = "Blur",
-    dark = "Dark",
-    light = "Light",
+    Blur = "Blur",
+    Dark = "Dark",
+    Light = "Light",
 }
 
 -- Used as default "reason" for most commands, eg. ban, kick, mute ...etc
