@@ -1,6 +1,6 @@
 ---@diagnostic disable: lowercase-global
 
--- Vous n'avez pas accès à _G, seulement à la fonction Color pour l'instant, je peux en ajouter d'autres si nécessaire.
+-- Vous pouvez accéder aux variables globales en utilisant la variable GLOBAL, ne demandez pas pourquoi.Retry
 
 -- Tous les Targets, Vous, Vous-même, Tout le monde, Inconnu, Console sont précédés d'un "*" blanc
 -- Ceci est pour les identifier plus facilement des joueurs qui ont le même nom qu'eux.
@@ -8,7 +8,7 @@ targets = {
     -- Ceci sera utilisé dans {P}
     you = {
         label = "Vous",
-        color = Color(255, 215, 0)
+        color = GLOBAL.Color(255, 215, 0)
     },
 
     yourself = "Vous-même", -- La couleur sera la même que "Vous"
@@ -19,19 +19,19 @@ targets = {
     -- quand cela affiche tout le monde dans le chat, cela ne signifie pas littéralement tout le monde, c'est tout le monde que le joueur peut cibler.
     everyone = {
         label = "Tout le monde",
-        color = Color(153, 0, 255)
+        color = GLOBAL.Color(153, 0, 255)
     },
 
     -- Ceci sera utilisé si {P} n'est pas un joueur/Console/chaîne
     unknown = {
         label = "Inconnu",
-        color = Color(80, 80, 80)
+        color = GLOBAL.Color(80, 80, 80)
     },
 
     -- Ceci sera utilisé si {P} est la console et également utilisé par d'autres fonctions qui doivent faire référence au nom de la console
     console = {
         label = "Console",
-        color = Color(46, 136, 137)
+        color = GLOBAL.Color(46, 136, 137)
     }
 }
 

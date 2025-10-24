@@ -1,6 +1,6 @@
 ---@diagnostic disable: lowercase-global
 
--- You don't have access to _G, only Color function for now, I can add more if needed.
+-- You can access globals using GLOBAL variable, don't ask why.
 
 -- All Targets, You, Yourself, Everyone, Unknown, Console get prepended with a white "*"
 -- This is to be easier to identify them from players that have the same name as them.
@@ -8,7 +8,7 @@ targets = {
     -- This will be used inside {P}
     you = {
         label = "You",
-        color = Color(255, 215, 0)
+        color = GLOBAL.Color(255, 215, 0)
     },
 
     yourself = "Yourself", -- Color will be the same as "You"
@@ -19,19 +19,19 @@ targets = {
     -- when it prints everyone in chat, it doesn't mean literally everyone, it's everyone that the player can target.
     everyone = {
         label = "Everyone",
-        color = Color(153, 0, 255)
+        color = GLOBAL.Color(153, 0, 255)
     },
 
     -- This will be used if {P} is not a player/Console/string
     unknown = {
         label = "Unknown",
-        color = Color(80, 80, 80)
+        color = GLOBAL.Color(80, 80, 80)
     },
 
     -- This will be used if {P} is the console and also used by other functions that need to refer to the console's name
     console = {
         label = "Console",
-        color = Color(46, 136, 137)
+        color = GLOBAL.Color(46, 136, 137)
     }
 }
 
