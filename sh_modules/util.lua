@@ -415,7 +415,7 @@ if CLIENT then
             Command.SendSyntax({
                 cmd = Command.Get(cmd_name),
                 caller = LocalPlayer(),
-                parsed_arguments = {},
+                parsed_args = {},
                 matched_prefix = matched_identifier,
             })
         else
