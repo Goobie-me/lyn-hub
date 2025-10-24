@@ -101,7 +101,7 @@ Config.AddTab("Adverts", function(sheet)
 end, {
     pos = 2,
     check = function()
-        return LocalPlayer():HasPermission("menu.manage_config")
+        return LocalPlayer():HasPermission("menu_manage_config")
     end
 })
 
