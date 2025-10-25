@@ -18,7 +18,7 @@ Command("hp")
             target:SetHealth(amount)
         end
 
-        LYN_NOTIFY("*", "#commands.hp.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.hp.notify", {
             P = ply,
             T = targets,
             amount = amount,
@@ -37,7 +37,7 @@ Command("armor")
             target:SetArmor(amount)
         end
 
-        LYN_NOTIFY("*", "#commands.armor.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.armor.notify", {
             P = ply,
             T = targets,
             amount = amount,
@@ -55,7 +55,7 @@ Command("give")
             target:Give(class)
         end
 
-        LYN_NOTIFY("*", "#commands.give.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.give.notify", {
             P = ply,
             T = targets,
             class = class,
@@ -92,13 +92,13 @@ do
             end
 
             if damage > 0 then
-                LYN_NOTIFY("*", "#commands.slap.notify_damage", {
+                LYN_NOTIFY("*", "#lyn.commands.slap.notify_damage", {
                     P = ply,
                     T = targets,
                     damage = damage,
                 })
             else
-                LYN_NOTIFY("*", "#commands.slap.notify", {
+                LYN_NOTIFY("*", "#lyn.commands.slap.notify", {
                     P = ply,
                     T = targets,
                 })
@@ -119,7 +119,7 @@ Command("slay")
             end
         end
 
-        LYN_NOTIFY("*", "#commands.slay.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.slay.notify", {
             P = ply,
             T = targets,
         })
@@ -141,7 +141,7 @@ Command("ignite")
             target:Ignite(duration)
         end
 
-        LYN_NOTIFY("*", "#commands.ignite.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.ignite.notify", {
             P = ply,
             T = targets,
             duration = TimeUtils.FormatDuration(duration),
@@ -159,7 +159,7 @@ Command("unignite")
             target:Extinguish()
         end
 
-        LYN_NOTIFY("*", "#commands.unignite.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.unignite.notify", {
             P = ply,
             T = targets,
         })
@@ -177,7 +177,7 @@ Command("god")
             Lyn.Player.SetVar(target, "god", true)
         end
 
-        LYN_NOTIFY("*", "#commands.god.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.god.notify", {
             P = ply,
             T = targets,
         })
@@ -195,7 +195,7 @@ Command("ungod")
             Lyn.Player.SetVar(target, "god", false)
         end
 
-        LYN_NOTIFY("*", "#commands.ungod.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.ungod.notify", {
             P = ply,
             T = targets,
         })
@@ -212,7 +212,7 @@ do
                 Lyn.Player.SetVar(target, "buddha", true)
             end
 
-            LYN_NOTIFY("*", "#commands.buddha.notify", {
+            LYN_NOTIFY("*", "#lyn.commands.buddha.notify", {
                 P = ply,
                 T = targets,
             })
@@ -228,7 +228,7 @@ do
                 Lyn.Player.SetVar(target, "buddha", nil)
             end
 
-            LYN_NOTIFY("*", "#commands.unbuddha.notify", {
+            LYN_NOTIFY("*", "#lyn.commands.unbuddha.notify", {
                 P = ply,
                 T = targets,
             })
@@ -261,7 +261,7 @@ do
                 Lyn.Player.SetExclusive(target, "freeze")
             end
 
-            LYN_NOTIFY("*", "#commands.freeze.notify", {
+            LYN_NOTIFY("*", "#lyn.commands.freeze.notify", {
                 P = ply,
                 T = targets,
             })
@@ -279,7 +279,7 @@ do
                 Lyn.Player.SetExclusive(target, nil)
             end
 
-            LYN_NOTIFY("*", "#commands.unfreeze.notify", {
+            LYN_NOTIFY("*", "#lyn.commands.unfreeze.notify", {
                 P = ply,
                 T = targets,
             })
@@ -306,7 +306,7 @@ Command("cloak")
             Lyn.Player.Cloak(target, true)
         end
 
-        LYN_NOTIFY("*", "#commands.cloak.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.cloak.notify", {
             P = ply,
             T = targets,
         })
@@ -322,7 +322,7 @@ Command("uncloak")
             Lyn.Player.Cloak(target, false)
         end
 
-        LYN_NOTIFY("*", "#commands.uncloak.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.uncloak.notify", {
             P = ply,
             T = targets,
         })
@@ -338,7 +338,7 @@ Command("strip")
             target:StripWeapons()
         end
 
-        LYN_NOTIFY("*", "#commands.strip.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.strip.notify", {
             P = ply,
             T = targets,
         })
@@ -354,7 +354,7 @@ Command("respawn")
             target:Spawn()
         end
 
-        LYN_NOTIFY("*", "#commands.respawn.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.respawn.notify", {
             P = ply,
             T = targets,
         })
@@ -365,13 +365,13 @@ Command("setmodel")
     :Permission("setmodel")
 
     :Param("player")
-    :Param("string", { hint = "model", default = "models/props_c17/oildrum001.mdl" })
+    :Param("string", { hint = "model" })
     :Execute(function(ply, targets, model)
         for _, target in ipairs(targets) do
             target:SetModel(model)
         end
 
-        LYN_NOTIFY("*", "#commands.setmodel.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.setmodel.notify", {
             P = ply,
             T = targets,
             model = model,
@@ -398,7 +398,7 @@ Command("giveammo")
             end
         end
 
-        LYN_NOTIFY("*", "#commands.giveammo.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.giveammo.notify", {
             P = ply,
             T = targets,
             amount = amount,
@@ -424,7 +424,7 @@ Command("scale")
             Lyn.Player.SetVar(target, "was_scaled", true)
         end
 
-        LYN_NOTIFY("*", "#commands.scale.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.scale.notify", {
             P = ply,
             T = targets,
             amount = amount,
@@ -453,7 +453,7 @@ Command("freezeprops")
             end
         end
 
-        LYN_NOTIFY("*", "#commands.freezeprops.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.freezeprops.notify", {
             P = ply,
         })
     end)

@@ -7,8 +7,8 @@
 targets = {
     -- This will be used inside {P}
     you = {
-        label = "You",
-        color = GLOBAL.Color(255, 215, 0)
+        title = "You",
+        color = "#FFD700"
     },
 
     yourself = "Yourself", -- Color will be the same as "You"
@@ -18,20 +18,20 @@ targets = {
     -- This will be used inside {T} when the target is "*"
     -- when it prints everyone in chat, it doesn't mean literally everyone, it's everyone that the player can target.
     everyone = {
-        label = "Everyone",
-        color = GLOBAL.Color(153, 0, 255)
+        title = "Everyone",
+        color = "#9900FF"
     },
 
     -- This will be used if {P} is not a player/Console/string
     unknown = {
-        label = "Unknown",
-        color = GLOBAL.Color(80, 80, 80)
+        title = "Unknown",
+        color = "#505050"
     },
 
     -- This will be used if {P} is the console and also used by other functions that need to refer to the console's name
     console = {
-        label = "Console",
-        color = GLOBAL.Color(46, 136, 137)
+        title = "Console",
+        color = "#2E8889"
     }
 }
 
@@ -73,6 +73,24 @@ If you believe this ban was issued in error, please contact the server staff.
 
 player_role_expired = "Your role {red %role%} has expired."
 
+menu = {
+    tabs = {
+        commands = "Commands",
+        players = "Players",
+        bans = "Bans",
+        roles = "Roles",
+        config = {
+            title = "Config",
+            tabs = {
+                general = "General",
+                adverts = "Adverts",
+                physgun = "Physgun",
+                updates = "Updates",
+            }
+        }
+    }
+}
+
 commands = {
     menu_help = "Open the admin mod menu.",
 
@@ -88,12 +106,12 @@ commands = {
         -- "Invalid number! (invalidsdsds)"
         invalid = "Invalid %argument%! Input: {red %input%}",
 
-        -- [%[%valid_inputs%]%] - A list of valid inputs for the parameter. It can't be used inside a {}.
+        -- %valid_inputs% - A list of valid inputs for the parameter. It can't be used inside a {}.
         -- %param_idx% - The index of the parameter in the command.
         -- %param_name% - The hint/name of the parameter.
         -- %input% - The input the player provided.
         restricted =
-        "Param {blue %param_name%} #{gold %param_idx%}, with input {red %input%}, is restricted to: [[%[%valid_inputs%]%]]",
+        "Param {blue %param_name%} #{gold %param_idx%}, with input {red %input%}, is restricted to: %valid_inputs%",
 
         cant_find_target = "Cannot find a player matching {red %target%}",
         target_not_authed = "You cannot target {T} because they are not authenticated yet.",
@@ -138,6 +156,8 @@ commands = {
         color = "color",
         message = "message",
         extends = "extends",
+        model = "model",
+        ["weapon/entity"] = "weapon/entity",
     },
 
     help = {

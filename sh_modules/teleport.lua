@@ -5,7 +5,6 @@ local Vector  = Vector
 local IsValid = IsValid
 local bit     = bit
 local math    = math
-local timer   = timer
 
 Command.SetCategory("Teleport")
 
@@ -313,13 +312,13 @@ Command("bring")
         end
         local targets, exclusives = place_group(ply, targets)
         if #targets > 0 then
-            LYN_NOTIFY("*", "#commands.bring.notify", {
+            LYN_NOTIFY("*", "#lyn.commands.bring.notify", {
                 P = ply,
                 T = targets,
             })
         end
         if #exclusives > 0 then
-            Lyn.Player.Chat.Send(ply, "#commands.exclusive_error_targets", {
+            Lyn.Player.Chat.Send(ply, "#lyn.commands.exclusive_error_targets", {
                 T = exclusives
             })
         end
@@ -360,14 +359,14 @@ Command("return")
 
                 Lyn.Player.Timer.Simple(target, 0, unstick)
             elseif count == 1 then
-                Lyn.Player.Chat.Send(ply, "#commands.return.no_previous_location", {
+                Lyn.Player.Chat.Send(ply, "#lyn.commands.return.no_previous_location", {
                     P = target
                 })
                 return
             end
         end
 
-        LYN_NOTIFY("*", "#commands.return.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.return.notify", {
             P = ply,
             T = targets,
         })

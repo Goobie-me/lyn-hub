@@ -8,7 +8,7 @@ targets = {
     -- Ceci sera utilisé dans {P}
     you = {
         label = "Vous",
-        color = GLOBAL.Color(255, 215, 0)
+        color = "#FFD700"
     },
 
     yourself = "Vous-même", -- La couleur sera la même que "Vous"
@@ -19,19 +19,19 @@ targets = {
     -- quand cela affiche tout le monde dans le chat, cela ne signifie pas littéralement tout le monde, c'est tout le monde que le joueur peut cibler.
     everyone = {
         label = "Tout le monde",
-        color = GLOBAL.Color(153, 0, 255)
+        color = "#9900FF"
     },
 
     -- Ceci sera utilisé si {P} n'est pas un joueur/Console/chaîne
     unknown = {
         label = "Inconnu",
-        color = GLOBAL.Color(80, 80, 80)
+        color = "#505050"
     },
 
     -- Ceci sera utilisé si {P} est la console et également utilisé par d'autres fonctions qui doivent faire référence au nom de la console
     console = {
         label = "Console",
-        color = GLOBAL.Color(46, 136, 137)
+        color = "#2E8889"
     }
 }
 
@@ -73,6 +73,24 @@ Si vous pensez que ce bannissement a été émis par erreur, veuillez contacter 
 
 player_role_expired = "Votre rôle {red %role%} a expiré."
 
+menu = {
+    tabs = {
+        commands = "Commandes",
+        players = "Joueurs",
+        bans = "Bannissements",
+        roles = "Rôles",
+        config = {
+            title = "Configuration",
+            tabs = {
+                general = "Général",
+                adverts = "Annonces",
+                physgun = "Physgun",
+                updates = "Mises à jour",
+            }
+        }
+    }
+}
+
 commands = {
     menu_help = "Ouvrir le menu du mod admin.",
 
@@ -89,12 +107,12 @@ commands = {
         -- "Nombre invalide! (invalidsdsds)"
         invalid = "%argument% invalide! Entrée: {red %input%}",
 
-        -- [%[%valid_inputs%]%] - Une liste des entrées valides pour le paramètre. Il ne peut pas être utilisé à l'intérieur d'un {}.
+        -- %valid_inputs% - Une liste des entrées valides pour le paramètre. Il ne peut pas être utilisé à l'intérieur d'un {}.
         -- %param_idx% - L'index du paramètre dans la commande.
         -- %param_name% - L'indice/nom du paramètre.
         -- %input% - L'entrée fournie par le joueur.
         restricted =
-        "Le paramètre {blue %param_name%} #{gold %param_idx%}, avec l'entrée {red %input%}, est limité à: [[%[%valid_inputs%]%]]",
+        "Le paramètre {blue %param_name%} #{gold %param_idx%}, avec l'entrée {red %input%}, est limité à: %valid_inputs%",
 
         cant_find_target = "Impossible de trouver un joueur correspondant à {red %target%}",
         target_not_authed = "Vous ne pouvez pas cibler {T} car ils ne sont pas encore authentifiés.",
@@ -139,6 +157,8 @@ commands = {
         color = "couleur",
         message = "message",
         extends = "étend",
+        model = "modèle",
+        ["weapon/entity"] = "arme/entité",
     },
 
     help = {

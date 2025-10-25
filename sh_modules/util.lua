@@ -1,6 +1,5 @@
 local Lyn = Lyn
 local Command = Lyn.Command
-local Language = Lyn.Language
 local TimeUtils = Lyn.GoobieCore.TimeUtils
 local Net = Lyn.GoobieCore.Net
 local Parser = Lyn.GoobieCore.Parser
@@ -25,12 +24,12 @@ Command("map")
     :Execute(function(ply, map, gamemode, duration)
         if gamemode then
             RunConsoleCommand("gamemode", gamemode)
-            LYN_NOTIFY("*", "#commands.map.notify_gamemode", {
+            LYN_NOTIFY("*", "#lyn.commands.map.notify_gamemode", {
                 P = ply,
                 duration = TimeUtils.FormatDuration(duration),
             })
         else
-            LYN_NOTIFY("*", "#commands.map.notify", {
+            LYN_NOTIFY("*", "#lyn.commands.map.notify", {
                 P = ply,
                 duration = TimeUtils.FormatDuration(duration),
             })
@@ -63,7 +62,7 @@ Command("maprestart")
             end)
         end
 
-        LYN_NOTIFY("*", "#commands.maprestart.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.maprestart.notify", {
             P = ply,
             duration = TimeUtils.FormatDuration(duration),
         })
@@ -76,12 +75,12 @@ Command("stopmaprestart")
 
     :Execute(function(ply)
         if not timer.Exists("Lyn.Command.MapRestart") then
-            Lyn.Player.Chat.Send(ply, "#commands.stopmaprestart.no_restart")
+            Lyn.Player.Chat.Send(ply, "#lyn.commands.stopmaprestart.no_restart")
             return
         end
 
         timer.Remove("Lyn.Command.MapRestart")
-        LYN_NOTIFY("*", "#commands.stopmaprestart.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.stopmaprestart.notify", {
             P = ply,
         })
     end)
@@ -93,7 +92,7 @@ Command("mapreset")
 
     :Execute(function(ply)
         game.CleanUpMap(false, nil, function() end)
-        LYN_NOTIFY("*", "#commands.mapreset.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.mapreset.notify", {
             P = ply,
         })
     end)
@@ -104,12 +103,16 @@ Command("kick")
     :Permission("kick", "admin")
 
     :Param("player", { single_target = true })
-    :Param("string", { hint = "reason", default = Language.Get("unspecified") })
+    :Param("string", { hint = "reason", optional = true })
     :GetRestArgs()
     :Execute(function(ply, targets, reason)
+        if not reason then
+            reason = Lyn.I18n.t("#lyn.unspecified")
+        end
+
         targets[1]:Kick(reason)
 
-        LYN_NOTIFY("*", "#commands.kick.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.kick.notify", {
             P = ply,
             T = targets,
             reason = reason,
@@ -122,14 +125,18 @@ Command("kickm")
     :Permission("kickm")
 
     :Param("player")
-    :Param("string", { hint = "reason", default = Language.Get("unspecified") })
+    :Param("string", { hint = "reason", optional = true })
     :GetRestArgs()
     :Execute(function(ply, targets, reason)
+        if not reason then
+            reason = Lyn.I18n.t("#lyn.unspecified")
+        end
+
         for _, target in ipairs(targets) do
             target:Kick(reason)
         end
 
-        LYN_NOTIFY("*", "#commands.kickm.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.kickm.notify", {
             P = ply,
             T = targets,
             reason = reason,
@@ -143,16 +150,20 @@ Command("ban")
 
     :Param("player", { single_target = true })
     :Param("duration", { default = 0 })
-    :Param("string", { hint = "reason", default = Language.Get("unspecified") })
+    :Param("string", { hint = "reason", optional = true })
     :GetRestArgs()
     :Execute(function(ply, targets, duration, reason)
+        if not reason then
+            reason = Lyn.I18n.t("#lyn.unspecified")
+        end
+
         local duration_formatted = TimeUtils.FormatDuration(duration)
         Lyn.Player.Ban(targets[1], duration, reason, ply:SteamID64(), function(err)
             if err then -- db error
-                Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#lyn.commands.failed_to_run")
                 return
             end
-            LYN_NOTIFY("*", "#commands.ban.notify", {
+            LYN_NOTIFY("*", "#lyn.commands.ban.notify", {
                 P = ply,
                 T = targets,
                 duration = duration_formatted,
@@ -168,20 +179,24 @@ Command("banid")
 
     :Param("steamid64")
     :Param("duration", { default = 0 })
-    :Param("string", { hint = "reason", default = Language.Get("unspecified") })
+    :Param("string", { hint = "reason", optional = true })
     :GetRestArgs()
     :Execute(function(ply, promise, duration, reason)
+        if not reason then
+            reason = Lyn.I18n.t("#lyn.unspecified")
+        end
+
         local steamid64 = promise.steamid64
         local caller_steamid64 = ply:SteamID64()
         promise:Handle(function()
             local duration_formatted = TimeUtils.FormatDuration(duration)
             Lyn.Player.BanSteamID64(steamid64, duration, reason, caller_steamid64, function(err2, immunity_error)
                 if err2 then -- db error
-                    Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                    Lyn.Player.Chat.Send(ply, "#lyn.commands.failed_to_run")
                 elseif immunity_error then
-                    Lyn.Player.Chat.Send(ply, "#banning.immunity_error")
+                    Lyn.Player.Chat.Send(ply, "#lyn.banning.immunity_error")
                 else
-                    LYN_NOTIFY("*", "#commands.banid.notify", {
+                    LYN_NOTIFY("*", "#lyn.commands.banid.notify", {
                         P = ply,
                         target_steamid64 = steamid64,
                         duration = duration_formatted,
@@ -205,13 +220,13 @@ Command("unban")
         promise:Handle(function()
             Lyn.Player.Unban(steamid64, caller_steamid64, function(err2, no_active_ban, immunity_error)
                 if err2 then -- db error
-                    Lyn.Player.Chat.Send(ply, "#commands.failed_to_run")
+                    Lyn.Player.Chat.Send(ply, "#lyn.commands.failed_to_run")
                 elseif no_active_ban then
-                    Lyn.Player.Chat.Send(ply, "#banning.unban_no_active_ban")
+                    Lyn.Player.Chat.Send(ply, "#lyn.banning.unban_no_active_ban")
                 elseif immunity_error then
-                    Lyn.Player.Chat.Send(ply, "#banning.unban_immunity_error")
+                    Lyn.Player.Chat.Send(ply, "#lyn.banning.unban_immunity_error")
                 else
-                    LYN_NOTIFY("*", "#commands.unban.notify", {
+                    LYN_NOTIFY("*", "#lyn.commands.unban.notify", {
                         P = ply,
                         target_steamid64 = steamid64,
                     })
@@ -231,7 +246,7 @@ do
                 target:SetMoveType(target:GetMoveType() == MOVETYPE_WALK and MOVETYPE_NOCLIP or MOVETYPE_WALK)
             end
 
-            LYN_NOTIFY("*", "#commands.noclip.notify", { P = ply, T = targets })
+            LYN_NOTIFY("*", "#lyn.commands.noclip.notify", { P = ply, T = targets })
         end)
         :Add()
 
@@ -312,7 +327,7 @@ do
 
         :Execute(function(ply)
             Net.StartSV("Command.ClearDecals", "*")
-            LYN_NOTIFY("*", "#commands.cleardecals.notify", {
+            LYN_NOTIFY("*", "#lyn.commands.cleardecals.notify", {
                 P = ply,
             })
         end)
@@ -333,7 +348,7 @@ do
 
         :Execute(function(ply)
             Net.StartSV("Command.StopSound", "*")
-            LYN_NOTIFY("*", "#commands.stopsound.notify", {
+            LYN_NOTIFY("*", "#lyn.commands.stopsound.notify", {
                 P = ply,
             })
         end)
@@ -355,9 +370,9 @@ Command("exitvehicle")
 
         if not target:InVehicle() then
             if ply == target then
-                Lyn.Player.Chat.Send(ply, "#commands.exit_vehicle.not_in_vehicle_self")
+                Lyn.Player.Chat.Send(ply, "#lyn.commands.exit_vehicle.not_in_vehicle_self")
             else
-                Lyn.Player.Chat.Send(ply, "#commands.exit_vehicle.not_in_vehicle_target", {
+                Lyn.Player.Chat.Send(ply, "#lyn.commands.exit_vehicle.not_in_vehicle_target", {
                     T = targets
                 })
             end
@@ -366,7 +381,7 @@ Command("exitvehicle")
 
         target:ExitVehicle()
 
-        LYN_NOTIFY("*", "#commands.exit_vehicle.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.exit_vehicle.notify", {
             P = ply,
             T = targets,
         })
@@ -383,7 +398,7 @@ Command("bot")
             RunConsoleCommand("bot")
         end
 
-        LYN_NOTIFY("*", "#commands.bot.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.bot.notify", {
             P = ply,
             amount = amount,
         })
@@ -397,7 +412,7 @@ Command("help")
         if cmd_name then
             local cmd = Command.Search(cmd_name)
             if not cmd or (cmd:GetPermissionName() and not ply:HasPermission(cmd:GetPermissionName())) then
-                Lyn.Player.Chat.Send(ply, "#commands.help.no_command", {
+                Lyn.Player.Chat.Send(ply, "#lyn.commands.help.no_command", {
                     command = cmd_name
                 })
                 return
@@ -445,11 +460,11 @@ Command("time")
     :Param("player", { single_target = true, default = "^" })
     :Execute(function(ply, targets)
         if ply == targets[1] then
-            Lyn.Player.Chat.Send(ply, "#commands.time.your", {
+            Lyn.Player.Chat.Send(ply, "#lyn.commands.time.your", {
                 time = TimeUtils.FormatDuration(Lyn.Player.GetPlayTime(ply))
             })
         else
-            Lyn.Player.Chat.Send(ply, "#commands.time.target", {
+            Lyn.Player.Chat.Send(ply, "#lyn.commands.time.target", {
                 T = targets, time = TimeUtils.FormatDuration(Lyn.Player.GetPlayTime(targets[1]))
             })
         end

@@ -1,7 +1,6 @@
 local Lyn = Lyn
 local Command = Lyn.Command
 local TimeUtils = Lyn.GoobieCore.TimeUtils
-local Language = Lyn.Language
 
 local ipairs = ipairs
 
@@ -22,12 +21,12 @@ Command("pm")
     :Execute(function(ply, targets, message)
         local target = targets[1]
 
-        Lyn.Player.Chat.Send(ply, "#commands.pm.to", {
+        Lyn.Player.Chat.Send(ply, "#lyn.commands.pm.to", {
             T = targets,
             message = message
         })
 
-        Lyn.Player.Chat.Send(target, "#commands.pm.from", {
+        Lyn.Player.Chat.Send(target, "#lyn.commands.pm.from", {
             P = ply,
             message = message
         })
@@ -63,12 +62,12 @@ Command("asay")
 
         -- Not using LYN_NOTIFY because it's a message
         if ply:HasPermission("see_admin_chat") then
-            Lyn.Player.Chat.Send(targets, "#commands.asay.notify", {
+            Lyn.Player.Chat.Send(targets, "#lyn.commands.asay.notify", {
                 P = ply,
                 message = message
             })
         else
-            Lyn.Player.Chat.Send(targets, "#commands.asay.notify_no_access", {
+            Lyn.Player.Chat.Send(targets, "#lyn.commands.asay.notify_no_access", {
                 P = ply,
                 message = message
             })
@@ -85,9 +84,13 @@ Command("mute")
     :Param("duration", {
         min = 0, default = "5m",
     })
-    :Param("string", { hint = "reason", default = Language.Get("unspecified") })
+    :Param("string", { hint = "reason", optional = true })
     :GetRestArgs()
     :Execute(function(ply, targets, duration, reason)
+        if not reason then
+            reason = Lyn.I18n.t("#lyn.unspecified")
+        end
+
         local till = duration ~= 0 and os.time() + duration or 0
 
         for _, target in ipairs(targets) do
@@ -97,7 +100,7 @@ Command("mute")
             })
         end
 
-        LYN_NOTIFY("*", "#commands.mute.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.mute.notify", {
             P = ply,
             T = targets,
             duration = TimeUtils.FormatDuration(duration),
@@ -116,7 +119,7 @@ Command("unmute")
             Lyn.Player.SetPData(target, "muted", nil)
         end
 
-        LYN_NOTIFY("*", "#commands.unmute.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.unmute.notify", {
             P = ply,
             T = targets,
         })
@@ -132,7 +135,7 @@ if SERVER then
         if till == 0 or till > os.time() then
             if not no_notify then
                 local duration = till == 0 and 0 or till - os.time()
-                Lyn.Player.Chat.Send(ply, "#commands.mute.notify_muted", {
+                Lyn.Player.Chat.Send(ply, "#lyn.commands.mute.notify_muted", {
                     duration = TimeUtils.FormatDuration(duration),
                     reason = muted.reason
                 })
@@ -167,9 +170,13 @@ Command("gag")
     :Param("duration", {
         min = 0, default = "5m",
     })
-    :Param("string", { hint = "reason", default = Language.Get("unspecified") })
+    :Param("string", { hint = "reason", optional = true })
     :GetRestArgs()
     :Execute(function(ply, targets, duration, reason)
+        if not reason then
+            reason = Lyn.I18n.t("#lyn.unspecified")
+        end
+
         for _, target in ipairs(targets) do
             Lyn.Player.SetPData(target, "gagged", {
                 till = duration ~= 0 and os.time() + duration or 0,
@@ -182,7 +189,7 @@ Command("gag")
             end
         end
 
-        LYN_NOTIFY("*", "#commands.gag.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.gag.notify", {
             P = ply,
             T = targets,
             duration = TimeUtils.FormatDuration(duration),
@@ -202,7 +209,7 @@ Command("ungag")
             Lyn.Player.Timer.Remove(target, "Lyn.Chat.Gag")
         end
 
-        LYN_NOTIFY("*", "#commands.ungag.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.ungag.notify", {
             P = ply,
             T = targets,
         })
