@@ -2,6 +2,13 @@
 
 -- Vous pouvez accéder aux variables globales en utilisant la variable GLOBAL, ne demandez pas pourquoi.Retry
 
+steamid64 = "SteamID64"
+
+-- Utilisé comme "raison" par défaut pour la plupart des commandes, par ex. ban, kick, mute ...etc
+unspecified = "non spécifié"
+
+player_role_expired = "Votre rôle {red %role%} a expiré."
+
 -- Tous les Targets, Vous, Vous-même, Tout le monde, Inconnu, Console sont précédés d'un "*" blanc
 -- Ceci est pour les identifier plus facilement des joueurs qui ont le même nom qu'eux.
 targets = {
@@ -41,9 +48,6 @@ themes = {
     Light = "Clair",
 }
 
--- Utilisé comme "raison" par défaut pour la plupart des commandes, par ex. ban, kick, mute ...etc
-unspecified = "non spécifié"
-
 banning = {
     immunity_error =
     "Vous ne pouvez pas modifier le bannissement de ce joueur car il a été émis par quelqu'un avec une immunité supérieure à la vôtre.",
@@ -71,14 +75,41 @@ Si vous pensez que ce bannissement a été émis par erreur, veuillez contacter 
 ]]
 }
 
-player_role_expired = "Votre rôle {red %role%} a expiré."
-
 menu = {
     tabs = {
-        commands = "Commandes",
-        players = "Joueurs",
-        bans = "Bannissements",
-        roles = "Rôles",
+        commands = {
+            title = "Commandes",
+        },
+        players = {
+            title = "Joueurs",
+            player = "Joueur",
+            playtime = "Temps de jeu",
+            first_join = "Première connexion",
+            last_join = "Dernière connexion",
+            name = "Nom",
+            role = "Rôle",
+            copy_name = "Copier le nom",
+            copy_steamid = "Copier SteamID",
+            copy_steamid64 = "Copier SteamID64",
+            remove_role = "Supprimer le rôle",
+            add_role = "Ajouter un rôle",
+        },
+        bans = {
+            title = "Bans",
+            player = "Joueur",
+            banned_by = "Banni par",
+            expires_in = "Expire dans",
+            expires_at = "Expire le",
+            reason = "Raison",
+            ban_date = "Date du ban",
+            copy_steamid = "Copier SteamID",
+            copy_steamid64 = "Copier SteamID64",
+            copy_admin_steamid64 = "Copier SteamID64 de l'admin",
+            copy_reason = "Copier la raison",
+        },
+        roles = {
+            title = "Rôles",
+        },
         config = {
             title = "Configuration",
             tabs = {

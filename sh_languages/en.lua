@@ -2,6 +2,13 @@
 
 -- You can access globals using GLOBAL variable, don't ask why.
 
+steamid64 = "SteamID64"
+
+-- Used as default "reason" for most commands, eg. ban, kick, mute ...etc
+unspecified = "unspecified"
+
+player_role_expired = "Your role {red %role%} has expired."
+
 -- All Targets, You, Yourself, Everyone, Unknown, Console get prepended with a white "*"
 -- This is to be easier to identify them from players that have the same name as them.
 targets = {
@@ -41,9 +48,6 @@ themes = {
     Light = "Light",
 }
 
--- Used as default "reason" for most commands, eg. ban, kick, mute ...etc
-unspecified = "unspecified"
-
 banning = {
     immunity_error =
     "You cannot modify this player's ban because it was issued by someone with higher immunity than you.",
@@ -71,14 +75,41 @@ If you believe this ban was issued in error, please contact the server staff.
 ]]
 }
 
-player_role_expired = "Your role {red %role%} has expired."
-
 menu = {
     tabs = {
-        commands = "Commands",
-        players = "Players",
-        bans = "Bans",
-        roles = "Roles",
+        commands = {
+            title = "Commands",
+        },
+        players = {
+            title = "Players",
+            player = "Player",
+            playtime = "Playtime",
+            first_join = "First Join",
+            last_join = "Last Join",
+            name = "Name",
+            role = "Role",
+            copy_name = "Copy Name",
+            copy_steamid = "Copy SteamID",
+            copy_steamid64 = "Copy SteamID64",
+            remove_role = "Remove Role",
+            add_role = "Add Role",
+        },
+        bans = {
+            title = "Bans",
+            player = "Player",
+            banned_by = "Banned By",
+            expires_in = "Expires In",
+            expires_at = "Expires At",
+            reason = "Reason",
+            ban_date = "Ban Date",
+            copy_steamid = "Copy SteamID",
+            copy_steamid64 = "Copy SteamID64",
+            copy_admin_steamid64 = "Copy Admin's SteamID64",
+            copy_reason = "Copy Reason",
+        },
+        roles = {
+            title = "Roles",
+        },
         config = {
             title = "Config",
             tabs = {
