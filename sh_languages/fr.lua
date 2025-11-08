@@ -122,15 +122,16 @@ menu = {
     }
 }
 
-commands = {
-    menu_help = "Ouvrir le menu du mod admin.",
-
+commands_core = {
     cant_use_as_console = "Vous devez être un joueur pour utiliser la commande {red %command%}.",
     no_permission = "Vous n'avez pas la permission d'utiliser la commande {red %command%}.",
 
     -- cela peut se produire lorsqu'une requête de base de données échoue, etc.
     failed_to_run =
     "Échec de l'exécution de la commande. Veuillez vérifier la console du serveur pour plus d'informations.",
+
+    exclusive_error = "Impossible d'exécuter cette commande sur {T} - {red %reason%} est actuellement actif",
+    exclusive_error_targets = "Exclusif actif - ignoré {T}",
 
     arguments = {
         -- Envoyé lorsqu'un joueur tape un argument invalide.
@@ -169,9 +170,6 @@ commands = {
         role_does_not_exist = "Le rôle {red %role%} n'existe pas.",
     },
 
-    exclusive_error = "Impossible d'exécuter cette commande sur {T} - {red %reason%} est actuellement actif",
-    exclusive_error_targets = "Exclusif actif - ignoré {T}",
-
     -- Les traductions des indices sont automatiquement utilisées sans utiliser un # avant eux contrairement aux noms des commandes.
     hints = {
         duration = "durée",
@@ -192,9 +190,16 @@ commands = {
         ["weapon/entity"] = "arme/entité",
     },
 
+}
+
+commands = {
     help = {
         help = "Afficher une liste des commandes disponibles ou obtenir de l'aide pour une commande spécifique.",
         no_command = "Aucune commande trouvée avec le nom {red %command%}",
+    },
+
+    menu = {
+        help = "Ouvrir le menu du mod admin."
     },
 
     -- Chat

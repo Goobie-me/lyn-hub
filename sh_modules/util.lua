@@ -160,7 +160,7 @@ Command("ban")
         local duration_formatted = TimeUtils.FormatDuration(duration)
         Lyn.Player.Ban(targets[1], duration, reason, ply:SteamID64(), function(err)
             if err then -- db error
-                Lyn.Player.Chat.Send(ply, "#lyn.commands.failed_to_run")
+                Lyn.Player.Chat.Send(ply, "#lyn.commands_core.failed_to_run")
                 return
             end
             LYN_NOTIFY("*", "#lyn.commands.ban.notify", {
@@ -192,7 +192,7 @@ Command("banid")
             local duration_formatted = TimeUtils.FormatDuration(duration)
             Lyn.Player.BanSteamID64(steamid64, duration, reason, caller_steamid64, function(err2, immunity_error)
                 if err2 then -- db error
-                    Lyn.Player.Chat.Send(ply, "#lyn.commands.failed_to_run")
+                    Lyn.Player.Chat.Send(ply, "#lyn.commands_core.failed_to_run")
                 elseif immunity_error then
                     Lyn.Player.Chat.Send(ply, "#lyn.banning.immunity_error")
                 else
@@ -220,7 +220,7 @@ Command("unban")
         promise:Handle(function()
             Lyn.Player.Unban(steamid64, caller_steamid64, function(err2, no_active_ban, immunity_error)
                 if err2 then -- db error
-                    Lyn.Player.Chat.Send(ply, "#lyn.commands.failed_to_run")
+                    Lyn.Player.Chat.Send(ply, "#lyn.commands_core.failed_to_run")
                 elseif no_active_ban then
                     Lyn.Player.Chat.Send(ply, "#lyn.banning.unban_no_active_ban")
                 elseif immunity_error then

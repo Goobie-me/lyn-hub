@@ -318,7 +318,7 @@ Command("bring")
             })
         end
         if #exclusives > 0 then
-            Lyn.Player.Chat.Send(ply, "#lyn.commands.exclusive_error_targets", {
+            Lyn.Player.Chat.Send(ply, "#lyn.commands_core.exclusive_error_targets", {
                 T = exclusives
             })
         end

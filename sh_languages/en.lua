@@ -122,14 +122,15 @@ menu = {
     }
 }
 
-commands = {
-    menu_help = "Open the admin mod menu.",
-
+commands_core = {
     cant_use_as_console = "You must be a player to use the {red %command%} command.",
     no_permission = "You do not have permission to use the {red %command%} command.",
 
     -- this could happen when a db query fails, etc.
     failed_to_run = "Failed to run the command. Please check the server console for more information.",
+
+    exclusive_error = "Cannot run this command on {T} - {red %reason%} is currently active",
+    exclusive_error_targets = "Exclusive active - skipping {T}",
 
     arguments = {
         -- Sent when a player types an invalid argument.
@@ -168,9 +169,6 @@ commands = {
         role_does_not_exist = "The role {red %role%} does not exist.",
     },
 
-    exclusive_error = "Cannot run this command on {T} - {red %reason%} is currently active",
-    exclusive_error_targets = "Exclusive active - skipping {T}",
-
     -- Hints translations are automatically used without using a # before them unlike commands' names.
     hints = {
         duration = "duration",
@@ -190,10 +188,16 @@ commands = {
         model = "model",
         ["weapon/entity"] = "weapon/entity",
     },
+}
 
+commands = {
     help = {
         help = "Display a list of available commands or get help for a specific command.",
         no_command = "No command found with the name {red %command%}",
+    },
+
+    menu = {
+        help = "Open the admin mod menu.",
     },
 
     -- Chat
