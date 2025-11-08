@@ -271,8 +271,13 @@ do
 
     Lyn.Hook.PreReturn("PhysgunPickup", "Lyn.CanPhysgunPlayer", function(ply, target)
         if type(target) == "Player" and ply:HasPermission("can_physgun_players") and ply:CanTarget(target) then
-            freeze_player(target)
             return true
+        end
+    end)
+
+    Lyn.Hook.Monitor("OnPhysgunPickup", "Lyn.FreezeOnPhysgunPickup", function(ply, target)
+        if type(target) == "Player" and ply:HasPermission("can_physgun_players") and ply:CanTarget(target) then
+            freeze_player(target)
         end
     end)
 
