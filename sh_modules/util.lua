@@ -313,7 +313,7 @@ do
 
             target:SetMoveType(MOVETYPE_WALK)
         end
-    end)
+    end, HOOK_MONITOR_LOW) -- HOOK_MONITOR_LOW to run after other addons that unfreeze
 
     hook.Add("OnPlayerHitGround", "Lyn.PhysgunDropOnPlayerHitGround", function(ply)
         if not physgun_nofalldamage() then return end
