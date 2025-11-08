@@ -326,7 +326,7 @@ Command("setroleextends")
         end
     })
     :Execute(function(ply, role, extends)
-        Lyn.Role.SetExtends(role, extends, function(err)
+        Lyn.Role.ChangeExtends(role, extends, function(err)
             if err then
                 Lyn.Player.Chat.Send(ply, "#lyn.commands_core.failed_to_run")
                 return
