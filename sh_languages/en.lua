@@ -186,6 +186,11 @@ commands_core = {
         message = "message",
         extends = "extends",
         model = "model",
+        damage = "damage",
+        permission = "permission",
+        map = "map",
+        gamemode = "gamemode",
+        command = "command",
         ["weapon/entity"] = "weapon/entity",
     },
 }
