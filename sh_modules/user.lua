@@ -245,7 +245,7 @@ Command("setroleimmunity")
         max = Role.MAX_IMMUNITY
     })
     :Execute(function(ply, role, immunity)
-        Lyn.Role.SetImmunity(role, immunity, function(err)
+        Lyn.Role.ChangeImmunity(role, immunity, function(err)
             if err then
                 Lyn.Player.Chat.Send(ply, "#lyn.commands_core.failed_to_run")
                 return
@@ -292,7 +292,7 @@ Command("setrolecolor")
     :Param("role")
     :Param("color")
     :Execute(function(ply, role, color)
-        Lyn.Role.SetColor(role, color, function(err)
+        Lyn.Role.ChangeColor(role, color, function(err)
             if err then
                 Lyn.Player.Chat.Send(ply, "#lyn.commands_core.failed_to_run")
                 return
