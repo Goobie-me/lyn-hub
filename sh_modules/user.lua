@@ -270,7 +270,7 @@ Command("setroledisplayname")
     })
     :Execute(function(ply, role, display_name)
         local old_display_name = Role.GetDisplayName(role)
-        Lyn.Role.SetDisplayName(role, display_name, function(err)
+        Lyn.Role.ChangeDisplayName(role, display_name, function(err)
             if err then
                 Lyn.Player.Chat.Send(ply, "#lyn.commands_core.failed_to_run")
                 return
