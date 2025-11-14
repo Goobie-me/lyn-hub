@@ -41,7 +41,7 @@ if SERVER then
             extends = role.Inherits
         end
 
-        Role.Create(role.name, 2, nil, nil, extends)
+        Role.Create(role.Name, 2, nil, nil, extends)
     end
     hook.Add("CAMI.OnUsergroupRegistered", "Lyn.CAMI.OnUsergroupRegistered", on_user_group_registered)
 
