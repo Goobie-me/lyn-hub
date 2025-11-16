@@ -144,7 +144,7 @@ Command("ignite")
         LYN_NOTIFY("*", "#lyn.commands.ignite.notify", {
             P = ply,
             T = targets,
-            duration = TimeUtils.FormatDuration(duration),
+            D = duration,
         })
     end)
     :Add()

@@ -20,7 +20,6 @@ Command("playeraddrole")
     :Execute(function(ply, targets, role, duration)
         local target = targets[1]
 
-        local duration_formatted = TimeUtils.FormatDuration(duration)
         Lyn.Player.Role.Add(target, role, duration, function(err)
             if err then
                 Lyn.Player.Chat.Send(ply, "#lyn.commands_core.failed_to_run")
@@ -31,7 +30,7 @@ Command("playeraddrole")
                 P = ply,
                 T = targets,
                 role = Role.GetDisplayName(role),
-                duration = duration_formatted,
+                D = duration,
             })
         end)
     end)
@@ -52,7 +51,6 @@ Command("playeraddroleid")
     :Execute(function(ply, promise, role, duration)
         local steamid64 = promise.steamid64
         promise:Handle(function()
-            local duration_formatted = TimeUtils.FormatDuration(duration)
             Lyn.Player.Role.AddSteamID64(steamid64, role, duration, function(err)
                 if err then
                     Lyn.Player.Chat.Send(ply, "#lyn.commands_core.failed_to_run")
@@ -63,7 +61,7 @@ Command("playeraddroleid")
                     P = ply,
                     target_steamid64 = steamid64,
                     role = Role.GetDisplayName(role),
-                    duration = duration_formatted,
+                    D = duration,
                 })
             end)
         end)

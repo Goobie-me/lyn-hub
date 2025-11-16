@@ -20,7 +20,7 @@ targets = {
 
     yourself = "Kendin", -- Color will be the same as "You"
 
-    himself = "Kendisi",   -- Color will be his role color
+    himself = "Kendisi", -- Color will be his role color
 
     -- This will be used inside {T} when the target is "*"
     -- when it prints everyone in chat, it doesn't mean literally everyone, it's everyone that the player can target.
@@ -186,6 +186,11 @@ commands_core = {
         message = "mesaj",
         extends = "genişletir",
         model = "model",
+        damage = "hasar",
+        permission = "izin",
+        map = "harita",
+        gamemode = "oyun modu",
+        command = "komut",
         ["weapon/entity"] = "silah/varlık",
     },
 }
@@ -222,9 +227,9 @@ commands = {
 
     mute = {
         help = "Bir oyuncuyu/oyuncuları sessize al.",
-        notify = "{P}, {T} oyuncusunu {green %duration%} süreyle {red %reason%} sebebiyle sessize aldı",
+        notify = "{P}, {T} oyuncusunu {D} süreyle {red %reason%} sebebiyle sessize aldı",
 
-        notify_muted = "{green %duration%} süreyle {red %reason%} sebebiyle sessize alındınız"
+        notify_muted = "{D} süreyle {red %reason%} sebebiyle sessize alındınız"
     },
 
     unmute = {
@@ -234,7 +239,7 @@ commands = {
 
     gag = {
         help = "Bir oyuncuyu/oyuncuları engelle.",
-        notify = "{P}, {T} oyuncusunu {green %duration%} süreyle {red %reason%} sebebiyle engelledi",
+        notify = "{P}, {T} oyuncusunu {D} süreyle {red %reason%} sebebiyle engelledi",
     },
 
     ungag = {
@@ -273,7 +278,7 @@ commands = {
 
     ignite = {
         help = "Bir oyuncuyu ateşe ver.",
-        notify = "{P}, {T} oyuncusunu {green %duration%} saniye boyunca ateşe verdi",
+        notify = "{P}, {T} oyuncusunu {D} saniye boyunca ateşe verdi",
     },
 
     unignite = {
@@ -378,14 +383,12 @@ commands = {
 
     playeraddrole = {
         help = "Bir oyuncuya rol ekle.",
-        notify = "{P}, {T} oyuncusuna {green %duration%} süreyle {green %role%} rolünü ekledi",
-        permanent = "Kalıcı", -- this will be used if duration is set to 0
+        notify = "{P}, {T} oyuncusuna {D} süreyle {green %role%} rolünü ekledi",
     },
 
     playeraddroleid = {
         help = "SteamID/SteamID64 ile bir oyuncuya rol ekle.",
-        notify = "{P}, {red %target_steamid64%} oyuncusuna {green %duration%} süreyle {green %role%} rolünü ekledi",
-        permanent = "Kalıcı", -- this will be used if duration is set to 0
+        notify = "{P}, {red %target_steamid64%} oyuncusuna {D} süreyle {green %role%} rolünü ekledi",
     },
 
     playerremoverole = {
@@ -455,15 +458,15 @@ commands = {
     map = {
         help = "Mevcut haritayı ve/veya oyun modunu değiştir.",
 
-        notify = "{P} tarafından harita değişikliği başlatıldı ve {green %duration%} içinde gerçekleşecek.",
+        notify = "{P} tarafından harita değişikliği başlatıldı ve {D} içinde gerçekleşecek.",
         notify_gamemode =
-        "{P} tarafından harita değişikliği başlatıldı ve {green %duration%} içinde {green %gamemode%} oyun moduyla gerçekleşecek.",
+        "{P} tarafından harita değişikliği başlatıldı ve {D} içinde {green %gamemode%} oyun moduyla gerçekleşecek.",
     },
 
     maprestart = {
         help = "Mevcut haritayı yeniden başlat.",
         notify =
-        "{P} tarafından harita yeniden başlatması başlatıldı ve {green %duration%} içinde gerçekleşecek."
+        "{P} tarafından harita yeniden başlatması başlatıldı ve {D} içinde gerçekleşecek."
     },
 
     stopmaprestart = {
@@ -489,12 +492,12 @@ commands = {
 
     ban = {
         help = "Bir oyuncuyu sunucudan yasakla.",
-        notify = "{P}, {T} oyuncusunu {green %duration%} süreyle {red %reason%} sebebiyle yasakladı",
+        notify = "{P}, {T} oyuncusunu {D} süreyle {red %reason%} sebebiyle yasakladı",
     },
 
     banid = {
         help = "SteamID/SteamID64 ile bir oyuncuyu yasakla.",
-        notify = "{P}, {red %target_steamid64%} oyuncusunu {green %duration%} süreyle {red %reason%} sebebiyle yasakladı",
+        notify = "{P}, {red %target_steamid64%} oyuncusunu {D} süreyle {red %reason%} sebebiyle yasakladı",
     },
 
     unban = {
@@ -533,7 +536,7 @@ commands = {
 
     time = {
         help = "Bir oyuncunun oynama süresini kontrol et.",
-        your = "Oynama süreniz: {green %time%}",
-        target = "{T} oynama süresi: {green %time%}",
+        your = "Oynama süreniz: {D}",
+        target = "{T} oynama süresi: {D}",
     }
 }

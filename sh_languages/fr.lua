@@ -14,7 +14,7 @@ player_role_expired = "Votre rôle {red %role%} a expiré."
 targets = {
     -- Ceci sera utilisé dans {P}
     you = {
-        label = "Vous",
+        title = "Vous",
         color = "#FFD700"
     },
 
@@ -25,19 +25,19 @@ targets = {
     -- Ceci sera utilisé dans {T} lorsque la cible est "*"
     -- quand cela affiche tout le monde dans le chat, cela ne signifie pas littéralement tout le monde, c'est tout le monde que le joueur peut cibler.
     everyone = {
-        label = "Tout le monde",
+        title = "Tout le monde",
         color = "#9900FF"
     },
 
     -- Ceci sera utilisé si {P} n'est pas un joueur/Console/chaîne
     unknown = {
-        label = "Inconnu",
+        title = "Inconnu",
         color = "#505050"
     },
 
     -- Ceci sera utilisé si {P} est la console et également utilisé par d'autres fonctions qui doivent faire référence au nom de la console
     console = {
-        label = "Console",
+        title = "Console",
         color = "#2E8889"
     }
 }
@@ -187,9 +187,13 @@ commands_core = {
         message = "message",
         extends = "étend",
         model = "modèle",
+        damage = "dégâts",
+        permission = "permission",
+        map = "carte",
+        gamemode = "mode de jeu",
+        command = "commande",
         ["weapon/entity"] = "arme/entité",
     },
-
 }
 
 commands = {
@@ -224,9 +228,9 @@ commands = {
 
     mute = {
         help = "Rendre muet un ou plusieurs joueurs.",
-        notify = "{P} a rendu muet {T} pendant {green %duration%} avec la raison {red %reason%}",
+        notify = "{P} a rendu muet {T} pendant {D} avec la raison {red %reason%}",
 
-        notify_muted = "Vous êtes muet pendant {green %duration%} avec la raison {red %reason%}"
+        notify_muted = "Vous êtes muet pendant {D} avec la raison {red %reason%}"
     },
 
     unmute = {
@@ -236,7 +240,7 @@ commands = {
 
     gag = {
         help = "Bâillonner un ou plusieurs joueurs.",
-        notify = "{P} a bâillonné {T} pendant {green %duration%} avec la raison {red %reason%}",
+        notify = "{P} a bâillonné {T} pendant {D} avec la raison {red %reason%}",
     },
 
     ungag = {
@@ -275,7 +279,7 @@ commands = {
 
     ignite = {
         help = "Enflammer un joueur, le mettant en feu.",
-        notify = "{P} a enflammé {T} pendant {green %duration%} secondes",
+        notify = "{P} a enflammé {T} pendant {D} secondes",
     },
 
     unignite = {
@@ -379,14 +383,12 @@ commands = {
 
     playeraddrole = {
         help = "Ajouter un rôle à un joueur.",
-        notify = "{P} a ajouté le rôle {green %role%} à {T} pendant {green %duration%}",
-        permanent = "Permanent", -- ceci sera utilisé si la durée est définie sur 0
+        notify = "{P} a ajouté le rôle {green %role%} à {T} pendant {D}",
     },
 
     playeraddroleid = {
         help = "Ajouter un rôle à un joueur par son SteamID/SteamID64.",
-        notify = "{P} a ajouté le rôle {green %role%} à {red %target_steamid64%} pendant {green %duration%}",
-        permanent = "Permanent", -- ceci sera utilisé si la durée est définie sur 0
+        notify = "{P} a ajouté le rôle {green %role%} à {red %target_steamid64%} pendant {D}",
     },
 
     playerremoverole = {
@@ -457,15 +459,15 @@ commands = {
     map = {
         help = "Changer la carte actuelle et/ou le mode de jeu.",
 
-        notify = "Un changement de carte a été initié par {P} et se produira dans {green %duration%}.",
+        notify = "Un changement de carte a été initié par {P} et se produira dans {D}.",
         notify_gamemode =
-        "Un changement de carte a été initié par {P} et se produira dans {green %duration%} avec le mode de jeu défini sur {green %gamemode%}.",
+        "Un changement de carte a été initié par {P} et se produira dans {D} avec le mode de jeu défini sur {green %gamemode%}.",
     },
 
     maprestart = {
         help = "Redémarrer la carte actuelle.",
         notify =
-        "Un redémarrage de carte a été initié par {P} et se produira dans {green %duration%}."
+        "Un redémarrage de carte a été initié par {P} et se produira dans {D}."
     },
 
     stopmaprestart = {
@@ -491,12 +493,12 @@ commands = {
 
     ban = {
         help = "Bannir un joueur du serveur.",
-        notify = "{P} a banni {T} pendant {green %duration%} avec la raison {red %reason%}",
+        notify = "{P} a banni {T} pendant {D} avec la raison {red %reason%}",
     },
 
     banid = {
         help = "Bannir un joueur par son SteamID/SteamID64.",
-        notify = "{P} a banni {red %target_steamid64%} pendant {green %duration%} avec la raison {red %reason%}",
+        notify = "{P} a banni {red %target_steamid64%} pendant {D} avec la raison {red %reason%}",
     },
 
     unban = {
@@ -535,7 +537,7 @@ commands = {
 
     time = {
         help = "Vérifier le temps de jeu d'un joueur.",
-        your = "Votre temps de jeu: {green %time%}",
-        target = "Temps de jeu de {T}: {green %time%}",
+        your = "Votre temps de jeu: {D}",
+        target = "Temps de jeu de {T}: {D}",
     }
 }

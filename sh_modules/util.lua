@@ -26,12 +26,12 @@ Command("map")
             RunConsoleCommand("gamemode", gamemode)
             LYN_NOTIFY("*", "#lyn.commands.map.notify_gamemode", {
                 P = ply,
-                duration = TimeUtils.FormatDuration(duration),
+                D = duration,
             })
         else
             LYN_NOTIFY("*", "#lyn.commands.map.notify", {
                 P = ply,
-                duration = TimeUtils.FormatDuration(duration),
+                D = duration,
             })
         end
 
@@ -64,7 +64,7 @@ Command("maprestart")
 
         LYN_NOTIFY("*", "#lyn.commands.maprestart.notify", {
             P = ply,
-            duration = TimeUtils.FormatDuration(duration),
+            D = duration,
         })
     end)
     :Add()
@@ -157,7 +157,6 @@ Command("ban")
             reason = Lyn.I18n.t("#lyn.unspecified")
         end
 
-        local duration_formatted = TimeUtils.FormatDuration(duration)
         Lyn.Player.Ban(targets[1], duration, reason, ply:SteamID64(), function(err)
             if err then -- db error
                 Lyn.Player.Chat.Send(ply, "#lyn.commands_core.failed_to_run")
@@ -166,7 +165,7 @@ Command("ban")
             LYN_NOTIFY("*", "#lyn.commands.ban.notify", {
                 P = ply,
                 T = targets,
-                duration = duration_formatted,
+                D = duration,
                 reason = reason,
             })
         end)
@@ -189,7 +188,6 @@ Command("banid")
         local steamid64 = promise.steamid64
         local caller_steamid64 = ply:SteamID64()
         promise:Handle(function()
-            local duration_formatted = TimeUtils.FormatDuration(duration)
             Lyn.Player.BanSteamID64(steamid64, duration, reason, caller_steamid64, function(err2, immunity_error)
                 if err2 then -- db error
                     Lyn.Player.Chat.Send(ply, "#lyn.commands_core.failed_to_run")
@@ -199,7 +197,7 @@ Command("banid")
                     LYN_NOTIFY("*", "#lyn.commands.banid.notify", {
                         P = ply,
                         target_steamid64 = steamid64,
-                        duration = duration_formatted,
+                        D = duration,
                         reason = reason,
                     })
                 end
@@ -466,11 +464,11 @@ Command("time")
     :Execute(function(ply, targets)
         if ply == targets[1] then
             Lyn.Player.Chat.Send(ply, "#lyn.commands.time.your", {
-                time = TimeUtils.FormatDuration(Lyn.Player.GetPlayTime(ply))
+                D = Lyn.Player.GetPlayTime(ply)
             })
         else
             Lyn.Player.Chat.Send(ply, "#lyn.commands.time.target", {
-                T = targets, time = TimeUtils.FormatDuration(Lyn.Player.GetPlayTime(targets[1]))
+                T = targets, D = Lyn.Player.GetPlayTime(targets[1])
             })
         end
     end)

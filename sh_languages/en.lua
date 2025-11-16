@@ -227,9 +227,9 @@ commands = {
 
     mute = {
         help = "Mute a player(s).",
-        notify = "{P} muted {T} for {green %duration%} with reason {red %reason%}",
+        notify = "{P} muted {T} for {D} with reason {red %reason%}",
 
-        notify_muted = "You are muted for {green %duration%} with reason {red %reason%}"
+        notify_muted = "You are muted for {D} with reason {red %reason%}"
     },
 
     unmute = {
@@ -239,7 +239,7 @@ commands = {
 
     gag = {
         help = "Gag a player(s).",
-        notify = "{P} gagged {T} for {green %duration%} with reason {red %reason%}",
+        notify = "{P} gagged {T} for {D} with reason {red %reason%}",
     },
 
     ungag = {
@@ -278,7 +278,7 @@ commands = {
 
     ignite = {
         help = "Ignite a player, setting them on fire.",
-        notify = "{P} ignited {T} for {green %duration%} seconds",
+        notify = "{P} ignited {T} for {D} seconds",
     },
 
     unignite = {
@@ -382,14 +382,12 @@ commands = {
 
     playeraddrole = {
         help = "Add a role to a player.",
-        notify = "{P} added the role {green %role%} to {T} for {green %duration%}",
-        permanent = "Permanent", -- this will be used if duration is set to 0
+        notify = "{P} added the role {green %role%} to {T} for {D}",
     },
 
     playeraddroleid = {
         help = "Add a role to a player by their SteamID/SteamID64.",
-        notify = "{P} added the role {green %role%} to {red %target_steamid64%} for {green %duration%}",
-        permanent = "Permanent", -- this will be used if duration is set to 0
+        notify = "{P} added the role {green %role%} to {red %target_steamid64%} for {D}",
     },
 
     playerremoverole = {
@@ -459,15 +457,15 @@ commands = {
     map = {
         help = "Change current map and/or gamemode.",
 
-        notify = "A map change has been initiated by {P} and will occur in {green %duration%}.",
+        notify = "A map change has been initiated by {P} and will occur in {D}.",
         notify_gamemode =
-        "A map change has been initiated by {P} and will occur in {green %duration%} with the gamemode set to {green %gamemode%}.",
+        "A map change has been initiated by {P} and will occur in {D} with the gamemode set to {green %gamemode%}.",
     },
 
     maprestart = {
         help = "Restart the current map.",
         notify =
-        "A map restart has been initiated by {P} and will occur in {green %duration%}."
+        "A map restart has been initiated by {P} and will occur in {D}."
     },
 
     stopmaprestart = {
@@ -493,12 +491,12 @@ commands = {
 
     ban = {
         help = "Ban a player from the server.",
-        notify = "{P} banned {T} for {green %duration%} with reason {red %reason%}",
+        notify = "{P} banned {T} for {D} with reason {red %reason%}",
     },
 
     banid = {
         help = "Ban a player by their SteamID/SteamID64.",
-        notify = "{P} banned {red %target_steamid64%} for {green %duration%} with reason {red %reason%}",
+        notify = "{P} banned {red %target_steamid64%} for {D} with reason {red %reason%}",
     },
 
     unban = {
@@ -537,7 +535,7 @@ commands = {
 
     time = {
         help = "Check the playtime of a player.",
-        your = "Your playtime: {green %time%}",
-        target = "{T} playtime: {green %time%}",
+        your = "Your playtime: {D}",
+        target = "{T} playtime: {D}",
     }
 }

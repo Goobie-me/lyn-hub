@@ -103,7 +103,7 @@ Command("mute")
         LYN_NOTIFY("*", "#lyn.commands.mute.notify", {
             P = ply,
             T = targets,
-            duration = TimeUtils.FormatDuration(duration),
+            D = duration,
             reason = reason,
         })
     end)
@@ -136,7 +136,7 @@ if SERVER then
             if not no_notify then
                 local duration = till == 0 and 0 or till - os.time()
                 Lyn.Player.Chat.Send(ply, "#lyn.commands.mute.notify_muted", {
-                    duration = TimeUtils.FormatDuration(duration),
+                    D = duration,
                     reason = muted.reason
                 })
             end
@@ -192,7 +192,7 @@ Command("gag")
         LYN_NOTIFY("*", "#lyn.commands.gag.notify", {
             P = ply,
             T = targets,
-            duration = TimeUtils.FormatDuration(duration),
+            D = duration,
             reason = reason,
         })
     end)
