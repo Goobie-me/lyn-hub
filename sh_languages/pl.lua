@@ -53,7 +53,7 @@ banning = {
     "Nie możesz zmodyfikować bana tego gracza, ponieważ został wydany przez kogoś z wyższym immunitetem niż ty.",
 
     unban_immunity_error =
-    "Nie możesz odblanować tego gracza, ponieważ jego ban został wydany przez kogoś z wyższym immunitetem niż ty.",
+    "Nie możesz odbanować tego gracza, ponieważ jego ban został wydany przez kogoś z wyższym immunitetem niż ty.",
     unban_no_active_ban = "Użytkownik nie jest obecnie zbanowany.",
 
     -- %reason% - The reason the player was banned.
