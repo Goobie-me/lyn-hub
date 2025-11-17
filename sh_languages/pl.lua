@@ -244,7 +244,7 @@ commands = {
 
     ungag = {
         help = "Odknebluj gracza/graczy.",
-        notify = "{P} odgęścił {T}",
+        notify = "{P} odkneblował {T}",
     },
 
     -- Fun Commands
