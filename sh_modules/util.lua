@@ -443,7 +443,8 @@ if CLIENT then
             for _, cmd in pairs(commands) do
                 if not cmd:GetPermissionName() or LocalPlayer():HasPermission(cmd:GetPermissionName()) then
                     if cmd.help then
-                        table.insert(chat_lines, Parser.escape(cmd.chat_prefix .. cmd.name .. " - " .. cmd.help))
+                        table.insert(chat_lines,
+                            Parser.escape(cmd.chat_prefix .. cmd.name .. " - " .. Lyn.I18n.t(cmd.help)))
                     else
                         table.insert(chat_lines, Parser.escape(cmd.chat_prefix .. cmd.name))
                     end
