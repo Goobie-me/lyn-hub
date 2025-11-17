@@ -347,7 +347,7 @@ commands = {
     },
 
     freezeprops = {
-        help = "Zamaróż obiekty na świecie.",
+        help = "Zamroź obiekty na świecie.",
         notify = "{P} zamroził wszystkie obiekty",
     },
 
