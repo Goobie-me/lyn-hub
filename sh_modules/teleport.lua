@@ -335,6 +335,11 @@ Command("goto")
         local target = targets[1]
         if Lyn.Player.SendExclusiveMessage(ply, target) then return end
         place_group(target, { ply })
+
+        LYN_NOTIFY("*", "#lyn.commands.goto.notify", {
+            P = ply,
+            T = targets,
+        })
     end)
     :Add()
 
