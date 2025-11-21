@@ -376,6 +376,7 @@ commands = {
     ["goto"] = {
         help = "Bir oyuncuya ışınlan.",
         notify = "{P}, {T} oyuncusuna ışınlandı",
+        no_space = "{T} ışınlanmak için yeterli alana sahip değil!",
     },
 
     ["return"] = {

@@ -377,6 +377,7 @@ commands = {
     ["goto"] = {
         help = "Se téléporter vers un joueur.",
         notify = "{P} s'est téléporté vers {T}",
+        no_space = "{T} n'a pas assez d'espace pour se téléporter!",
     },
 
     ["return"] = {
