@@ -329,6 +329,141 @@ Command("uncloak")
     end)
     :Add()
 
+do
+    local JAIL_WALLS = {
+        { Vector(0, 0, -5),     Angle(90, 0, 0) },
+        { Vector(0, 0, 97),     Angle(90, 0, 0) },
+        { Vector(21, 31, 46),   Angle(0, 90, 0) },
+        { Vector(21, -31, 46),  Angle(0, 90, 0) },
+        { Vector(-21, 31, 46),  Angle(0, 90, 0) },
+        { Vector(-21, -31, 46), Angle(0, 90, 0) },
+        { Vector(-52, 0, 46),   Angle(0, 0, 0) },
+        { Vector(52, 0, 46),    Angle(0, 0, 0) }
+    }
+
+    local function return_false() return false end
+
+    local function cleanup_jail(ply)
+        local props = Lyn.Player.GetVar(ply, "jail_props", {})
+        for _, prop in ipairs(props) do
+            if IsValid(prop) then prop:Remove() end
+        end
+    end
+
+    local function unjail(ply)
+        if not Lyn.Player.GetSharedVar(ply, "jailed") then return end
+        cleanup_jail(ply)
+        Lyn.Player.SetExclusive(ply, nil)
+        Lyn.Player.Timer.Remove(ply, "Unjail")
+        Lyn.Player.Timer.Remove(ply, "JailWatch")
+        Lyn.Player.SetVar(ply, "jail_pos", nil)
+        Lyn.Player.SetVar(ply, "jail_props", nil)
+        Lyn.Player.SetSharedVar(ply, "jailed", nil)
+    end
+
+    local function jail(ply, time)
+        if not IsValid(ply) then return end
+        time = math.max(0, tonumber(time) or 0)
+
+        if Lyn.Player.GetSharedVar(ply, "frozen") then
+            Command.Execute("unfreeze", ply)
+        end
+
+        if not Lyn.Player.GetSharedVar(ply, "jailed") then
+            ply:ExitVehicle()
+            ply:SetMoveType(MOVETYPE_WALK)
+
+            local pos = ply:GetPos()
+            Lyn.Player.SetVar(ply, "jail_pos", pos)
+            Lyn.Player.SetSharedVar(ply, "jailed", true)
+            Lyn.Player.SetExclusive(ply, "jail")
+
+            cleanup_jail(ply)
+
+            local props = {}
+            for _, wall in ipairs(JAIL_WALLS) do
+                local prop = ents.Create("prop_physics")
+                prop:SetModel("models/props_building_details/Storefront_Template001a_Bars.mdl")
+                prop:SetPos(pos + wall[1])
+                prop:SetAngles(wall[2])
+                prop:Spawn()
+
+                prop:SetMoveType(MOVETYPE_NONE)
+                prop:GetPhysicsObject():EnableMotion(false)
+
+                prop.CanTool = return_false
+                prop.PhysgunPickup = return_false
+                prop.jailWall = true
+
+                table.insert(props, prop)
+            end
+            Lyn.Player.SetVar(ply, "jail_props", props)
+        end
+
+        Lyn.Player.Timer.Remove(ply, "Unjail")
+        if time > 0 then
+            Lyn.Player.Timer.Create(ply, "Unjail", time, 1, unjail)
+        end
+
+        Lyn.Player.Timer.Create(ply, "JailWatch", 0.5, 0, function()
+            local pos = Lyn.Player.GetVar(ply, "jail_pos")
+            if ply:GetPos():DistToSqr(pos) > 4900 then
+                ply:SetPos(pos)
+            end
+            local props = Lyn.Player.GetVar(ply, "jail_props", {})
+            if not IsValid(props[1]) then
+                jail(ply, Lyn.Player.Timer.TimeLeft(ply, "Unjail") or 0)
+            end
+        end)
+    end
+
+    Command("jail")
+        :Permission("jail", "admin")
+        :Param("player")
+        :Param("duration", { default = 0, min = 0 })
+        :Param("string", { hint = "reason", optional = true })
+        :GetRestArgs()
+        :Execute(function(ply, targets, duration, reason)
+            if not reason then
+                reason = Lyn.I18n.t("#lyn.unspecified")
+            end
+
+            for _, target in ipairs(targets) do
+                jail(target, duration)
+            end
+
+            LYN_NOTIFY("*", "#lyn.commands.jail.notify", {
+                P = ply,
+                T = targets,
+                D = duration,
+                reason = reason,
+            })
+        end)
+        :Add()
+
+    Command("unjail")
+        :Permission("unjail", "admin")
+
+        :Param("player", { default = "^" })
+        :Execute(function(ply, targets)
+            for _, target in ipairs(targets) do
+                unjail(target)
+            end
+
+            LYN_NOTIFY("*", "#lyn.commands.unjail.notify", {
+                P = ply,
+                T = targets,
+            })
+        end)
+        :Add()
+
+    Lyn.Hook.PreReturn("CanProperty", "Lyn.Jail", function(_, _, ent)
+        if ent.jailWall then
+            return false
+        end
+    end)
+end
+
 Command("strip")
     :Permission("strip", "admin")
 

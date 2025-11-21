@@ -356,6 +356,11 @@ commands = {
         notify = "{P}, {T} oyuncusunu hapse attı",
     },
 
+    unjail = {
+        help = "Oyuncu(ların) hapisten çıkmasını sağla.",
+        notify = "{P}, {T} oyuncusunu hapisten çıkardı",
+    },
+
     respawn = {
         help = "Bir oyuncuyu yeniden canlandır.",
         notify = "{P}, {T} oyuncusunu yeniden canlandırdı",

@@ -326,6 +326,16 @@ commands = {
         notify = "{P} uncloaked {T}",
     },
 
+    jail = {
+        help = "Jail a player(s).",
+        notify = "{P} jailed {T} for {D} with reason {red %reason%}",
+    },
+
+    unjail = {
+        help = "Unjail a player(s).",
+        notify = "{P} unjailed {T}",
+    },
+
     strip = {
         help = "Strip player(s) of their weapons.",
         notify = "{P} stripped {T} of their weapons",
@@ -349,10 +359,6 @@ commands = {
     freezeprops = {
         help = "Freeze props in the world.",
         notify = "{P} froze all props",
-    },
-
-    jail = {
-
     },
 
     respawn = {

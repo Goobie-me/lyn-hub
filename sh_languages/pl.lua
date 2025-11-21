@@ -20,7 +20,7 @@ targets = {
 
     yourself = "Siebie", -- Color will be the same as "You"
 
-    himself = "Siebie",   -- Color will be his role color
+    himself = "Siebie",  -- Color will be his role color
 
     -- This will be used inside {T} when the target is "*"
     -- when it prints everyone in chat, it doesn't mean literally everyone, it's everyone that the player can target.
@@ -326,6 +326,16 @@ commands = {
         notify = "{P} odkrył {T}",
     },
 
+    jail = {
+        help = "Uwięź gracza/graczy.",
+        notify = "{P} uwięził {T} na {D} z powodu {red %reason%}",
+    },
+
+    unjail = {
+        help = "Wypuść gracza/graczy z więzienia.",
+        notify = "{P} wypuścił {T} z więzienia",
+    },
+
     strip = {
         help = "Pozbaw gracza/graczy broni.",
         notify = "{P} pozbawił {T} broni",
@@ -349,10 +359,6 @@ commands = {
     freezeprops = {
         help = "Zamroź obiekty na świecie.",
         notify = "{P} zamroził wszystkie obiekty",
-    },
-
-    jail = {
-
     },
 
     respawn = {
@@ -448,7 +454,8 @@ commands = {
     },
 
     roledeletepermission = {
-        help = "Usuń uprawnienie z roli. W przeciwieństwie do usunięcia, usuwa zastąpienie, aby miało zastosowanie dziedziczenie.",
+        help =
+        "Usuń uprawnienie z roli. W przeciwieństwie do usunięcia, usuwa zastąpienie, aby miało zastosowanie dziedziczenie.",
         notify = "{P} usunął uprawnienie {red %permission%} z roli {green %role%}",
     },
 

@@ -327,6 +327,16 @@ commands = {
         notify = "{P} a rendu visible {T}",
     },
 
+    jail = {
+        help = "Incarcérer un ou plusieurs joueurs.",
+        notify = "{P} a incarcéré {T} pendant {D} avec la raison {red %reason%}",
+    },
+
+    unjail = {
+        help = "Libérer un ou plusieurs joueurs de la prison.",
+        notify = "{P} a libéré {T} de la prison",
+    },
+
     strip = {
         help = "Retirer les armes d'un ou plusieurs joueurs.",
         notify = "{P} a retiré les armes de {T}",
@@ -350,10 +360,6 @@ commands = {
     freezeprops = {
         help = "Geler les props dans le monde.",
         notify = "{P} a gelé tous les props",
-    },
-
-    jail = {
-
     },
 
     respawn = {
