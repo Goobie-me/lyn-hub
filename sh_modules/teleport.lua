@@ -275,7 +275,7 @@ end
 
 local function place_group(caller, targets)
     local plan = assign_slots(caller, targets)
-    if #plan == 0 then return {} end
+    if #plan == 0 then return { caller = caller }, { caller = caller } end
 
     local exclusives = { caller = caller }
     targets = { caller = caller }
@@ -333,8 +333,19 @@ Command("goto")
     :Param("player", { cant_target_self = true, single_target = true, allow_higher_target = true })
     :Execute(function(ply, targets)
         local target = targets[1]
-        if Lyn.Player.SendExclusiveMessage(ply, target) then return end
-        place_group(target, { ply })
+        local placed, exclusives = place_group(target, { ply })
+
+        if #placed == 0 then
+            if #exclusives > 0 then
+                Lyn.Player.SendExclusiveMessage(ply, ply)
+            else
+                Lyn.Player.Chat.Send(ply, "#lyn.commands.goto.no_space", {
+                    T = targets
+                })
+            end
+
+            return
+        end
 
         LYN_NOTIFY("*", "#lyn.commands.goto.notify", {
             P = ply,
