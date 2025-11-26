@@ -31,11 +31,12 @@ Config.Hook({ { "tool_restrictions", false } }, "tool_restrictions", function(to
             end
         end
 
-        hook.Add("CanTool", HOOK_NAME, function(ply, _, tool)
+        hook.Add("CanTool", HOOK_NAME, function(ply, _, tool, tool_info)
             if Lyn.Player.HasPermission(ply, tool_name(tool)) then return end
 
-            if CLIENT and not Lyn.Player.HasCooldown(ply, HOOK_NAME, 0.1) then
-                Lyn.Player.Chat.Send(ply, "#lyn.extra.no_tool_permission", { tool = tool })
+            if CLIENT and not Lyn.Player.HasCooldown(ply, HOOK_NAME, 0.2) then
+                Lyn.Player.Chat.Send(ply, "#lyn.extra.no_tool_permission",
+                    { tool = (tool_info and tool_info.Name) or tool })
             end
 
             return false
