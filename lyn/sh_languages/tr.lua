@@ -122,6 +122,10 @@ menu = {
     }
 }
 
+extra = {
+    no_tool_permission = "{red %tool%} aracını kullanma izniniz yok",
+}
+
 commands_core = {
     cant_use_as_console = "{red %command%} komutunu kullanmak için oyuncu olmanız gerekir.",
     no_permission = "{red %command%} komutunu kullanma izniniz yok.",

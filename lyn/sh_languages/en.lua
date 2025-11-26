@@ -122,6 +122,10 @@ menu = {
     }
 }
 
+extra = {
+    no_tool_permission = "You do not have permission to use the {red %tool%} tool",
+}
+
 commands_core = {
     cant_use_as_console = "You must be a player to use the {red %command%} command.",
     no_permission = "You do not have permission to use the {red %command%} command.",
