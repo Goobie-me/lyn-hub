@@ -408,53 +408,60 @@ Command("bot")
     end)
     :Add()
 
+local function send_help(source, ply, cmd_name, matched_identifier)
+    if cmd_name then
+        Command.SendSyntax({
+            cmd = Command.Get(cmd_name),
+            caller = ply,
+            parsed_args = {},
+            matched_prefix = matched_identifier,
+        })
+    else
+        for _, cmd in pairs(Command.GetAll()) do
+            if cmd:PlayerHasPermission(ply) then
+                local prefix = source == Command.SOURCE_CHAT and cmd.chat_prefix or cmd.console_prefix
+                local v = prefix .. cmd.name
+                if cmd.help then
+                    v = v .. " - " .. Lyn.I18n.t(cmd.help)
+                end
+                v = Parser.escape(v)
+                Lyn.Player.Chat.Send(ply, v)
+            end
+        end
+    end
+end
+
 Command("help")
     :Param("string", { hint = "command", optional = true })
     :GetRestArgs()
     :Execute(function(ply, cmd_name)
+        local source = LYN_CTX.source
         if cmd_name then
             local cmd = Command.Search(cmd_name)
-            if not cmd or (cmd:GetPermissionName() and not ply:HasPermission(cmd:GetPermissionName())) then
+            if not cmd or not cmd:PlayerHasPermission(ply) then
                 Lyn.Player.Chat.Send(ply, "#lyn.commands.help.no_command", {
                     command = cmd_name
                 })
                 return
             end
-            Net.StartSV("Command.Help", ply, cmd.name, cmd_name)
+            if Lyn.IsConsole(ply) then
+                send_help(source, ply, cmd.name, cmd_name)
+            else
+                Net.StartSV("Command.Help", ply, source, cmd.name, cmd_name)
+            end
         else
-            Net.StartSV("Command.Help", ply)
+            if Lyn.IsConsole(ply) then
+                send_help(source, ply)
+            else
+                Net.StartSV("Command.Help", ply, source)
+            end
         end
     end)
     :Add()
 
 if CLIENT then
-    Net.HookCL("Command.Help", function(cmd_name, matched_identifier)
-        if cmd_name then
-            Command.SendSyntax({
-                cmd = Command.Get(cmd_name),
-                caller = LocalPlayer(),
-                parsed_args = {},
-                matched_prefix = matched_identifier,
-            })
-        else
-            local commands = Command.GetAll()
-            local chat_lines = {}
-
-            for _, cmd in pairs(commands) do
-                if not cmd:GetPermissionName() or LocalPlayer():HasPermission(cmd:GetPermissionName()) then
-                    if cmd.help then
-                        table.insert(chat_lines,
-                            Parser.escape(cmd.chat_prefix .. cmd.name .. " - " .. Lyn.I18n.t(cmd.help)))
-                    else
-                        table.insert(chat_lines, Parser.escape(cmd.chat_prefix .. cmd.name))
-                    end
-                end
-            end
-
-            if #chat_lines > 0 then
-                Lyn.Player.Chat.Add(table.concat(chat_lines, "\n"))
-            end
-        end
+    Net.HookCL("Command.Help", function(source, cmd_name, matched_identifier)
+        send_help(source, LocalPlayer(), cmd_name, matched_identifier)
     end)
 end
 
