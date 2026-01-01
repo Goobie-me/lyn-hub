@@ -20,7 +20,7 @@ targets = {
 
     yourself = "您自己", -- 颜色将与"You"相同
 
-    himself = "他自己",   -- 颜色将与其角色颜色相同
+    himself = "他自己", -- 颜色将与其角色颜色相同
 
     -- 当目标是"*"时，这将在 {T} 内部使用
     -- 当它在聊天中打印所有人时，并不是字面意义上的所有人，而是玩家可以目标的所有人。
@@ -93,6 +93,7 @@ menu = {
             copy_steamid64 = "复制 SteamID64",
             remove_role = "移除角色",
             add_role = "添加角色",
+            hide_bots = "隐藏机器人",
         },
         bans = {
             title = "封禁",

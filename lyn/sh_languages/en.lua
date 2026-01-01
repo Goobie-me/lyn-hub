@@ -93,6 +93,7 @@ menu = {
             copy_steamid64 = "Copy SteamID64",
             remove_role = "Remove Role",
             add_role = "Add Role",
+            hide_bots = "Hide Bots",
         },
         bans = {
             title = "Bans",

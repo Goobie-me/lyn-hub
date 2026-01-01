@@ -93,6 +93,7 @@ menu = {
             copy_steamid64 = "SteamID64'ü Kopyala",
             remove_role = "Rolü Sil",
             add_role = "Rol Ekle",
+            hide_bots = "Botları Gizle",
         },
         bans = {
             title = "Yasaklar",
