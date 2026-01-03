@@ -197,6 +197,7 @@ commands_core = {
         gamemode = "游戏模式",
         command = "命令",
         ["weapon/entity"] = "武器/实体",
+        shipment = "货物",
     },
 }
 
@@ -549,5 +550,66 @@ commands = {
         help = "检查玩家的游戏时间。",
         your = "您的游戏时间：{D}",
         target = "{T} 的游戏时间：{D}",
-    }
+    },
+
+    -- DarkRP
+
+    arrest = {
+        help = "逮捕玩家。",
+        notify = "{P} 永久逮捕了 {T}",
+        notify_duration = "{P} 逮捕了 {T}，时长 {D}",
+    },
+
+    unarrest = {
+        help = "释放玩家。",
+        notify = "{P} 释放了 {T}",
+    },
+
+    setmoney = {
+        help = "设置玩家金钱。",
+        notify = "{P} 将 {T} 的金钱设为 {green %amount%}",
+    },
+
+    addmoney = {
+        help = "给玩家添加金钱。",
+        notify = "{P} 给 {T} 添加了 {green %amount%}",
+    },
+
+    selldoor = {
+        help = "出售你正在看的门/载具。",
+        notify = "{P} 为 {T} 出售了一扇门/载具",
+        invalid = "无效的门",
+        no_owner = "这扇门没有主人",
+    },
+
+    sellall = {
+        help = "出售玩家拥有的所有门/载具。",
+        notify = "{P} 为 {T} 出售了所有门/载具",
+    },
+
+    darkrpsetjailpos = {
+        help = "重置所有监狱位置并在你的位置设置新位置。",
+        notify = "{P} 设置了新的 DarkRP 监狱位置",
+    },
+
+    darkrpaddjailpos = {
+        help = "在你的当前位置添加监狱位置。",
+        notify = "{P} 添加了新的 DarkRP 监狱位置",
+    },
+
+    setjob = {
+        help = "更改玩家职业。",
+        notify = "{P} 将 {T} 的职业设为 {green %job%}",
+    },
+
+    shipment = {
+        help = "生成一个货物。",
+        notify = "{P} 生成了 {green %shipment%} 货物",
+    },
+
+    forcename = {
+        help = "强制更改玩家名称。",
+        notify = "{P} 将 {T} 的名称设为 {green %name%}",
+        taken = "名称已被使用 ({red %name%})",
+    },
 }

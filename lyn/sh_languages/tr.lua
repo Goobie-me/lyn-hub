@@ -197,6 +197,7 @@ commands_core = {
         gamemode = "oyun modu",
         command = "komut",
         ["weapon/entity"] = "silah/varlık",
+        shipment = "kargo",
     },
 }
 
@@ -549,5 +550,66 @@ commands = {
         help = "Bir oyuncunun oynama süresini kontrol et.",
         your = "Oynama süreniz: {D}",
         target = "{T} oynama süresi: {D}",
-    }
+    },
+
+    -- DarkRP
+
+    arrest = {
+        help = "Oyuncuları tutkula.",
+        notify = "{P}, {T} kişisini kalıcı olarak tutukladı",
+        notify_duration = "{P}, {T} kişisini {D} süreliğine tutukladı",
+    },
+
+    unarrest = {
+        help = "Oyuncuları serbest bırak.",
+        notify = "{P}, {T} kişisini serbest bıraktı",
+    },
+
+    setmoney = {
+        help = "Oyuncunun parasını ayarla.",
+        notify = "{P}, {T} kişisinin parasını {green %amount%} olarak ayarladı",
+    },
+
+    addmoney = {
+        help = "Oyuncuya para ekle.",
+        notify = "{P}, {T} kişisine {green %amount%} ekledi",
+    },
+
+    selldoor = {
+        help = "Baktığın kapıyı/aracı sat.",
+        notify = "{P}, {T} için bir kapı/araç sattı",
+        invalid = "Satılacak geçersiz kapı",
+        no_owner = "Bu kapının sahibi yok",
+    },
+
+    sellall = {
+        help = "Oyuncunun tüm kapılarını/araçlarını sat.",
+        notify = "{P}, {T} için tüm kapıları/araçları sattı",
+    },
+
+    darkrpsetjailpos = {
+        help = "Tüm hapishane konumlarını sıfırlar ve konumunda yeni bir tane ayarlar.",
+        notify = "{P} yeni bir DarkRP hapishane konumu ayarladı",
+    },
+
+    darkrpaddjailpos = {
+        help = "Mevcut konumuna bir hapishane konumu ekler.",
+        notify = "{P} yeni bir DarkRP hapishane konumu ekledi",
+    },
+
+    setjob = {
+        help = "Oyuncunun mesleğini değiştir.",
+        notify = "{P}, {T} kişisinin mesleğini {green %job%} olarak ayarladı",
+    },
+
+    shipment = {
+        help = "Bir kargo oluştur.",
+        notify = "{P}, {green %shipment%} kargosu oluşturdu",
+    },
+
+    forcename = {
+        help = "Oyuncunun adını zorla değiştir.",
+        notify = "{P}, {T} kişisinin adını {green %name%} olarak ayarladı",
+        taken = "Ad zaten alınmış ({red %name%})",
+    },
 }

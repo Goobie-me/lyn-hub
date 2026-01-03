@@ -197,6 +197,7 @@ commands_core = {
         gamemode = "tryb gry",
         command = "polecenie",
         ["weapon/entity"] = "broń/przedmiot",
+        shipment = "przesyłka",
     },
 }
 
@@ -550,5 +551,66 @@ commands = {
         help = "Sprawdź czas gry gracza.",
         your = "Twój czas gry: {D}",
         target = "Czas gry {T}: {D}",
-    }
+    },
+
+    -- DarkRP
+
+    arrest = {
+        help = "Aresztuj graczy.",
+        notify = "{P} aresztował {T} na stałe",
+        notify_duration = "{P} aresztował {T} na {D}",
+    },
+
+    unarrest = {
+        help = "Zwolnij graczy.",
+        notify = "{P} zwolnił {T}",
+    },
+
+    setmoney = {
+        help = "Ustaw pieniądze gracza.",
+        notify = "{P} ustawił pieniądze {T} na {green %amount%}",
+    },
+
+    addmoney = {
+        help = "Dodaj pieniądze graczowi.",
+        notify = "{P} dodał {green %amount%} do {T}",
+    },
+
+    selldoor = {
+        help = "Sprzedaj drzwi/pojazd, na które patrzysz.",
+        notify = "{P} sprzedał drzwi/pojazd dla {T}",
+        invalid = "Nieprawidłowe drzwi do sprzedaży",
+        no_owner = "Nikt nie jest właścicielem tych drzwi",
+    },
+
+    sellall = {
+        help = "Sprzedaj wszystkie drzwi/pojazdy gracza.",
+        notify = "{P} sprzedał wszystkie drzwi/pojazdy dla {T}",
+    },
+
+    darkrpsetjailpos = {
+        help = "Resetuje wszystkie pozycje więzienia i ustawia nową w twojej lokalizacji.",
+        notify = "{P} ustawił nową pozycję więzienia DarkRP",
+    },
+
+    darkrpaddjailpos = {
+        help = "Dodaje pozycję więzienia w twojej lokalizacji.",
+        notify = "{P} dodał nową pozycję więzienia DarkRP",
+    },
+
+    setjob = {
+        help = "Zmień pracę gracza.",
+        notify = "{P} ustawił pracę {T} na {green %job%}",
+    },
+
+    shipment = {
+        help = "Stwórz przesyłkę.",
+        notify = "{P} stworzył przesyłkę {green %shipment%}",
+    },
+
+    forcename = {
+        help = "Wymuś nazwę gracza.",
+        notify = "{P} ustawił nazwę {T} na {green %name%}",
+        taken = "Nazwa już zajęta ({red %name%})",
+    },
 }

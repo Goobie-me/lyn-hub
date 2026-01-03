@@ -198,6 +198,7 @@ commands_core = {
         gamemode = "gamemode",
         command = "befehl",
         ["weapon/entity"] = "waffe/entität",
+        shipment = "Lieferung",
     },
 }
 
@@ -551,5 +552,66 @@ commands = {
         help = "Zeige die Spielzeit eines Spielers an.",
         your = "Deine Spielzeit: {D}",
         target = "Spielzeit von {T}: {D}",
-    }
+    },
+
+    -- DarkRP
+
+    arrest = {
+        help = "Spieler verhaften.",
+        notify = "{P} hat {T} dauerhaft verhaftet",
+        notify_duration = "{P} hat {T} für {D} verhaftet",
+    },
+
+    unarrest = {
+        help = "Spieler freilassen.",
+        notify = "{P} hat {T} freigelassen",
+    },
+
+    setmoney = {
+        help = "Geld eines Spielers festlegen.",
+        notify = "{P} hat {T}s Geld auf {green %amount%} gesetzt",
+    },
+
+    addmoney = {
+        help = "Geld zu einem Spieler hinzufügen.",
+        notify = "{P} hat {green %amount%} zu {T} hinzugefügt",
+    },
+
+    selldoor = {
+        help = "Tür/Fahrzeug verkaufen, das du ansiehst.",
+        notify = "{P} hat eine Tür/ein Fahrzeug für {T} verkauft",
+        invalid = "Ungültige Tür zum Verkaufen",
+        no_owner = "Diese Tür gehört niemandem",
+    },
+
+    sellall = {
+        help = "Alle Türen/Fahrzeuge eines Spielers verkaufen.",
+        notify = "{P} hat alle Türen/Fahrzeuge für {T} verkauft",
+    },
+
+    darkrpsetjailpos = {
+        help = "Setzt alle Gefängnispositionen zurück und erstellt eine neue an deinem Standort.",
+        notify = "{P} hat eine neue DarkRP-Gefängnisposition gesetzt",
+    },
+
+    darkrpaddjailpos = {
+        help = "Fügt eine Gefängnisposition an deinem Standort hinzu.",
+        notify = "{P} hat eine neue DarkRP-Gefängnisposition hinzugefügt",
+    },
+
+    setjob = {
+        help = "Job eines Spielers ändern.",
+        notify = "{P} hat {T}s Job auf {green %job%} gesetzt",
+    },
+
+    shipment = {
+        help = "Eine Lieferung spawnen.",
+        notify = "{P} hat {green %shipment%}-Lieferung gespawnt",
+    },
+
+    forcename = {
+        help = "Namen eines Spielers erzwingen.",
+        notify = "{P} hat {T}s Namen auf {green %name%} gesetzt",
+        taken = "Name bereits vergeben ({red %name%})",
+    },
 }

@@ -198,6 +198,7 @@ commands_core = {
         gamemode = "mode de jeu",
         command = "commande",
         ["weapon/entity"] = "arme/entité",
+        shipment = "cargaison",
     },
 }
 
@@ -551,5 +552,66 @@ commands = {
         help = "Vérifier le temps de jeu d'un joueur.",
         your = "Votre temps de jeu: {D}",
         target = "Temps de jeu de {T}: {D}",
-    }
+    },
+
+    -- DarkRP
+
+    arrest = {
+        help = "Arrêter des joueurs.",
+        notify = "{P} a arrêté {T} définitivement",
+        notify_duration = "{P} a arrêté {T} pour {D}",
+    },
+
+    unarrest = {
+        help = "Libérer des joueurs.",
+        notify = "{P} a libéré {T}",
+    },
+
+    setmoney = {
+        help = "Définir l'argent d'un joueur.",
+        notify = "{P} a défini l'argent de {T} à {green %amount%}",
+    },
+
+    addmoney = {
+        help = "Ajouter de l'argent à un joueur.",
+        notify = "{P} a ajouté {green %amount%} à {T}",
+    },
+
+    selldoor = {
+        help = "Vendre la porte/véhicule que vous regardez.",
+        notify = "{P} a vendu une porte/véhicule pour {T}",
+        invalid = "Porte invalide à vendre",
+        no_owner = "Personne ne possède cette porte",
+    },
+
+    sellall = {
+        help = "Vendre toutes les portes/véhicules d'un joueur.",
+        notify = "{P} a vendu toutes les portes/véhicules pour {T}",
+    },
+
+    darkrpsetjailpos = {
+        help = "Réinitialise toutes les positions de prison et en définit une nouvelle à votre position.",
+        notify = "{P} a défini une nouvelle position de prison DarkRP",
+    },
+
+    darkrpaddjailpos = {
+        help = "Ajoute une position de prison à votre position actuelle.",
+        notify = "{P} a ajouté une nouvelle position de prison DarkRP",
+    },
+
+    setjob = {
+        help = "Changer le métier d'un joueur.",
+        notify = "{P} a défini le métier de {T} à {green %job%}",
+    },
+
+    shipment = {
+        help = "Faire apparaître une cargaison.",
+        notify = "{P} a fait apparaître une cargaison {green %shipment%}",
+    },
+
+    forcename = {
+        help = "Forcer le nom d'un joueur.",
+        notify = "{P} a défini le nom de {T} à {green %name%}",
+        taken = "Nom déjà pris ({red %name%})",
+    },
 }

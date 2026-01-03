@@ -197,6 +197,7 @@ commands_core = {
         gamemode = "gamemode",
         command = "command",
         ["weapon/entity"] = "weapon/entity",
+        shipment = "shipment",
     },
 }
 
@@ -549,5 +550,66 @@ commands = {
         help = "Check the playtime of a player.",
         your = "Your playtime: {D}",
         target = "{T} playtime: {D}",
-    }
+    },
+
+    -- DarkRP
+
+    arrest = {
+        help = "Arrest player(s).",
+        notify = "{P} arrested {T} permanently",
+        notify_duration = "{P} arrested {T} for {D}",
+    },
+
+    unarrest = {
+        help = "Unarrest player(s).",
+        notify = "{P} unarrested {T}",
+    },
+
+    setmoney = {
+        help = "Set money for a player.",
+        notify = "{P} set {T}'s money to {green %amount%}",
+    },
+
+    addmoney = {
+        help = "Add money for a player.",
+        notify = "{P} added {green %amount%} to {T}",
+    },
+
+    selldoor = {
+        help = "Unown the door/vehicle you are looking at.",
+        notify = "{P} sold a door/vehicle for {T}",
+        invalid = "Invalid door to sell",
+        no_owner = "No one owns this door",
+    },
+
+    sellall = {
+        help = "Sell every door/vehicle owned for a player.",
+        notify = "{P} sold every door/vehicle for {T}",
+    },
+
+    darkrpsetjailpos = {
+        help = "Resets all jail positions and sets a new one at your location.",
+        notify = "{P} set a new DarkRP jail position",
+    },
+
+    darkrpaddjailpos = {
+        help = "Adds a jail position at your current location.",
+        notify = "{P} added a new DarkRP jail position",
+    },
+
+    setjob = {
+        help = "Change a player's job.",
+        notify = "{P} set {T}'s job to {green %job%}",
+    },
+
+    shipment = {
+        help = "Spawn a shipment.",
+        notify = "{P} spawned {green %shipment%} shipment",
+    },
+
+    forcename = {
+        help = "Force name for a player.",
+        notify = "{P} set {T}'s name to {green %name%}",
+        taken = "Name already taken ({red %name%})",
+    },
 }
