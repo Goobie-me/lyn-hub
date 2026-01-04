@@ -10,7 +10,7 @@ local function load_roles()
                 Name = name,
                 Inherits = role.extends,
                 CAMI_Source = "Lyn"
-            })
+            }, "Lyn")
         end
     end
 end
