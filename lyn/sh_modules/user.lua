@@ -127,6 +127,68 @@ Command("playerremoveroleid")
     end)
     :Add()
 
+Command("playerextendrole")
+    :Permission("playerextendrole")
+
+    :Param("player", { single_target = true })
+    :Param("role", {
+        check = function(ctx)
+            local value = ctx.value
+            return value and ctx.caller:CanTargetRole(value)
+        end
+    })
+    :Param("duration", { max = "10y" })
+    :Execute(function(ply, targets, role, duration)
+        local target = targets[1]
+
+        Lyn.Player.Role.ExtendExpiry(target, role, duration, function(err)
+            if err then
+                Lyn.Player.Chat.Send(ply, "#lyn.commands_core.failed_to_run")
+                return
+            end
+
+            LYN_NOTIFY("*", "#lyn.commands.playerextendrole.notify", {
+                P = ply,
+                T = targets,
+                role = Role.GetDisplayName(role),
+                D = duration,
+            })
+        end)
+    end)
+    :Add()
+
+Command("playerextendroleid")
+    :Permission("playerextendroleid")
+
+    :Param("steamid64")
+    :Param("role", {
+        check = function(ctx)
+            local value = ctx.value
+            return value and ctx.caller:CanTargetRole(value)
+        end
+    })
+    :Param("duration", { max = "10y" })
+    :Execute(function(ply, promise, role, duration)
+        local steamid64 = promise.steamid64
+        promise:Handle(function()
+            Lyn.Player.Role.ExtendExpirySteamID64(steamid64, role, duration, function(err)
+                if err then
+                    Lyn.Player.Chat.Send(ply, "#lyn.commands_core.failed_to_run")
+                    return
+                end
+
+                LYN_NOTIFY("*", "#lyn.commands.playerextendroleid.notify", {
+                    P = ply,
+                    target_steamid64 = steamid64,
+                    role = Role.GetDisplayName(role),
+                    D = duration,
+                })
+            end)
+        end)
+    end)
+    :Add()
+
+
 Command("createrole")
     :Aliases("newrole", "rolecreate", "rolenew")
     :Permission("manage_roles")

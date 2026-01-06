@@ -413,6 +413,16 @@ commands = {
         notify = "{P} 移除了 {red %target_steamid64%} 的角色 {red %role%}",
     },
 
+    playerextendrole = {
+        help = "延长玩家角色的有效期。",
+        notify = "{P} 将 {T} 的 {green %role%} 角色延长了 {D}",
+    },
+
+    playerextendroleid = {
+        help = "通过 SteamID/SteamID64 延长玩家角色的有效期。",
+        notify = "{P} 将 {red %target_steamid64%} 的 {green %role%} 角色延长了 {D}",
+    },
+
     createrole = {
         help = "创建新角色。",
         notify = "{P} 创建了新角色：{green %role%}",

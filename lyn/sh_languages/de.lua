@@ -414,6 +414,16 @@ commands = {
         notify = "{P} hat die Rolle {red %role%} von {red %target_steamid64%} entfernt",
     },
 
+    playerextendrole = {
+        help = "Verlängert die Laufzeit einer Spielerrolle.",
+        notify = "{P} hat die Rolle {green %role%} für {T} um {D} verlängert",
+    },
+
+    playerextendroleid = {
+        help = "Verlängert die Laufzeit einer Spielerrolle per SteamID/SteamID64.",
+        notify = "{P} hat die Rolle {green %role%} für {red %target_steamid64%} um {D} verlängert",
+    },
+
     createrole = {
         help = "Erstelle eine neue Rolle.",
         notify = "{P} hat eine neue Rolle erstellt: {green %role%}",

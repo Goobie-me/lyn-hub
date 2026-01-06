@@ -413,6 +413,16 @@ commands = {
         notify = "{P}, {red %target_steamid64%} oyuncusundan {red %role%} rolünü kaldırdı",
     },
 
+    playerextendrole = {
+        help = "Bir oyuncunun rol süresini uzat.",
+        notify = "{P}, {T} için {green %role%} rolünü {D} uzattı",
+    },
+
+    playerextendroleid = {
+        help = "Bir oyuncunun rol süresini SteamID/SteamID64 ile uzat.",
+        notify = "{P}, {red %target_steamid64%} için {green %role%} rolünü {D} uzattı",
+    },
+
     createrole = {
         help = "Yeni bir rol oluştur.",
         notify = "{P} yeni bir rol oluşturdu: {green %role%}",

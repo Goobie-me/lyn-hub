@@ -414,6 +414,16 @@ commands = {
         notify = "{P} a retiré le rôle {red %role%} de {red %target_steamid64%}",
     },
 
+    playerextendrole = {
+        help = "Prolonger l'expiration du rôle d'un joueur.",
+        notify = "{P} a prolongé le rôle {green %role%} de {T} de {D}",
+    },
+
+    playerextendroleid = {
+        help = "Prolonger l'expiration du rôle d'un joueur par son SteamID/SteamID64.",
+        notify = "{P} a prolongé le rôle {green %role%} de {red %target_steamid64%} de {D}",
+    },
+
     createrole = {
         help = "Créer un nouveau rôle.",
         notify = "{P} a créé un nouveau rôle: {green %role%}",
