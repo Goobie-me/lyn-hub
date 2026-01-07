@@ -543,7 +543,7 @@ commands = {
         notify = "{P} tüm sesleri durdurdu",
     },
 
-    exit_vehicle = {
+    exitvehicle = {
         help = "Bir oyuncuyu araçtan zorla çıkar.",
 
         not_in_vehicle_self = "Araçta değilsin!",

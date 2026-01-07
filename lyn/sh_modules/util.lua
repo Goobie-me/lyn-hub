@@ -373,9 +373,9 @@ Command("exitvehicle")
 
         if not target:InVehicle() then
             if ply == target then
-                Lyn.Player.Chat.Send(ply, "#lyn.commands.exit_vehicle.not_in_vehicle_self")
+                Lyn.Player.Chat.Send(ply, "#lyn.commands.exitvehicle.not_in_vehicle_self")
             else
-                Lyn.Player.Chat.Send(ply, "#lyn.commands.exit_vehicle.not_in_vehicle_target", {
+                Lyn.Player.Chat.Send(ply, "#lyn.commands.exitvehicle.not_in_vehicle_target", {
                     T = targets
                 })
             end
@@ -384,7 +384,7 @@ Command("exitvehicle")
 
         target:ExitVehicle()
 
-        LYN_NOTIFY("*", "#lyn.commands.exit_vehicle.notify", {
+        LYN_NOTIFY("*", "#lyn.commands.exitvehicle.notify", {
             P = ply,
             T = targets,
         })

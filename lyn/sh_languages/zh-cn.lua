@@ -543,7 +543,7 @@ commands = {
         notify = "{P} 停止了所有声音",
     },
 
-    exit_vehicle = {
+    exitvehicle = {
         help = "强制玩家离开载具。",
 
         not_in_vehicle_self = "您不在载具中！",

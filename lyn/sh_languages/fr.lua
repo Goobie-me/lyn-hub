@@ -545,7 +545,7 @@ commands = {
         notify = "{P} a arrêté tous les sons",
     },
 
-    exit_vehicle = {
+    exitvehicle = {
         help = "Forcer un joueur à sortir d'un véhicule.",
 
         not_in_vehicle_self = "Vous n'êtes pas dans un véhicule!",
