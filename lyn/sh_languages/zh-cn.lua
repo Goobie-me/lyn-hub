@@ -120,7 +120,8 @@ menu = {
                 updates = "更新",
             }
         }
-    }
+    },
+    search = "搜索...",
 }
 
 extra = {

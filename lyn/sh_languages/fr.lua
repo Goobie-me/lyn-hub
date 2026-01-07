@@ -120,7 +120,8 @@ menu = {
                 updates = "Mises à jour",
             }
         }
-    }
+    },
+    search = "Rechercher...",
 }
 
 extra = {

@@ -120,7 +120,8 @@ menu = {
                 updates = "Güncellemeler",
             }
         }
-    }
+    },
+    search = "Ara...",
 }
 
 extra = {
