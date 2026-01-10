@@ -125,7 +125,8 @@ menu = {
 }
 
 extra = {
-    no_tool_permission = "您没有权限使用 {red %tool%} 工具",
+    no_tool_permission = "你没有使用 {red %tool%} 工具的权限",
+    no_spawn_permission = "你没有 {red %name%} 权限",
 }
 
 commands_core = {

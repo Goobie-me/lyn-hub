@@ -126,6 +126,7 @@ menu = {
 
 extra = {
     no_tool_permission = "Nie masz uprawnień do używania narzędzia {red %tool%}",
+    no_spawn_permission = "Nie masz uprawnienia {red %name%}",
 }
 
 commands_core = {

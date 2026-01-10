@@ -125,7 +125,8 @@ menu = {
 }
 
 extra = {
-    no_tool_permission = "Du hast keine Berechtigung, das {red %tool%} Tool zu verwenden",
+    no_tool_permission = "Du hast keine Berechtigung, das Tool {red %tool%} zu verwenden",
+    no_spawn_permission = "Du hast keine {red %name%}-Berechtigung",
 }
 
 commands_core = {

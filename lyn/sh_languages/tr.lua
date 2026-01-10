@@ -126,6 +126,7 @@ menu = {
 
 extra = {
     no_tool_permission = "{red %tool%} aracını kullanma izniniz yok",
+    no_spawn_permission = "{red %name%} izniniz yok",
 }
 
 commands_core = {
