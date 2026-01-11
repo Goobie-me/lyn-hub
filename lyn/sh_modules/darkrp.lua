@@ -154,9 +154,11 @@ load("PostGamemodeLoaded", "Lyn.DarkRP", function()
         :Param("player")
         :Param("string", {
             hint = "job",
-            check = function(job)
-                job = job:lower()
+            check = function(ctx)
+                local job = ctx.value
+                if not job then return false end
 
+                job = job:lower()
                 for i = 1, #RPExtraTeams do
                     local v = RPExtraTeams[i]
                     if v.name:lower() == job or v.command:lower() == job then
