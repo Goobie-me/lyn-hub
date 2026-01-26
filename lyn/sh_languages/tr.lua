@@ -111,6 +111,7 @@ menu = {
         },
         roles = {
             title = "Roller",
+            delete = "Sil",
         },
         config = {
             title = "Yapılandırma",

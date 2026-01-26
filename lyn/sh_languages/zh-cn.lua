@@ -111,6 +111,7 @@ menu = {
         },
         roles = {
             title = "角色",
+            delete = "删除",
         },
         config = {
             title = "配置",

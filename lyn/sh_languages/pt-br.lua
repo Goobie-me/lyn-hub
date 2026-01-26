@@ -95,6 +95,7 @@ menu = {
         },
         roles = {
             title = "Cargos",
+            delete = "Excluir",
         },
         config = {
             title = "Configurações",

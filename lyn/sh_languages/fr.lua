@@ -111,6 +111,7 @@ menu = {
         },
         roles = {
             title = "Rôles",
+            delete = "Supprimer",
         },
         config = {
             title = "Configuration",
