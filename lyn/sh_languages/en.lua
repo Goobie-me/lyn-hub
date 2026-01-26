@@ -107,6 +107,7 @@ menu = {
             copy_steamid64 = "Copy SteamID64",
             copy_admin_steamid64 = "Copy Admin's SteamID64",
             copy_reason = "Copy Reason",
+            unban = "Unban",
         },
         roles = {
             title = "Roles",

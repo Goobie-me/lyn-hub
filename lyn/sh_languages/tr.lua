@@ -107,6 +107,7 @@ menu = {
             copy_steamid64 = "SteamID64'ü Kopyala",
             copy_admin_steamid64 = "Yöneticinin SteamID64'ünü Kopyala",
             copy_reason = "Sebebi Kopyala",
+            unban = "Yasağı Kaldır",
         },
         roles = {
             title = "Roller",

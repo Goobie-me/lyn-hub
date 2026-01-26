@@ -107,6 +107,7 @@ menu = {
             copy_steamid64 = "复制 SteamID64",
             copy_admin_steamid64 = "复制管理员的 SteamID64",
             copy_reason = "复制原因",
+            unban = "解封",
         },
         roles = {
             title = "角色",

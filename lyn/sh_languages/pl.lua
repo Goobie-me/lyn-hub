@@ -107,6 +107,7 @@ menu = {
             copy_steamid64 = "Skopiuj SteamID64",
             copy_admin_steamid64 = "Skopiuj SteamID64 admina",
             copy_reason = "Skopiuj powód",
+            unban = "Odbanuj",
         },
         roles = {
             title = "Role",

@@ -1,4 +1,3 @@
-
 -- by Dahaka 76561198134120717
 
 steamid64 = "SteamID64"
@@ -92,6 +91,7 @@ menu = {
             copy_steamid64 = "Copiar SteamID64",
             copy_admin_steamid64 = "Copiar SteamID64 do Admin",
             copy_reason = "Copiar Motivo",
+            unban = "Desbanir",
         },
         roles = {
             title = "Cargos",
