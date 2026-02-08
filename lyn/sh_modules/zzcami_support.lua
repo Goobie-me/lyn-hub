@@ -32,6 +32,28 @@ hook.Add("Lyn.Role.ChangeExtends", "Lyn.CAMI.ChangeExtendsRole", function(name)
     load_roles()
 end)
 
+hook.Add("Lyn.Player.Role.Add", "Lyn.CAMI.RoleAdd", function(ply, _, role)
+    if not ply then return end
+
+    local map = Lyn.Player.Role.GetMap(ply)
+    local primary = map:GetKeyAtIndex(1) or ""
+    if primary ~= role then return end
+    local old_primary = map:GetKeyAtIndex(2) or ""
+
+    CAMI.SignalUserGroupChanged(ply, old_primary, primary, "Lyn")
+end)
+
+hook.Add("Lyn.Player.Role.Remove", "Lyn.CAMI.RoleRemove", function(ply, _, role)
+    if not ply then return end
+
+    local new_primary = Lyn.Player.Role.Get(ply)
+    local new_immunity = Role.GetImmunity(new_primary)
+    local removed_immunity = Role.GetImmunity(role)
+    if removed_immunity <= new_immunity then return end
+
+    CAMI.SignalUserGroupChanged(ply, role, new_primary, "Lyn")
+end)
+
 if SERVER then
     local function on_user_group_registered(role, source)
         if source == "Lyn" then return end
