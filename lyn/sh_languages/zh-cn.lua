@@ -131,6 +131,13 @@ extra = {
     no_spawn_permission = "你没有 {red %name%} 权限",
 }
 
+teams = {
+    tab = "队伍",
+    has_team = "角色拥有队伍",
+    team_name = "队伍名称",
+    team_color = "队伍颜色",
+}
+
 commands_core = {
     cant_use_as_console = "您必须是玩家才能使用 {red %command%} 命令。",
     no_permission = "您没有权限使用 {red %command%} 命令。",
@@ -625,5 +632,15 @@ commands = {
         help = "强制更改玩家名称。",
         notify = "{P} 将 {T} 的名称设为 {green %name%}",
         taken = "名称已被使用 ({red %name%})",
+    },
+
+    setteam = {
+        help = "为角色设置队伍。",
+        notify = "{P} 将角色 {red %role%} 的队伍设置为 {green %name%}",
+    },
+
+    removeteam = {
+        help = "移除角色的队伍。",
+        notify = "{P} 移除了角色 {red %role%} 的队伍",
     },
 }

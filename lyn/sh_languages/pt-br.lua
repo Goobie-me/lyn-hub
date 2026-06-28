@@ -115,6 +115,13 @@ extra = {
     no_spawn_permission = "Você não possui a permissão {red %name%}",
 }
 
+teams = {
+    tab = "Equipes",
+    has_team = "O cargo tem uma equipe",
+    team_name = "Nome da equipe",
+    team_color = "Cor da equipe",
+}
+
 commands_core = {
     cant_use_as_console = "Você precisa ser um jogador para usar o comando {red %command%}.",
     no_permission = "Você não tem permissão para usar o comando {red %command%}.",
@@ -582,5 +589,15 @@ commands = {
         help = "Forçar o nome de um jogador.",
         notify = "{P} definiu o nome de {T} para {green %name%}",
         taken = "Nome já está em uso ({red %name%})",
+    },
+
+    setteam = {
+        help = "Definir a equipe de um cargo.",
+        notify = "{P} definiu a equipe do cargo {red %role%} para {green %name%}",
+    },
+
+    removeteam = {
+        help = "Remover a equipe de um cargo.",
+        notify = "{P} removeu a equipe do cargo {red %role%}",
     },
 }

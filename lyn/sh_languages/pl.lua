@@ -131,6 +131,13 @@ extra = {
     no_spawn_permission = "Nie masz uprawnienia {red %name%}",
 }
 
+teams = {
+    tab = "Drużyny",
+    has_team = "Rola ma drużynę",
+    team_name = "Nazwa drużyny",
+    team_color = "Kolor drużyny",
+}
+
 commands_core = {
     cant_use_as_console = "Musisz być graczem, aby użyć polecenia {red %command%}.",
     no_permission = "Nie masz uprawnień do użycia polecenia {red %command%}.",
@@ -626,5 +633,15 @@ commands = {
         help = "Wymuś nazwę gracza.",
         notify = "{P} ustawił nazwę {T} na {green %name%}",
         taken = "Nazwa już zajęta ({red %name%})",
+    },
+
+    setteam = {
+        help = "Ustaw drużynę dla roli.",
+        notify = "{P} ustawił drużynę dla roli {red %role%} na {green %name%}",
+    },
+
+    removeteam = {
+        help = "Usuń drużynę roli.",
+        notify = "{P} usunął drużynę roli {red %role%}",
     },
 }

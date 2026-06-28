@@ -131,6 +131,13 @@ extra = {
     no_spawn_permission = "{red %name%} izniniz yok",
 }
 
+teams = {
+    tab = "Takımlar",
+    has_team = "Rolün bir takımı var",
+    team_name = "Takım adı",
+    team_color = "Takım rengi",
+}
+
 commands_core = {
     cant_use_as_console = "{red %command%} komutunu kullanmak için oyuncu olmanız gerekir.",
     no_permission = "{red %command%} komutunu kullanma izniniz yok.",
@@ -625,5 +632,15 @@ commands = {
         help = "Oyuncunun adını zorla değiştir.",
         notify = "{P}, {T} kişisinin adını {green %name%} olarak ayarladı",
         taken = "Ad zaten alınmış ({red %name%})",
+    },
+
+    setteam = {
+        help = "Bir rol için takım ayarla.",
+        notify = "{P}, {red %role%} rolünün takımını {green %name%} olarak ayarladı",
+    },
+
+    removeteam = {
+        help = "Bir rolün takımını kaldır.",
+        notify = "{P}, {red %role%} rolünün takımını kaldırdı",
     },
 }
