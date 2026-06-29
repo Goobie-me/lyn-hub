@@ -1,5 +1,6 @@
 local Lyn = Lyn
 local Hook = Lyn.Hook
+local Config = Lyn.Config
 
 Lyn.Permission.Add("manage_teams", "Teams")
 
@@ -22,7 +23,7 @@ end
 
 -- stored mapping: role_name -> { name = "...", color = Color }
 function Teams.GetAll()
-    return Lyn.Global.Get("teams", {})
+    return Config.Get("teams", {})
 end
 
 function Teams.GetIndex(role_name)
@@ -85,28 +86,20 @@ local function reassign_all()
     end
 end
 
-Hook.Monitor("Lyn.Role.Loaded", "Lyn.Teams.Init", function()
+Config.Hook({ "teams" }, "Lyn.Teams.Setup", function()
     setup_teams()
     if SERVER then reassign_all() end
 end)
 
+Hook.Monitor("Lyn.Role.ChangeImmunity", "Lyn.Teams.Rebuild", function()
+    setup_teams()
+    if SERVER then reassign_all() end
+end)
 
-if CLIENT then
-    Hook.Monitor("Lyn.Global.Updated", "Lyn.Teams.Setup", function(key)
-        if key == "teams" then setup_teams() end
-    end)
-else
-    Hook.Monitor("Lyn.Teams.Updated", "Lyn.Teams.Reassign", function()
-        setup_teams()
-        reassign_all()
-    end)
+if SERVER then
     Hook.Monitor("Lyn.Player.Auth", "Lyn.Teams.Assign", Teams.Assign)
-    Hook.Monitor("Lyn.Player.Role.Add", "Lyn.Teams.Assign", function(ply) Teams.Assign(ply) end)
-    Hook.Monitor("Lyn.Player.Role.Remove", "Lyn.Teams.Assign", function(ply) Teams.Assign(ply) end)
-    Hook.Monitor("Lyn.Role.ChangeImmunity", "Lyn.Teams.Rebuild", function()
-        setup_teams()
-        reassign_all()
-    end)
+    Hook.Monitor("Lyn.Player.Role.Add", "Lyn.Teams.Assign", Teams.Assign)
+    Hook.Monitor("Lyn.Player.Role.Remove", "Lyn.Teams.Assign", Teams.Assign)
 end
 
 local Command = Lyn.Command

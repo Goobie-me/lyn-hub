@@ -19,7 +19,6 @@ Config.AddTab("Teams", function(sheet)
     local selected_role
 
     local editor = UI.Create("GPanel")
-    editor:DockPadding(8, 5, 8, 5)
     split:AddItem(editor, 120)
 
     local has_team_check = editor:Add("GLabeledCheckBox")
@@ -80,7 +79,7 @@ Config.AddTab("Teams", function(sheet)
         end
     end
 
-    hook.Add("Lyn.Teams.Updated", panel, function()
+    Config.Hook({ "teams" }, panel, function()
         if selected_role then load_role(selected_role) end
     end)
 
